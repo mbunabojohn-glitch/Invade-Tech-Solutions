@@ -1,0 +1,175 @@
+import { Link } from "react-router-dom";
+
+const ServicesPreview = () => {
+  const services = [
+    {
+      title: "Managed Services",
+      description:
+        "We deliver managed services through a team of experienced technical professionals, supported by a customer-focused approach that goes beyond typical industry standards.",
+      gradient: "from-blue-900 via-blue-800 to-cyan-900",
+      image: "/images/managed-services.jpg", // ← Your image
+      link: "/services/managed-services",
+    },
+    {
+      title: "IT and Hardware Support",
+      description:
+        "Comprehensive IT infrastructure support and hardware maintenance to keep your business running smoothly",
+      gradient: "from-gray-800 via-gray-900 to-blue-900",
+      image: "/images/it-support.jpg", // ← Your image
+      link: "/services/it-support",
+    },
+    {
+      title: "Cloud Solutions",
+      description:
+        "Scalable cloud infrastructure and migration services tailored to your business needs",
+      gradient: "from-cyan-900 via-blue-900 to-indigo-900",
+      image: "/images/cloud-solutions.jpg", // ← Your image
+      link: "/services/cloud",
+    },
+    {
+      title: "Cybersecurity",
+      description:
+        "Advanced security solutions to protect your data and infrastructure from evolving threats",
+      gradient: "from-purple-900 via-blue-900 to-cyan-900",
+      image: "/images/cybersecurity.jpg", // ← Your image
+      link: "/services/cybersecurity",
+    },
+  ];
+
+  return (
+    <section className="py-20 bg-gray-900">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="text-center mb-16 animate-fade-in-up">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            Our <span className="text-cyan-500">Services</span>
+          </h2>
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            Comprehensive IT solutions designed to empower your business and
+            drive digital transformation
+          </p>
+        </div>
+
+        {/* Services Grid - 2 columns on desktop */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          {services.map((service, index) => (
+            <Link
+              key={index}
+              to={service.link}
+              className="group relative h-80 overflow-hidden rounded-lg animate-fade-in-up"
+              style={{ animationDelay: `${index * 100}ms` }}
+            >
+              {/* Background - Gradient or Image */}
+              {service.image ? (
+                <div
+                  className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                  style={{ backgroundImage: `url(${service.image})` }}
+                />
+              ) : (
+                <div
+                  className={`absolute inset-0 bg-gradient-to-br ${service.gradient} transition-transform duration-500 group-hover:scale-110`}
+                />
+              )}
+
+              {/* Pattern Overlay for depth */}
+              <div
+                className="absolute inset-0 opacity-10"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+                }}
+              />
+
+              {/* Dark Overlay */}
+              <div className="absolute inset-0 bg-black/60 group-hover:bg-black/40 transition-all duration-300" />
+
+              {/* Content */}
+              <div className="relative h-full flex flex-col items-center justify-center p-8 text-center">
+                {/* Title with Border Frame */}
+                <div className="border-2 border-white px-8 py-4 mb-6 group-hover:border-cyan-500 group-hover:shadow-lg group-hover:shadow-cyan-500/50 transition-all duration-300">
+                  <h3 className="text-2xl md:text-3xl font-bold text-white group-hover:text-cyan-500 transition-colors">
+                    {service.title}
+                  </h3>
+                </div>
+
+                {/* Description - Shows on hover */}
+                <p className="text-gray-200 text-sm md:text-base mb-6 max-w-md opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                  {service.description}
+                </p>
+
+                {/* Learn More Button */}
+                <button className="bg-white text-gray-900 px-8 py-3 rounded-full font-semibold opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 hover:bg-cyan-500 hover:text-white">
+                  Learn More
+                </button>
+              </div>
+            </Link>
+          ))}
+        </div>
+
+        {/* Featured Service - Full Width Card */}
+        <div
+          className="relative h-96 overflow-hidden rounded-lg animate-fade-in-up"
+          style={{ animationDelay: "400ms" }}
+        >
+          {/* Background Gradient */}
+          <div className="absolute inset-0 bg-gradient-to-br from-indigo-900 via-blue-900 to-cyan-900" />
+
+          {/* Pattern Overlay */}
+          <div
+            className="absolute inset-0 opacity-10"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            }}
+          />
+
+          {/* Dark Overlay */}
+          <div className="absolute inset-0 bg-black/50" />
+
+          {/* Content */}
+          <div className="relative h-full flex flex-col items-center justify-center p-8 text-center max-w-3xl mx-auto">
+            <h3 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              Network Infrastructure
+            </h3>
+            <p className="text-gray-200 text-lg mb-8 max-w-2xl">
+              Design, implementation, and optimization of robust network
+              solutions for seamless connectivity and performance
+            </p>
+            <Link
+              to="/services/network"
+              className="bg-white text-gray-900 px-10 py-4 rounded-full font-semibold hover:bg-cyan-500 hover:text-white transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/50"
+            >
+              Learn More
+            </Link>
+          </div>
+        </div>
+
+        {/* View All Services CTA */}
+        <div
+          className="text-center mt-12 animate-fade-in-up"
+          style={{ animationDelay: "500ms" }}
+        >
+          <Link
+            to="/services"
+            className="inline-flex items-center text-cyan-500 hover:text-cyan-400 font-semibold text-lg group"
+          >
+            View All Services
+            <svg
+              className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+              />
+            </svg>
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default ServicesPreview;
