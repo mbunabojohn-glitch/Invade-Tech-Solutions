@@ -15,10 +15,10 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Fixed: Close menu when location changes
+  // Close menu when location changes
   useEffect(() => {
     setIsOpen(false);
-  }, [location.pathname]); // Changed dependency
+  }, [location.pathname]); 
 
   const navLinks = [
     { name: "Home", path: "/" },

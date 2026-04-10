@@ -1,12 +1,13 @@
 import Hero from "./Hero";
-import ServicesPreview from "../../pages/Home/ServicePreview";
+import Stats from "./Stats";
+import ServicePreview from "./ServicePreview";
 
 const Home = () => {
   return (
-    <div>
+    <div className="min-h-screen">
       <Hero />
-      <ServicesPreview />
-      {/* Add more sections here as you build them */}
+      <Stats />
+      <ServicePreview />
     </div>
   );
 };

@@ -1,16 +1,20 @@
-// client/src/App.tsx
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
+import Footer from "./components/layout/Footer";
 import AppRoutes from "./routes/AppRoutes";
+import "./App.css";
 
 function App() {
   return (
-    <BrowserRouter>
-      <div className="min-h-screen bg-gray-900">
+    <Router>
+      <div className="min-h-screen flex flex-col bg-gray-900">
         <Navbar />
-        <AppRoutes />
+        <main className="flex-grow">
+          <AppRoutes />
+        </main>
+        <Footer />
       </div>
-    </BrowserRouter>
+    </Router>
   );
 }
 

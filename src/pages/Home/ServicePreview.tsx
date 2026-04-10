@@ -50,7 +50,7 @@ const ServicesPreview = () => {
           </p>
         </div>
 
-        {/* Services Grid - 2 columns on desktop */}
+        {/* Services Grid: 2 columns on desktop */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           {services.map((service, index) => (
             <Link
@@ -59,7 +59,7 @@ const ServicesPreview = () => {
               className="group relative h-80 overflow-hidden rounded-lg animate-fade-in-up"
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              {/* Background - Gradient or Image */}
+              {/* Background: Gradient or Image */}
               {service.image ? (
                 <div
                   className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
