@@ -24,6 +24,29 @@ const Stats = () => {
     { id: 4, label: "System Uptime", value: 99.9, suffix: "%", prefix: "" },
   ];
 
+  // Scroll animation setup
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -100px 0px",
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("animate-in");
+        }
+      });
+    }, observerOptions);
+
+    // Observe all elements with scroll-animate class
+    const elements = document.querySelectorAll(".scroll-animate");
+    elements.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Trigger counter animation
   useEffect(() => {
     setIsVisible(true);
   }, []);
@@ -42,8 +65,8 @@ const Stats = () => {
     useEffect(() => {
       if (!isVisible) return;
 
-      const duration = 2000; // 2 seconds
-      const steps = 60;
+      const duration = 3500;
+      const steps = 80;
       const increment = value / steps;
       let currentStep = 0;
 
@@ -58,7 +81,7 @@ const Stats = () => {
       }, duration / steps);
 
       return () => clearInterval(timer);
-    }, [isVisible, value]);
+    }, [value]); // Only depend on value
 
     return (
       <span className="text-5xl md:text-6xl font-bold text-cyan-500">
@@ -73,7 +96,7 @@ const Stats = () => {
     <section className="bg-gray-900 py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 scroll-animate fade-in">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Our Track Record
           </h2>
@@ -85,15 +108,10 @@ const Stats = () => {
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {stats.map((stat, index) => (
+          {stats.map((stat) => (
             <div
               key={stat.id}
-              className="bg-gray-950 border border-gray-800 rounded-lg p-8 text-center transform transition-all duration-500 hover:scale-105 hover:border-cyan-500 hover:shadow-lg hover:shadow-cyan-500/20"
-              style={{
-                animation: isVisible
-                  ? `fade-in-up 0.6s ease-out ${index * 0.1}s both`
-                  : "none",
-              }}
+              className="bg-gray-950 border border-gray-800 rounded-lg p-8 text-center transform transition-all duration-500 hover:scale-105 hover:border-cyan-500 hover:shadow-lg hover:shadow-cyan-500/20 scroll-animate fade-in"
             >
               <div className="mb-4">
                 <AnimatedCounter
@@ -108,7 +126,7 @@ const Stats = () => {
         </div>
 
         {/* Bottom CTA */}
-        <div className="text-center mt-16">
+        <div className="text-center mt-16 scroll-animate scale-in">
           <p className="text-gray-400 text-lg mb-6">
             Join hundreds of businesses who trust us with their IT
             infrastructure

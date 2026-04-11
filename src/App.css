@@ -46,3 +46,109 @@ html {
 .bg-gray-750 {
   background-color: #2d3748;
 }
+
+/* About-Animation */
+/* Base state for scroll animations - elements start invisible */
+.scroll-animate {
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Slide from right (text from left) */
+.scroll-animate.slide-right {
+  transform: translateX(-40px);
+}
+
+/* Slide from left (images from right) */
+.scroll-animate.slide-left {
+  transform: translateX(40px);
+}
+
+/* Simple fade in */
+.scroll-animate.fade-in {
+  transform: translateY(20px);
+}
+
+/* Scale in animation */
+.scroll-animate.scale-in {
+  transform: scale(0.95);
+}
+
+/* Active state - when element enters viewport */
+.scroll-animate.animate-in {
+  opacity: 1;
+  transform: translateX(0) translateY(0) scale(1);
+}
+
+/* Smooth transition for all states */
+.scroll-animate.animate-in.slide-right,
+.scroll-animate.animate-in.slide-left,
+.scroll-animate.animate-in.fade-in,
+.scroll-animate.animate-in.scale-in {
+  opacity: 1;
+  transform: translateX(0) translateY(0) scale(1);
+}
+
+/* Add stagger effect for multiple elements */
+.scroll-animate:nth-child(1) {
+  transition-delay: 0s;
+}
+.scroll-animate:nth-child(2) {
+  transition-delay: 0.1s;
+}
+.scroll-animate:nth-child(3) {
+  transition-delay: 0.2s;
+}
+.scroll-animate:nth-child(4) {
+  transition-delay: 0.3s;
+}
+
+/* Ensure smooth performance */
+.scroll-animate {
+  will-change: transform, opacity;
+}
+
+/* Remove will-change after animation completes to save resources */
+.scroll-animate.animate-in {
+  will-change: auto;
+}
+
+/* Scroll Animation Styles */
+.scroll-animate {
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-animate.slide-right {
+  transform: translateX(-40px);
+}
+
+.scroll-animate.slide-left {
+  transform: translateX(40px);
+}
+
+.scroll-animate.fade-in {
+  transform: translateY(20px);
+}
+
+.scroll-animate.scale-in {
+  transform: scale(0.95);
+}
+
+.scroll-animate.animate-in {
+  opacity: 1;
+  transform: translateX(0) translateY(0) scale(1);
+}
+
+.scroll-animate:nth-child(1) { transition-delay: 0s; }
+.scroll-animate:nth-child(2) { transition-delay: 0.1s; }
+.scroll-animate:nth-child(3) { transition-delay: 0.2s; }
+.scroll-animate:nth-child(4) { transition-delay: 0.3s; }
+
+.scroll-animate {
+  will-change: transform, opacity;
+}
+
+.scroll-animate.animate-in {
+  will-change: auto;
+}

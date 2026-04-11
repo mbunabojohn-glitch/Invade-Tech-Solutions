@@ -1,13 +1,36 @@
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 const ServicesPreview = () => {
+  // Scroll animation setup
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -100px 0px",
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("animate-in");
+        }
+      });
+    }, observerOptions);
+
+    // Observe all elements with scroll-animate class
+    const elements = document.querySelectorAll(".scroll-animate");
+    elements.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
+
   const services = [
     {
       title: "Managed Services",
       description:
         "We deliver managed services through a team of experienced technical professionals, supported by a customer-focused approach that goes beyond typical industry standards.",
       gradient: "from-blue-900 via-blue-800 to-cyan-900",
-      image: "/images/managed-services.jpg", // ← Your image
+      image: "/images/managed-services.jpg",
       link: "/services/managed-services",
     },
     {
@@ -15,7 +38,7 @@ const ServicesPreview = () => {
       description:
         "Comprehensive IT infrastructure support and hardware maintenance to keep your business running smoothly",
       gradient: "from-gray-800 via-gray-900 to-blue-900",
-      image: "/images/it-support.jpg", // ← Your image
+      image: "/images/it-support.jpg",
       link: "/services/it-support",
     },
     {
@@ -23,7 +46,7 @@ const ServicesPreview = () => {
       description:
         "Scalable cloud infrastructure and migration services tailored to your business needs",
       gradient: "from-cyan-900 via-blue-900 to-indigo-900",
-      image: "/images/cloud-solutions.jpg", // ← Your image
+      image: "/images/cloud-solutions.jpg",
       link: "/services/cloud",
     },
     {
@@ -31,7 +54,7 @@ const ServicesPreview = () => {
       description:
         "Advanced security solutions to protect your data and infrastructure from evolving threats",
       gradient: "from-purple-900 via-blue-900 to-cyan-900",
-      image: "/images/cybersecurity.jpg", // ← Your image
+      image: "/images/cybersecurity.jpg",
       link: "/services/cybersecurity",
     },
   ];
@@ -40,7 +63,7 @@ const ServicesPreview = () => {
     <section className="py-20 bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16 animate-fade-in-up">
+        <div className="text-center mb-16 scroll-animate fade-in">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Our <span className="text-cyan-500">Services</span>
           </h2>
@@ -56,8 +79,7 @@ const ServicesPreview = () => {
             <Link
               key={index}
               to={service.link}
-              className="group relative h-80 overflow-hidden rounded-lg animate-fade-in-up"
-              style={{ animationDelay: `${index * 100}ms` }}
+              className="group relative h-80 overflow-hidden rounded-lg scroll-animate fade-in"
             >
               {/* Background: Gradient or Image */}
               {service.image ? (
@@ -106,10 +128,7 @@ const ServicesPreview = () => {
         </div>
 
         {/* Featured Service - Full Width Card */}
-        <div
-          className="relative h-96 overflow-hidden rounded-lg animate-fade-in-up"
-          style={{ animationDelay: "400ms" }}
-        >
+        <div className="relative h-96 overflow-hidden rounded-lg scroll-animate scale-in">
           {/* Background Gradient */}
           <div className="absolute inset-0 bg-gradient-to-br from-indigo-900 via-blue-900 to-cyan-900" />
 
@@ -143,10 +162,7 @@ const ServicesPreview = () => {
         </div>
 
         {/* View All Services CTA */}
-        <div
-          className="text-center mt-12 animate-fade-in-up"
-          style={{ animationDelay: "500ms" }}
-        >
+        <div className="text-center mt-12 scroll-animate fade-in">
           <Link
             to="/services"
             className="inline-flex items-center text-cyan-500 hover:text-cyan-400 font-semibold text-lg group"
