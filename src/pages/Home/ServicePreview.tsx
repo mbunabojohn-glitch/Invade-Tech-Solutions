@@ -42,15 +42,20 @@ const ServicePreview = () => {
         {/* Services Grid: 2 columns on desktop */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           {services.slice(0, 3).map((service) => (
-            <Link
+            <div
               key={service.id}
-              to="#"
-              className="group relative h-80 overflow-hidden rounded-lg scroll-animate fade-in"
+              className={service.id === 'it-training-career' ? 'lg:col-span-2 lg:flex lg:justify-center' : ''}
+            >
+              <Link
+                to="#"
+                className={`group relative h-80 overflow-hidden rounded-lg scroll-animate fade-in ${
+                  service.id === 'it-training-career' ? 'w-full lg:w-1/2' : 'w-full'
+                }`}
             >
               {/* Background: Image */}
               {service.image ? (
                 <div
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                  className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
                   style={{ backgroundImage: `url(${service.image})` }}
                 />
               ) : (
@@ -88,6 +93,7 @@ const ServicePreview = () => {
                 </button>
               </div>
             </Link>
+            </div>
           ))}
         </div>
 

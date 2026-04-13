@@ -11,11 +11,13 @@ const Footer = () => {
     { name: "Career", path: "/career" },
   ];
 
-  // Map services data to include paths for footer links
-  const services = servicesData.map((service) => ({
-    name: service.title,
-    path: `/services/${service.id}`,
-  }));
+  // Map services data to include paths for footer links (excluding Network Infrastructure)
+  const services = servicesData
+    .filter(service => service.id !== 'network-infrastructure')
+    .map((service) => ({
+      name: service.title,
+      path: `/services/${service.id}`,
+    }));
 
   return (
     <footer className="bg-gray-950 text-gray-300 pt-16 pb-8">
