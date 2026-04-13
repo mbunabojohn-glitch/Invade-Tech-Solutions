@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { services as servicesData } from "../../data/servicesData";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -10,12 +11,11 @@ const Footer = () => {
     { name: "Career", path: "/career" },
   ];
 
-  const services = [
-    { name: "Managed Services", path: "/services/managed-services" },
-    { name: "Cloud Solutions", path: "/services/cloud" },
-    { name: "Cybersecurity", path: "/services/cybersecurity" },
-    { name: "IT Consulting", path: "/services/consulting" },
-  ];
+  // Map services data to include paths for footer links
+  const services = servicesData.map((service) => ({
+    name: service.title,
+    path: `/services/${service.id}`,
+  }));
 
   return (
     <footer className="bg-gray-950 text-gray-300 pt-16 pb-8">

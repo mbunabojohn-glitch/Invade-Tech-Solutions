@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import { services } from "../../data/servicesData";
 
-const ServicesPreview = () => {
+const ServicePreview = () => {
   // Scroll animation setup
   useEffect(() => {
     const observerOptions = {
@@ -24,41 +25,6 @@ const ServicesPreview = () => {
     return () => observer.disconnect();
   }, []);
 
-  const services = [
-    {
-      title: "Managed Services",
-      description:
-        "We deliver managed services through a team of experienced technical professionals, supported by a customer-focused approach that goes beyond typical industry standards.",
-      gradient: "from-blue-900 via-blue-800 to-cyan-900",
-      image: "/images/managed-services.jpg",
-      link: "/services/managed-services",
-    },
-    {
-      title: "IT and Hardware Support",
-      description:
-        "Comprehensive IT infrastructure support and hardware maintenance to keep your business running smoothly",
-      gradient: "from-gray-800 via-gray-900 to-blue-900",
-      image: "/images/it-support.jpg",
-      link: "/services/it-support",
-    },
-    {
-      title: "Cloud Solutions",
-      description:
-        "Scalable cloud infrastructure and migration services tailored to your business needs",
-      gradient: "from-cyan-900 via-blue-900 to-indigo-900",
-      image: "/images/cloud-solutions.jpg",
-      link: "/services/cloud",
-    },
-    {
-      title: "Cybersecurity",
-      description:
-        "Advanced security solutions to protect your data and infrastructure from evolving threats",
-      gradient: "from-purple-900 via-blue-900 to-cyan-900",
-      image: "/images/cybersecurity.jpg",
-      link: "/services/cybersecurity",
-    },
-  ];
-
   return (
     <section className="py-20 bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -75,22 +41,20 @@ const ServicesPreview = () => {
 
         {/* Services Grid: 2 columns on desktop */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-          {services.map((service, index) => (
+          {services.slice(0, 3).map((service) => (
             <Link
-              key={index}
-              to={service.link}
+              key={service.id}
+              to="#"
               className="group relative h-80 overflow-hidden rounded-lg scroll-animate fade-in"
             >
-              {/* Background: Gradient or Image */}
+              {/* Background: Image */}
               {service.image ? (
                 <div
                   className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
                   style={{ backgroundImage: `url(${service.image})` }}
                 />
               ) : (
-                <div
-                  className={`absolute inset-0 bg-gradient-to-br ${service.gradient} transition-transform duration-500 group-hover:scale-110`}
-                />
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-blue-800 to-cyan-900" />
               )}
 
               {/* Pattern Overlay for depth */}
@@ -127,10 +91,17 @@ const ServicesPreview = () => {
           ))}
         </div>
 
-        {/* Featured Service - Full Width Card */}
-        <div className="relative h-96 overflow-hidden rounded-lg scroll-animate scale-in">
-          {/* Background Gradient */}
-          <div className="absolute inset-0 bg-gradient-to-br from-indigo-900 via-blue-900 to-cyan-900" />
+        {/* Featured Service - Full Width Card (Network Infrastructure) */}
+        <div className="relative h-96 overflow-hidden rounded-lg scroll-animate scale-in mb-6">
+          {/* Background Image or Gradient */}
+          {services[3]?.image ? (
+            <div
+              className="absolute inset-0 bg-cover bg-center transition-transform duration-500"
+              style={{ backgroundImage: `url(${services[3].image})` }}
+            />
+          ) : (
+            <div className="absolute inset-0 bg-gradient-to-br from-indigo-900 via-blue-900 to-cyan-900" />
+          )}
 
           {/* Pattern Overlay */}
           <div
@@ -146,14 +117,13 @@ const ServicesPreview = () => {
           {/* Content */}
           <div className="relative h-full flex flex-col items-center justify-center p-8 text-center max-w-3xl mx-auto">
             <h3 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Network Infrastructure
+              {services[3]?.title}
             </h3>
             <p className="text-gray-200 text-lg mb-8 max-w-2xl">
-              Design, implementation, and optimization of robust network
-              solutions for seamless connectivity and performance
+              {services[3]?.description}
             </p>
             <Link
-              to="/services/network"
+              to="/services"
               className="bg-white text-gray-900 px-10 py-4 rounded-full font-semibold hover:bg-cyan-500 hover:text-white transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/50"
             >
               Learn More
@@ -188,4 +158,4 @@ const ServicesPreview = () => {
   );
 };
 
-export default ServicesPreview;
+export default ServicePreview;
