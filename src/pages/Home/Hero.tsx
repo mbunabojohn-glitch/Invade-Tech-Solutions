@@ -25,21 +25,21 @@ const Hero = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="max-w-3xl">
             {/* Main Headline - Animates first */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight opacity-0 animate-fade-in-up">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight animate-fade-in-up">
               Build Stronger, Faster,{" "}
               <span className="text-cyan-400">More Efficient Systems</span>
             </h1>
 
             {/* Description - Animates second */}
-            <p className="text-base sm:text-lg text-gray-300 mb-10 max-w-2xl opacity-0 animate-fade-in-up-delay-1">
+            <p className="text-base sm:text-lg text-gray-300 mb-10 max-w-2xl animate-fade-in-up-delay-1">
               We help businesses grow and operate efficiently through reliable
               IT solutions, expert consulting, and tailored technical support.
             </p>
 
             {/* CTA Buttons - Animates third */}
-            <div className="flex flex-col sm:flex-row gap-4 opacity-0 animate-fade-in-up-delay-2">
+            <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up-delay-2">
               <Link
-                to="/services"
+                to="/contact"
                 className="px-8 py-4 bg-cyan-500 text-white font-semibold rounded-lg hover:bg-cyan-600 transition-all duration-300 transform hover:scale-105 text-center shadow-lg shadow-cyan-500/30"
               >
                 Get Started

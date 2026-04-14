@@ -68,7 +68,7 @@ const Contact = () => {
     {
       icon: Mail,
       title: "Email",
-      value: "info@invadetech.com",
+      value: "Admin@invadetechsolutionz.com",
       description: "We'll respond within 24 hours",
     },
     {

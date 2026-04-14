@@ -1,7 +1,8 @@
-import { useState, type FormEvent } from 'react';
-import { Send, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
-import { useSubmitContactForm } from '../hooks/useApi';
-import { serviceCategories } from '../data/servicesData';
+import { useState, type FormEvent, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { Send, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
+import { useSubmitContactForm } from "../hooks/useApi";
+import { serviceCategories } from "../data/servicesData";
 
 interface FormData {
   name: string;
@@ -20,19 +21,42 @@ interface FormErrors {
 }
 
 const ContactForm = () => {
+  // useLocation allows us to access the state passed during navigation
+  // For instance, when coming from the Career page, state might hold { service, jobTitle, message }
+  const location = useLocation();
+  const state = location.state as {
+    service?: string;
+    jobTitle?: string;
+    message?: string;
+  } | null;
+
+  // Initialize the form state. We pre-fill fields if any data exists in the navigation state
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     phone: "",
     company: "",
-    service: "general",
-    message: "",
+    service: state?.service || "general", // Pre-fill service category if available
+    message: state?.message || "", // Pre-fill message body if available
   });
+
+  // Update form message automatically if the navigation state changes after initial load
+  // e.g., if the user clicks a different "Apply Now" button but the form is already open
+  useEffect(() => {
+    if (state) {
+      setFormData((prev) => ({
+        ...prev,
+        service: state.service || prev.service,
+        message: state.message || (state.jobTitle ? `I would like to apply for the ${state.jobTitle} position.` : prev.message),
+      }));
+    }
+  }, [state]);
 
   const [errors, setErrors] = useState<FormErrors>({});
   const [showSuccess, setShowSuccess] = useState(false);
 
-  // TanStack Query mutation
+  // Use the custom React Query mutation to handle form submission gracefully
+  // This provides 'isPending', 'isError', and 'error' states automatically
   const {
     mutate: submitForm,
     isPending,
@@ -40,7 +64,7 @@ const ContactForm = () => {
     error,
   } = useSubmitContactForm();
 
-  // Validation function
+  // Validation function checks required fields before submitting
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
 
@@ -51,7 +75,7 @@ const ContactForm = () => {
       newErrors.name = "Name must be at least 2 characters";
     }
 
-    // Email validation
+    // Email validation using a standard regex
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email.trim()) {
       newErrors.email = "Email is required";
@@ -59,9 +83,9 @@ const ContactForm = () => {
       newErrors.email = "Please enter a valid email address";
     }
 
-    // Phone validation (optional but validate if provided)
+    // Phone validation (optional, but validates format if a number is provided)
     if (formData.phone && !/^[-+\d\s()]*$/.test(formData.phone)) {
-      newErrors.phone = 'Please enter a valid phone number';
+      newErrors.phone = "Please enter a valid phone number";
     }
 
     // Message validation
@@ -72,10 +96,10 @@ const ContactForm = () => {
     }
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    return Object.keys(newErrors).length === 0; // Return true if no errors were found
   };
 
-  // Handle input changes
+  // Handle generic input changes for text, textarea, and select fields
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -84,26 +108,26 @@ const ContactForm = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // Clear error for this field when user starts typing
+    // Clear the error for this specific field once the user starts typing to improve UX
     if (errors[name as keyof FormErrors]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
   };
 
-  // Handle form submission
+  // Handle the form submission event
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent the default browser form submission (page reload)
 
-    // Validate form
+    // Run validation and stop execution if there are errors
     if (!validateForm()) {
       return;
     }
 
-    // Submit form using TanStack Query
+    // Submit form using the TanStack Query mutation hook
     submitForm(formData, {
       onSuccess: () => {
         setShowSuccess(true);
-        // Reset form
+        // Reset form to blank/default state after successful submission
         setFormData({
           name: "",
           email: "",
@@ -114,7 +138,7 @@ const ContactForm = () => {
         });
         setErrors({});
 
-        // Hide success message after 5 seconds
+        // Automatically hide the success message after 5 seconds
         setTimeout(() => {
           setShowSuccess(false);
         }, 5000);
@@ -283,6 +307,7 @@ const ContactForm = () => {
                 {category.label}
               </option>
             ))}
+            <option value="career-application">Career Application</option>
             <option value="other">Other</option>
           </select>
         </div>

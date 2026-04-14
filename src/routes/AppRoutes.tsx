@@ -2,6 +2,11 @@ import { Routes, Route } from "react-router-dom";
 import Home from "../pages/Home/Home";
 import About from "../pages/Home/About";
 import Contact from "../pages/Contact";
+import Services from "../pages/Services";
+import Career from "../pages/Career";
+import PrivacyPolicy from "../pages/PrivacyPolicy";
+import TermsOfService from "../pages/TermsOfService";
+import CookiePolicy from "../pages/CookiePolicy";
 
 const AppRoutes = () => {
   return (
@@ -9,23 +14,11 @@ const AppRoutes = () => {
       <Route path="/" element={<Home />} />
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
-      {/* Placeholder routes - to be built later */}
-      <Route
-        path="/services"
-        element={
-          <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center text-2xl">
-            Services Page - Coming Soon
-          </div>
-        }
-      />
-      <Route
-        path="/career"
-        element={
-          <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center text-2xl">
-            Career Page - Coming Soon
-          </div>
-        }
-      />
+      <Route path="/services" element={<Services />} />
+      <Route path="/career" element={<Career />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/terms-of-service" element={<TermsOfService />} />
+      <Route path="/cookie-policy" element={<CookiePolicy />} />
     </Routes>
   );
 };

@@ -149,8 +149,8 @@ const About = () => {
               </div>
               <p className="text-gray-300 text-lg mb-8">
                 Excellence, Commitment and Dependability are the very core of
-                Invade Tech Solutions and a key element of our vision and way of doing
-                business.
+                Invade Tech Solutions and a key element of our vision and way of
+                doing business.
               </p>
 
               <div className="space-y-6">
@@ -211,8 +211,8 @@ const About = () => {
                 existing challenges says we are more than capable to take on
                 seemingly unattainable tasks. From mobile and web applications
                 to custom applications and business productivity solutions,
-                Invade Tech Solutions will design, develop and support custom IT solutions
-                to meet your business needs.
+                Invade Tech Solutions will design, develop and support custom IT
+                solutions to meet your business needs.
               </p>
 
               <p className="text-gray-300 text-lg mb-8 leading-relaxed">
@@ -302,14 +302,14 @@ const About = () => {
             technology solutions.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button 
-              onClick={() => navigate('/contact')}
+            <button
+              onClick={() => navigate("/contact")}
               className="bg-cyan-500 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-cyan-600 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30"
             >
               Get Started
             </button>
-            <button 
-              onClick={() => navigate('/contact')}
+            <button
+              onClick={() => navigate("/contact")}
               className="bg-transparent border-2 border-cyan-500 text-cyan-500 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-cyan-500 hover:text-white transition-all duration-300 transform hover:scale-105"
             >
               Contact Us
