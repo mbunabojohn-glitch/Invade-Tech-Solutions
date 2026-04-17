@@ -150,7 +150,10 @@ const Services = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* 
+        CTA Section: Bottom of the page encouragement to contact the company
+        - bg-gray-950: Slightly darker background than the rest of the page for contrast
+      */}
       <section className="py-20 bg-gray-950">
         <div className="max-w-5xl mx-auto px-4 text-center scroll-animate fade-in">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
@@ -160,9 +163,14 @@ const Services = () => {
             Contact us today for a consultation and let us help you build 
             a more efficient and secure business environment.
           </p>
+          {/* 
+            Get Started Button: 
+            - inline-flex: Allows text-center on parent to center the button
+            - space-x-2: Space between text and icon
+          */}
           <button
             onClick={handleGetStarted}
-            className="bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 flex items-center space-x-2 hover:shadow-lg hover:shadow-cyan-500/50"
+            className="inline-flex items-center space-x-2 bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/50"
           >
             <span>Get Started Now</span>
             <ArrowRight className="w-5 h-5" />

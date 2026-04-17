@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import ContactForm from "../../components/ContactForm";
 
@@ -7,6 +8,7 @@ interface ScrollAnimationState {
 }
 
 const Contact = () => {
+  const location = useLocation();
   const [animated, setAnimated] = useState<ScrollAnimationState>({});
   const heroRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
@@ -168,7 +170,7 @@ const Contact = () => {
                 <p className="text-gray-400 mb-8">
                   Fill out the form below and we'll get back to you shortly.
                 </p>
-                <ContactForm />
+                <ContactForm key={location.key} />
               </div>
             </div>
 

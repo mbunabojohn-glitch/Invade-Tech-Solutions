@@ -15,9 +15,10 @@ interface ApiResponse<T> {
   error?: string;
 }
 
-// Example API service functions
+// API Service Object: Centralizes all backend communication
+// Each method uses the shared apiClient for consistent headers and error handling
 export const apiService = {
-  // Auth endpoints
+  // --- AUTHENTICATION ---
   login: async (email: string, password: string) => {
     const response = await apiClient.post("/auth/login", { email, password });
     return response.data;
@@ -28,7 +29,7 @@ export const apiService = {
     return response.data;
   },
 
-  // Contact form endpoints
+  // --- CONTACT FORM ---
   submitContactForm: async (
     data: ContactFormData,
   ): Promise<ApiResponse<unknown>> => {
@@ -36,7 +37,7 @@ export const apiService = {
     return response.data;
   },
 
-  // User endpoints
+  // --- USER PROFILE ---
   getUser: async () => {
     const response = await apiClient.get("/user/profile");
     return response.data;
@@ -47,7 +48,7 @@ export const apiService = {
     return response.data;
   },
 
-  // Service endpoints
+  // --- SERVICES ---
   getServices: async () => {
     const response = await apiClient.get("/services");
     return response.data;

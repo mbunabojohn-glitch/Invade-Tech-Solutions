@@ -29,10 +29,12 @@ interface AppState {
   clearError: () => void;
 }
 
+// Global State Management with Zustand
+// Persist: Automatically saves selected state to LocalStorage for persistence across reloads
 export const useAppStore = create<AppState>()(
   persist(
     (set) => ({
-      // Initial state
+      // --- INITIAL STATE ---
       token: null,
       user: null,
       isAuthenticated: false,
@@ -40,16 +42,10 @@ export const useAppStore = create<AppState>()(
       error: null,
       theme: "light",
 
-      // Actions
+      // --- AUTH ACTIONS ---
       setToken: (token) => set({ token, isAuthenticated: !!token }),
 
       setUser: (user) => set({ user }),
-
-      setIsLoading: (isLoading) => set({ isLoading }),
-
-      setError: (error) => set({ error }),
-
-      setTheme: (theme) => set({ theme }),
 
       logout: () =>
         set({
@@ -58,10 +54,18 @@ export const useAppStore = create<AppState>()(
           isAuthenticated: false,
         }),
 
+      // --- UI ACTIONS ---
+      setIsLoading: (isLoading) => set({ isLoading }),
+
+      setError: (error) => set({ error }),
+
       clearError: () => set({ error: null }),
+
+      setTheme: (theme) => set({ theme }),
     }),
     {
-      name: "app-store", // localStorage key
+      name: "app-store", // localStorage key used for persistence
+      // partialize: Defines exactly which pieces of state should be saved to LocalStorage
       partialize: (state) => ({
         token: state.token,
         user: state.user,

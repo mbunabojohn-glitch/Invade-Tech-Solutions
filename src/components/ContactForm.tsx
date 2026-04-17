@@ -1,4 +1,4 @@
-import { useState, type FormEvent, useEffect } from "react";
+import { useState, type FormEvent } from "react";
 import { useLocation } from "react-router-dom";
 import { Send, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import { useSubmitContactForm } from "../hooks/useApi";
@@ -37,20 +37,9 @@ const ContactForm = () => {
     phone: "",
     company: "",
     service: state?.service || "general", // Pre-fill service category if available
-    message: state?.message || "", // Pre-fill message body if available
+    // Pre-fill message body if available, otherwise check for a jobTitle to generate a custom application message
+    message: state?.message || (state?.jobTitle ? `I would like to apply for the ${state.jobTitle} position.` : ""),
   });
-
-  // Update form message automatically if the navigation state changes after initial load
-  // e.g., if the user clicks a different "Apply Now" button but the form is already open
-  useEffect(() => {
-    if (state) {
-      setFormData((prev) => ({
-        ...prev,
-        service: state.service || prev.service,
-        message: state.message || (state.jobTitle ? `I would like to apply for the ${state.jobTitle} position.` : prev.message),
-      }));
-    }
-  }, [state]);
 
   const [errors, setErrors] = useState<FormErrors>({});
   const [showSuccess, setShowSuccess] = useState(false);

@@ -44,64 +44,22 @@ const ServicePreview = () => {
           </p>
         </div>
 
-        {/* Top Services Row: 3 columns on desktop */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
-          {services.slice(0, 3).map((service: Service) => (
-            <div key={service.id}>
-              <Link
-                to="/services"
-                className="group relative h-80 overflow-hidden rounded-lg scroll-animate fade-in block w-full"
-              >
-                {/* Background: Image */}
-                {service.image ? (
-                  <div
-                    className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-                    style={{ backgroundImage: `url(${service.image})` }}
-                  />
-                ) : (
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-blue-800 to-cyan-900" />
-                )}
-
-                {/* Pattern Overlay for depth */}
-                <div
-                  className="absolute inset-0 opacity-10"
-                  style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-                  }}
-                />
-
-                {/* Dark Overlay */}
-                <div className="absolute inset-0 bg-black/60 group-hover:bg-black/40 transition-all duration-300" />
-
-                {/* Content */}
-                <div className="relative h-full flex flex-col items-center justify-center p-8 text-center">
-                  {/* Title with Border Frame */}
-                  <div className="border-2 border-white px-8 py-4 mb-6 group-hover:border-cyan-500 group-hover:shadow-lg group-hover:shadow-cyan-500/50 transition-all duration-300">
-                    <h3 className="text-2xl md:text-3xl font-bold text-white group-hover:text-cyan-500 transition-colors">
-                      {service.title}
-                    </h3>
-                  </div>
-
-                  {/* Description - Shows on hover */}
-                  <p className="text-gray-200 text-sm md:text-base mb-6 max-w-md opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-                    {service.description}
-                  </p>
-
-                  {/* Learn More Button */}
-                  <button className="bg-white text-gray-900 px-8 py-3 rounded-full font-semibold opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 hover:bg-cyan-500 hover:text-white">
-                    Learn More
-                  </button>
-                </div>
-              </Link>
-            </div>
-          ))}
-        </div>
-
-        {/* Bottom Services Row: Centralized */}
+        {/* 
+          Services Grid: Responsive layout for all services 
+          - flex-wrap: Allows cards to move to the next row as screen size changes
+          - justify-center: Ensures that any cards on a final row that don't fill the full width are centered
+          - gap-6: Adds 24px spacing between cards
+        */}
         <div className="flex flex-wrap justify-center gap-6">
-          {services.slice(3).map((service: Service) => (
+          {services.map((service: Service) => (
             <div
               key={service.id}
+              /* 
+                Responsive widths:
+                - w-full: 1 column on mobile
+                - md:w-[calc(50%-12px)]: 2 columns on tablet (50% minus half the gap)
+                - lg:w-[calc(33.333%-16px)]: 3 columns on desktop (33.3% minus two-thirds of the gap)
+              */
               className="w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
             >
               <Link
