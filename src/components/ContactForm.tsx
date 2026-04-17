@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { useLocation } from "react-router-dom";
-import { Send, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
+import { Send, Loader2, AlertCircle } from "lucide-react";
+import { toast } from "sonner";
 import { useSubmitContactForm } from "../hooks/useApi";
 import { serviceCategories } from "../data/servicesData";
 
@@ -42,16 +43,9 @@ const ContactForm = () => {
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
-  const [showSuccess, setShowSuccess] = useState(false);
 
   // Use the custom React Query mutation to handle form submission gracefully
-  // This provides 'isPending', 'isError', and 'error' states automatically
-  const {
-    mutate: submitForm,
-    isPending,
-    isError,
-    error,
-  } = useSubmitContactForm();
+  const { mutateAsync: submitForm, isPending } = useSubmitContactForm();
 
   // Validation function checks required fields before submitting
   const validateForm = (): boolean => {
@@ -104,7 +98,7 @@ const ContactForm = () => {
   };
 
   // Handle the form submission event
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent the default browser form submission (page reload)
 
     // Run validation and stop execution if there are errors
@@ -112,63 +106,36 @@ const ContactForm = () => {
       return;
     }
 
-    // Submit form using the TanStack Query mutation hook
-    submitForm(formData, {
-      onSuccess: () => {
-        setShowSuccess(true);
-        // Reset form to blank/default state after successful submission
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          company: "",
-          service: "general",
-          message: "",
-        });
-        setErrors({});
+    const loadingToast = toast.loading("Sending your message...");
 
-        // Automatically hide the success message after 5 seconds
-        setTimeout(() => {
-          setShowSuccess(false);
-        }, 5000);
-      },
-    });
+    try {
+      await submitForm(formData);
+      toast.dismiss(loadingToast);
+      toast.success("Message sent successfully!", {
+        description: "We'll get back to you within 24 hours.",
+        duration: 5000,
+      });
+
+      // Reset form to blank/default state after successful submission
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        company: "",
+        service: "general",
+        message: "",
+      });
+      setErrors({});
+    } catch (error: any) {
+      toast.dismiss(loadingToast);
+      toast.error("Failed to send message", {
+        description: error?.message || "Something went wrong. Please try again later.",
+      });
+    }
   };
 
   return (
     <div className="bg-gray-950 rounded-lg p-8 border border-gray-800 shadow-xl">
-      {/* Success Message */}
-      {showSuccess && (
-        <div className="mb-6 p-4 bg-green-500/10 border border-green-500/30 rounded-lg flex items-start space-x-3 animate-in fade-in">
-          <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
-          <div>
-            <h4 className="text-green-400 font-semibold mb-1">
-              Message Sent Successfully!
-            </h4>
-            <p className="text-green-300 text-sm">
-              Thank you for contacting us. We'll get back to you within 24
-              hours.
-            </p>
-          </div>
-        </div>
-      )}
-
-      {/* Error Message */}
-      {isError && (
-        <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-lg flex items-start space-x-3">
-          <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
-          <div>
-            <h4 className="text-red-400 font-semibold mb-1">
-              Submission Failed
-            </h4>
-            <p className="text-red-300 text-sm">
-              {error?.message ||
-                "Something went wrong. Please try again later."}
-            </p>
-          </div>
-        </div>
-      )}
-
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Name Input */}
         <div>
