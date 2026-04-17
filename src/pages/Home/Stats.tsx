@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface StatItem {
   id: number;
@@ -9,7 +10,19 @@ interface StatItem {
 }
 
 const Stats = () => {
+  const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
+
+  const handlePartnerClick = () => {
+    navigate("/contact", {
+      state: {
+        service: "Partnership Opportunity",
+        message:
+          "I'm interested in partnering with Invade Tech Solutions after reviewing your track record.",
+        source: "track-record-section",
+      },
+    });
+  };
 
   const stats: StatItem[] = [
     { id: 1, label: "Years of Excellence", value: 6, suffix: "+", prefix: "" },
@@ -131,7 +144,10 @@ const Stats = () => {
             Join hundreds of businesses who trust us with their IT
             infrastructure
           </p>
-          <button className="bg-cyan-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-cyan-600 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30">
+          <button
+            onClick={handlePartnerClick}
+            className="bg-cyan-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-cyan-600 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30"
+          >
             Partner With Us
           </button>
         </div>

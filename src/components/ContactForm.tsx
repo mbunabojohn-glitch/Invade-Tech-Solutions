@@ -296,6 +296,9 @@ const ContactForm = () => {
                 {category.label}
               </option>
             ))}
+            <option value="Partnership Opportunity">
+              Partnership Opportunity
+            </option>
             <option value="career-application">Career Application</option>
             <option value="other">Other</option>
           </select>

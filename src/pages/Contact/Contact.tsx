@@ -9,6 +9,11 @@ interface ScrollAnimationState {
 
 const Contact = () => {
   const location = useLocation();
+  const prefilledData = location.state as {
+    service?: string;
+    message?: string;
+    source?: string;
+  } | null;
   const [animated, setAnimated] = useState<ScrollAnimationState>({});
   const heroRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
@@ -170,6 +175,16 @@ const Contact = () => {
                 <p className="text-gray-400 mb-8">
                   Fill out the form below and we'll get back to you shortly.
                 </p>
+
+                {prefilledData?.source === "track-record-section" && (
+                  <div className="bg-cyan-500/10 border-l-4 border-cyan-500 p-4 mb-6 animate-in fade-in">
+                    <p className="text-cyan-400">
+                      💼 <strong>Partnership Inquiry</strong> - We're excited to
+                      discuss collaboration opportunities with you!
+                    </p>
+                  </div>
+                )}
+
                 <ContactForm key={location.key} />
               </div>
             </div>
