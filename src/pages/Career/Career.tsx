@@ -109,7 +109,7 @@ const Career = () => {
           <img
             src="/images/career-Img.jpg"
             alt="Career Background"
-            className="w-full h-full object-cover opacity-150"
+            className="w-full h-full object-cover opacity-40"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-gray-900/80 via-gray-900/70 to-gray-900"></div>
         </div>

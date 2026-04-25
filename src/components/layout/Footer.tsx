@@ -131,6 +131,14 @@ const Footer = () => {
                   Contact
                 </Link>
               </li>
+              <li>
+                <Link
+                  to="/career"
+                  className="text-gray-400 hover:text-cyan-500 transition-colors"
+                >
+                  Careers
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -138,11 +146,46 @@ const Footer = () => {
           <div>
             <h3 className="text-white font-bold text-lg mb-4">Our Services</h3>
             <ul className="space-y-2">
-              <li className="text-gray-400">IT & Hardware Support</li>
-              <li className="text-gray-400">Cloud Infrastructure</li>
-              <li className="text-gray-400">Hardware Procurement</li>
-              <li className="text-gray-400">IT Training</li>
-              <li className="text-gray-400">IT/Project Outsourcing</li>
+              <li>
+                <Link
+                  to="/services"
+                  className="text-gray-400 hover:text-cyan-500 transition-colors"
+                >
+                  IT & Hardware Support
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/services"
+                  className="text-gray-400 hover:text-cyan-500 transition-colors"
+                >
+                  Cloud Infrastructure
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/services"
+                  className="text-gray-400 hover:text-cyan-500 transition-colors"
+                >
+                  Hardware Procurement
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/services"
+                  className="text-gray-400 hover:text-cyan-500 transition-colors"
+                >
+                  IT Training
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/services"
+                  className="text-gray-400 hover:text-cyan-500 transition-colors"
+                >
+                  IT/Project Outsourcing
+                </Link>
+              </li>
             </ul>
           </div>
 

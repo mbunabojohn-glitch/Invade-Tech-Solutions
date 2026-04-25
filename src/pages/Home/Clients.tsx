@@ -1,28 +1,13 @@
 import { useEffect } from "react";
 import { CheckCircle } from "lucide-react";
-
-const clients = [
-  {
-    id: "livespot360",
-    name: "Livespot360",
-    industry: "Marketing & Events",
-    logo: "/images/livespot-Img.jpg",
-  },
-  {
-    id: "standpoint-ng",
-    name: "Standpoint ng",
-    industry: "Digital Agency",
-    logo: "/images/standpoint-Img.png",
-  },
-  {
-    id: "intervene-k12",
-    name: "Intervene K-12",
-    industry: "Education Technology",
-    logo: "/images/Intervene-Img.jpg",
-  },
-];
+import { useClients } from "../../hooks/useApi";
+import { clients as staticClients } from "../../data/clientsData";
 
 const Clients = () => {
+  const { data: dynamicClients } = useClients();
+  // Only use dynamic clients if they are complete (at least as many as static clients)
+  const clients = Array.isArray(dynamicClients) && dynamicClients.length >= staticClients.length ? dynamicClients : staticClients;
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {

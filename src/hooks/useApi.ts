@@ -6,73 +6,19 @@ import {
   type UseMutationOptions,
 } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { apiService, type ContactFormData } from "../lib/api";
+import { apiService, type ContactFormData, type Service, type Client } from "../lib/api";
 
-// Hook for fetching user profile
-// Uses React Query's useQuery to fetch data and cache it automatically.
-export const useUserProfile = (
-  options?: UseQueryOptions<unknown, AxiosError>,
-) => {
-  return useQuery({
-    queryKey: ["user", "profile"], // Unique key for caching this specific request
-    queryFn: () => apiService.getUser(), // The actual API call function
-    ...options, // Allow overriding default options
-  });
-};
+// --- AUTHENTICATION & PROFILE ---
 
-// Hook for fetching services
-// Caches the list of services for 5 minutes to avoid redundant network requests.
-export const useServices = (options?: UseQueryOptions<unknown, AxiosError>) => {
-  return useQuery({
-    queryKey: ["services"],
-    queryFn: () => apiService.getServices(),
-    staleTime: 5 * 60 * 1000, // Data remains fresh for 5 minutes
-    ...options,
-  });
-};
-
-// Hook for fetching a single service
-export const useService = (
-  id: string | undefined,
-  options?: UseQueryOptions<unknown, AxiosError>,
-) => {
-  return useQuery({
-    queryKey: ["services", id],
-    queryFn: () => apiService.getServiceById(id!),
-    enabled: !!id, // Only run the query if an ID is actually provided
-    ...options,
-  });
-};
-
-// Hook for updating user profile
-// Uses useMutation for operations that change data (POST/PUT/PATCH).
-export const useUpdateUser = (
+export const useRegister = (
   options?: UseMutationOptions<unknown, AxiosError, Record<string, unknown>>,
 ) => {
-  const queryClient = useQueryClient();
-
   return useMutation({
-    mutationFn: (data) => apiService.updateUser(data),
-    onSuccess: () => {
-      // Invalidate the profile query to trigger a refetch with the updated data
-      queryClient.invalidateQueries({ queryKey: ["user", "profile"] });
-    },
+    mutationFn: (data) => apiService.register(data),
     ...options,
   });
 };
 
-// Hook for submitting contact form
-export const useSubmitContactForm = (
-  options?: UseMutationOptions<unknown, AxiosError, ContactFormData>,
-) => {
-  return useMutation({
-    // The function that performs the API POST request with the form data
-    mutationFn: (data: ContactFormData) => apiService.submitContactForm(data),
-    ...options,
-  });
-};
-
-// Hook for login
 export const useLogin = (
   options?: UseMutationOptions<
     unknown,
@@ -91,7 +37,6 @@ export const useLogin = (
   });
 };
 
-// Hook for logout
 export const useLogout = (
   options?: UseMutationOptions<unknown, AxiosError>,
 ) => {
@@ -101,6 +46,221 @@ export const useLogout = (
     mutationFn: () => apiService.logout(),
     onSuccess: () => {
       queryClient.clear();
+    },
+    ...options,
+  });
+};
+
+export const useUserProfile = (
+  options?: UseQueryOptions<unknown, AxiosError>,
+) => {
+  return useQuery({
+    queryKey: ["user", "profile"],
+    queryFn: () => apiService.getUser(),
+    ...options,
+  });
+};
+
+export const useUpdateUser = (
+  options?: UseMutationOptions<unknown, AxiosError, Record<string, unknown>>,
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data) => apiService.updateUser(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["user", "profile"] });
+    },
+    ...options,
+  });
+};
+
+// --- CONTACT FORM & LEADS ---
+
+export const useSubmitContactForm = (
+  options?: UseMutationOptions<unknown, AxiosError, ContactFormData>,
+) => {
+  return useMutation({
+    mutationFn: (data: ContactFormData) => apiService.submitContactForm(data),
+    ...options,
+  });
+};
+
+export const useInquiries = (options?: UseQueryOptions<unknown, AxiosError>) => {
+  return useQuery({
+    queryKey: ["inquiries"],
+    queryFn: () => apiService.getInquiries(),
+    ...options,
+  });
+};
+
+export const useInquiry = (
+  id: string | undefined,
+  options?: UseQueryOptions<unknown, AxiosError>,
+) => {
+  return useQuery({
+    queryKey: ["inquiries", id],
+    queryFn: () => apiService.getInquiryById(id!),
+    enabled: !!id,
+    ...options,
+  });
+};
+
+export const useUpdateInquiryStatus = (
+  options?: UseMutationOptions<unknown, AxiosError, { id: string; status: string }>,
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, status }) => apiService.updateInquiryStatus(id, status),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["inquiries"] });
+    },
+    ...options,
+  });
+};
+
+export const useDeleteInquiry = (
+  options?: UseMutationOptions<unknown, AxiosError, string>,
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id) => apiService.deleteInquiry(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["inquiries"] });
+    },
+    ...options,
+  });
+};
+
+// --- SERVICES ---
+
+export const useServices = (options?: UseQueryOptions<Service[], AxiosError>) => {
+  return useQuery({
+    queryKey: ["services"],
+    queryFn: () => apiService.getServices(),
+    staleTime: 5 * 60 * 1000,
+    ...options,
+  });
+};
+
+export const useService = (
+  id: string | undefined,
+  options?: UseQueryOptions<Service, AxiosError>,
+) => {
+  return useQuery({
+    queryKey: ["services", id],
+    queryFn: () => apiService.getServiceById(id!),
+    enabled: !!id,
+    ...options,
+  });
+};
+
+export const useCreateService = (
+  options?: UseMutationOptions<unknown, AxiosError, Partial<Service>>,
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data) => apiService.createService(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["services"] });
+    },
+    ...options,
+  });
+};
+
+export const useUpdateService = (
+  options?: UseMutationOptions<unknown, AxiosError, { id: string; data: Partial<Service> }>,
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, data }) => apiService.updateService(id, data),
+    onSuccess: (_, { id }) => {
+      queryClient.invalidateQueries({ queryKey: ["services"] });
+      queryClient.invalidateQueries({ queryKey: ["services", id] });
+    },
+    ...options,
+  });
+};
+
+export const useDeleteService = (
+  options?: UseMutationOptions<unknown, AxiosError, string>,
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id) => apiService.deleteService(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["services"] });
+    },
+    ...options,
+  });
+};
+
+// --- CLIENT PORTFOLIO ---
+
+export const useClients = (options?: UseQueryOptions<Client[], AxiosError>) => {
+  return useQuery({
+    queryKey: ["clients"],
+    queryFn: () => apiService.getClients(),
+    staleTime: 10 * 60 * 1000,
+    ...options,
+  });
+};
+
+export const useClient = (
+  id: string | undefined,
+  options?: UseQueryOptions<Client, AxiosError>,
+) => {
+  return useQuery({
+    queryKey: ["clients", id],
+    queryFn: () => apiService.getClientById(id!),
+    enabled: !!id,
+    ...options,
+  });
+};
+
+export const useCreateClient = (
+  options?: UseMutationOptions<unknown, AxiosError, Partial<Client>>,
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data) => apiService.createClient(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["clients"] });
+    },
+    ...options,
+  });
+};
+
+export const useUpdateClient = (
+  options?: UseMutationOptions<unknown, AxiosError, { id: string; data: Partial<Client> }>,
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, data }) => apiService.updateClient(id, data),
+    onSuccess: (_, { id }) => {
+      queryClient.invalidateQueries({ queryKey: ["clients"] });
+      queryClient.invalidateQueries({ queryKey: ["clients", id] });
+    },
+    ...options,
+  });
+};
+
+export const useDeleteClient = (
+  options?: UseMutationOptions<unknown, AxiosError, string>,
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id) => apiService.deleteClient(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["clients"] });
     },
     ...options,
   });

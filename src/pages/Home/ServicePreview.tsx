@@ -1,12 +1,16 @@
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { services as staticServices } from "../../data/servicesData";
-import type { Service } from "../../data/servicesData";
+import { type Service as StaticService } from "../../data/servicesData";
+import { type Service as ApiService } from "../../lib/api";
 import { useServices } from "../../hooks/useApi";
 
 const ServicePreview = () => {
   const { data: dynamicServices } = useServices();
-  const services = (dynamicServices as Service[]) || staticServices;
+  
+  // Ensure services is always an array to prevent crashes if API returns unexpected data
+  // Only use dynamic services if they are complete (at least as many as static services)
+  const services = Array.isArray(dynamicServices) && dynamicServices.length >= staticServices.length ? dynamicServices : staticServices;
 
   // Scroll animation setup
   useEffect(() => {
@@ -51,7 +55,7 @@ const ServicePreview = () => {
           - gap-6: Adds 24px spacing between cards
         */}
         <div className="flex flex-wrap justify-center gap-6">
-          {services.map((service: Service) => (
+          {services.map((service: ApiService | StaticService) => (
             <div
               key={service.id}
               /* 
