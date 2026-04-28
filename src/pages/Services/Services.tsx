@@ -5,6 +5,7 @@ import { CheckCircle, ArrowRight } from "lucide-react";
 import { useServices } from "../../hooks/useApi";
 import { getIconComponent, type Service as ApiService } from "../../lib/api";
 import { type Service as StaticService } from "../../data/servicesData";
+import { resolveServiceImage } from "../../lib/image-utils";
 
 const Services = () => {
   const navigate = useNavigate();
@@ -62,7 +63,7 @@ const Services = () => {
         {/* Background Image */}
         <div className="absolute inset-0">
           <img
-            src="/images/service-Img.jpg"
+            src={resolveServiceImage('service-Img.jpg', 'hero')}
             alt="Services Background"
             className="w-full h-full object-cover opacity-40"
           />
@@ -101,17 +102,20 @@ const Services = () => {
                     <div className="relative group">
                       <div className="absolute -inset-4 bg-cyan-500/20 rounded-xl blur-xl group-hover:bg-cyan-500/30 transition-all duration-500"></div>
                       <div className="relative overflow-hidden rounded-2xl border border-gray-800 bg-gray-900 shadow-2xl">
-                        {service.image ? (
-                          <img 
-                            src={service.image} 
-                            alt={service.title}
-                            className="w-full h-[400px] object-cover transition-transform duration-700 group-hover:scale-105"
-                          />
-                        ) : (
-                          <div className="w-full h-[400px] flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900">
-                            <Icon className="w-32 h-32 text-cyan-500 opacity-50" />
-                          </div>
-                        )}
+                        {(() => {
+                          const imageUrl = resolveServiceImage(service.image, service.id);
+                          return imageUrl ? (
+                            <img 
+                              src={imageUrl} 
+                              alt={service.title}
+                              className="w-full h-[400px] object-cover transition-transform duration-700 group-hover:scale-105"
+                            />
+                          ) : (
+                            <div className="w-full h-[400px] flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900">
+                              <Icon className="w-32 h-32 text-cyan-500 opacity-50" />
+                            </div>
+                          );
+                        })()}
                         <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-60"></div>
                       </div>
                     </div>

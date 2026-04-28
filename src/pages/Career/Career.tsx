@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Briefcase, Users, Star, Coffee, ShieldCheck, MapPin, Clock, ArrowRight } from "lucide-react";
+import { resolveServiceImage } from "../../lib/image-utils";
 
 const Career = () => {
   const navigate = useNavigate();
@@ -107,7 +108,7 @@ const Career = () => {
         {/* Background Image */}
         <div className="absolute inset-0">
           <img
-            src="/images/career-Img.jpg"
+            src={resolveServiceImage('career-Img.jpg', 'career', 'hero')}
             alt="Career Background"
             className="w-full h-full object-cover opacity-40"
           />

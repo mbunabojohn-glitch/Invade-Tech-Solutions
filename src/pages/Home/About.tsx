@@ -1,6 +1,7 @@
 import { Target, Zap, CheckCircle } from "lucide-react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { resolveServiceImage } from "../../lib/image-utils";
 
 const About = () => {
   const navigate = useNavigate();
@@ -75,7 +76,7 @@ const About = () => {
         {/* Background Image */}
         <div className="absolute inset-0">
           <img
-            src="/images/about/circuit-board-hero.jpg"
+            src={resolveServiceImage('about/circuit-board-hero.jpg', 'about-hero', 'hero')}
             alt="Technology Background"
             className="w-full h-full object-cover opacity-40"
           />
@@ -126,7 +127,7 @@ const About = () => {
             <div className="relative scroll-animate slide-left">
               <div className="rounded-lg overflow-hidden shadow-2xl border border-gray-800">
                 <img
-                  src="/images/about/technician-working.jpg"
+                  src={resolveServiceImage('about/technician-working.jpg', 'about-tech', 'other')}
                   alt="IT Support Professional"
                   className="w-full h-[400px] object-cover"
                 />
@@ -171,7 +172,7 @@ const About = () => {
             <div className="relative lg:mt-12 scroll-animate slide-left">
               <div className="rounded-lg overflow-hidden shadow-2xl border border-gray-800">
                 <img
-                  src="/images/about/server-room.jpg"
+                  src={resolveServiceImage('about/server-room.jpg', 'about-server', 'other')}
                   alt="Network Infrastructure"
                   className="w-full h-[500px] object-cover"
                 />
@@ -189,7 +190,7 @@ const About = () => {
             <div className="relative order-2 lg:order-1 scroll-animate slide-right">
               <div className="rounded-lg overflow-hidden shadow-2xl border border-gray-800">
                 <img
-                  src="/images/cybersecurity.jpg"
+                  src={resolveServiceImage('cybersecurity.jpg', 'about-cyber', 'other')}
                   alt="IT Professional"
                   className="w-full h-[500px] object-cover"
                 />

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { CheckCircle } from "lucide-react";
 import { useClients } from "../../hooks/useApi";
 import { clients as staticClients } from "../../data/clientsData";
+import { resolveServiceImage } from "../../lib/image-utils";
 
 const Clients = () => {
   const { data: dynamicClients } = useClients();
@@ -51,7 +52,7 @@ const Clients = () => {
               {/* Logo/Image Header - Set to cover the layout */}
               <div className="h-56 overflow-hidden relative">
                 <img
-                  src={client.logo}
+                  src={resolveServiceImage(client.logo, client.id, 'client')}
                   alt={`${client.name} logo`}
                   className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700 transform group-hover:scale-110"
                   onError={(e) => {

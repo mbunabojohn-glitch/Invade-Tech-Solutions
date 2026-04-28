@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import ContactForm from "../../components/ContactForm";
+import { resolveServiceImage } from "../../lib/image-utils";
 
 interface ScrollAnimationState {
   [key: string]: boolean;
@@ -98,7 +99,7 @@ const Contact = () => {
         {/* Background Image */}
         <div className="absolute inset-0">
           <img
-            src="/images/Contact-Img.jpg"
+            src={resolveServiceImage('Contact-Img.jpg', 'contact', 'hero')}
             alt="Contact Background"
             className="w-full h-full object-cover opacity-40"
           />

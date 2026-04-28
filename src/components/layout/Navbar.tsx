@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
+import { resolveServiceImage } from "../../lib/image-utils";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,7 +26,7 @@ const Navbar = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <img
-              src="/logo.png"
+              src={resolveServiceImage('logo.png', 'logo', 'logo')}
               alt="Invade Tech Solutions"
               className="h-10 w-10"
             />

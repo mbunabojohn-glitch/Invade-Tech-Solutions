@@ -4,6 +4,7 @@ import { services as staticServices } from "../../data/servicesData";
 import { type Service as StaticService } from "../../data/servicesData";
 import { type Service as ApiService } from "../../lib/api";
 import { useServices } from "../../hooks/useApi";
+import { resolveServiceImage } from "../../lib/image-utils";
 
 const ServicePreview = () => {
   const { data: dynamicServices } = useServices();
@@ -71,14 +72,17 @@ const ServicePreview = () => {
                 className="group relative h-80 overflow-hidden rounded-lg scroll-animate fade-in block w-full"
               >
                 {/* Background: Image */}
-                {service.image ? (
-                  <div
-                    className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-                    style={{ backgroundImage: `url(${service.image})` }}
-                  />
-                ) : (
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-blue-800 to-cyan-900" />
-                )}
+                {(() => {
+                  const imageUrl = resolveServiceImage(service.image, service.id);
+                  return imageUrl ? (
+                    <div
+                      className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                      style={{ backgroundImage: `url("${imageUrl}")` }}
+                    />
+                  ) : (
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-blue-800 to-cyan-900" />
+                  );
+                })()}
 
                 {/* Pattern Overlay for depth */}
                 <div

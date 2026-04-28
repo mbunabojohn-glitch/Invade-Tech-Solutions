@@ -1,5 +1,6 @@
 // src/pages/Home/Hero.tsx
 import { Link } from "react-router-dom";
+import { resolveServiceImage } from "../../lib/image-utils";
 
 const Hero = () => {
   return (
@@ -13,7 +14,7 @@ const Hero = () => {
           playsInline
           className="w-full h-full object-cover"
         >
-          <source src="/hero-video.mp4" type="video/mp4" />
+          <source src={resolveServiceImage('hero-video.mp4', 'hero', 'hero')} type="video/mp4" />
         </video>
 
         {/* Dark Overlay */}
