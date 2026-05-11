@@ -12,8 +12,6 @@ import {
   X,
   ChevronRight,
   ChevronLeft,
-  PanelLeftClose,
-  PanelLeftOpen,
 } from "lucide-react";
 import { useAppStore } from "../../store/useAppStore";
 
