@@ -13,38 +13,7 @@ interface Webinar {
   attendees: number;
 }
 
-const MOCK_WEBINARS: Webinar[] = [
-  {
-    _id: "1",
-    title: "Cloud Infrastructure — Live Q&A Session",
-    instructor: "Dr. Okafor",
-    date: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(),
-    time: "2:00 PM",
-    duration: "1.5 hours",
-    status: "live",
-    attendees: 47,
-  },
-  {
-    _id: "2",
-    title: "Cybersecurity Threats in 2026",
-    instructor: "Ms. Bello",
-    date: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
-    time: "11:00 AM",
-    duration: "2 hours",
-    status: "upcoming",
-    attendees: 0,
-  },
-  {
-    _id: "3",
-    title: "IT Career Path Guidance",
-    instructor: "Mr. Adeyemi",
-    date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
-    time: "3:00 PM",
-    duration: "1 hour",
-    status: "ended",
-    attendees: 63,
-  },
-];
+// Removed unused MOCK_WEBINARS
 
 const WEBINAR_STATUS: Record<string, string> = {
   live: "bg-red-500/10 text-red-400 border border-red-500/30",
@@ -66,7 +35,7 @@ function PageLoader({ text }: { text: string }) {
 export function Webinars() {
   const navigate = useNavigate();
   const { data: response, isLoading: loading } = useStudentWebinars();
-  const webinars = ((response as any)?.data as Webinar[]) || [];
+  const webinars = ((response as { data?: Webinar[] })?.data as Webinar[]) || [];
 
   const formatDate = (d: string) =>
     new Date(d).toLocaleDateString("en-US", {

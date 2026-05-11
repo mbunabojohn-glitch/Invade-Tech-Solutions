@@ -9,7 +9,6 @@ import {
   Clock,
   Bell,
   ArrowRight,
-  Loader2,
 } from "lucide-react";
 
 interface ScheduleItem {
@@ -30,62 +29,7 @@ interface Announcement {
   isNew: boolean;
 }
 
-const MOCK_SCHEDULE: ScheduleItem[] = [
-  {
-    _id: "1",
-    title: "IT Support & Hardware Maintenance",
-    type: "class",
-    date: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(),
-    time: "10:00 AM",
-    instructor: "Mr. Adeyemi",
-    joinLink: "/student/classroom",
-  },
-  {
-    _id: "2",
-    title: "Cloud Infrastructure — Live Q&A",
-    type: "webinar",
-    date: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(),
-    time: "2:00 PM",
-    instructor: "Dr. Okafor",
-    joinLink: "/student/webinars",
-  },
-  {
-    _id: "3",
-    title: "Cybersecurity Essentials",
-    type: "class",
-    date: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000).toISOString(),
-    time: "11:00 AM",
-    instructor: "Ms. Bello",
-    joinLink: "/student/classroom",
-  },
-];
-
-const MOCK_ANNOUNCEMENTS: Announcement[] = [
-  {
-    _id: "1",
-    title: "Welcome to Invade Tech Learning Platform!",
-    preview:
-      "We are excited to have you on board. Your first class starts soon — check your schedule.",
-    date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-    isNew: true,
-  },
-  {
-    _id: "2",
-    title: "New Resource Materials Uploaded",
-    preview:
-      "Course notes and lab guides for IT Support have been uploaded to the Resources section.",
-    date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-    isNew: true,
-  },
-  {
-    _id: "3",
-    title: "Class Schedule Update — Week 3",
-    preview:
-      "The Cloud Infrastructure session on Thursday has been moved to Friday at 3:00 PM.",
-    date: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
-    isNew: false,
-  },
-];
+// Removed unused MOCK_SCHEDULE and MOCK_ANNOUNCEMENTS
 
 export default function StudentOverview() {
   const navigate = useNavigate();
@@ -94,15 +38,15 @@ export default function StudentOverview() {
   const { data: response, isLoading: loading } = useStudentDashboardStats();
 
   // The backend returns { success: true, data: { enrolledClassesCount, upcomingWebinars, announcements } }
-  const dashboardData = (response as any)?.data || {};
+  const dashboardData = (response as { data?: any })?.data || {};
 
   const stats = {
-    classesEnrolled: dashboardData.enrolledClassesCount || 0,
-    upcomingWebinars: dashboardData.upcomingWebinars?.length || 0,
+    classesEnrolled: (dashboardData.enrolledClassesCount as number) || 0,
+    upcomingWebinars: (dashboardData.upcomingWebinars?.length as number) || 0,
     assignmentsDue: 0, // Not currently provided by backend
   };
-  const schedule = dashboardData.upcomingWebinars || [];
-  const announcements = dashboardData.announcements || [];
+  const schedule = (dashboardData.upcomingWebinars as ScheduleItem[]) || [];
+  const announcements = (dashboardData.announcements as Announcement[]) || [];
 
   const formatScheduleDate = (dateStr: string) => {
     const date = new Date(dateStr);

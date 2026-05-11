@@ -44,6 +44,7 @@ interface RegistrationFormData {
 interface FormErrors {
   fullName?: string;
   email?: string;
+  password?: string;
   phone?: string;
   course?: string;
   educationalBackground?: string;
@@ -166,17 +167,19 @@ export default function Register() {
 
       const response = (await registerStudent(dataToSend)) as any;
 
-      // Check for success flag if the backend returns it in a 200/201 response
-      if (response.success === false) {
-        throw new Error(response.error || "Registration failed");
+      // Check for success flag in the response body
+      if (response?.success === false) {
+        throw new Error(response?.error || "Registration failed");
       }
 
-      // The backend returns { success: true, data: { token, student }, message }
-      const authData = response.data || response;
+      // Backend typically returns { success: true, data: { token, student } }
+      // We look for token and student in response.data or response itself
+      const token = response?.data?.token || response?.token;
+      const student = response?.data?.student || response?.student;
 
       // Handle successful registration and auto-login if token is returned
-      if (authData.token && authData.student) {
-        setStudentToken(authData.token, authData.student);
+      if (token && student) {
+        setStudentToken(token, student);
       }
 
       setIsSuccess(true);

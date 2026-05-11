@@ -22,44 +22,7 @@ interface CourseClass {
   startDate: string;
 }
 
-const MOCK_CLASSES: CourseClass[] = [
-  {
-    _id: "1",
-    title: "IT Support & Hardware Maintenance",
-    instructor: "Mr. Adeyemi",
-    schedule: "Mon / Wed — 10:00 AM",
-    duration: "8 weeks",
-    enrolled: 24,
-    capacity: 30,
-    progress: 65,
-    status: "active",
-    startDate: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    _id: "2",
-    title: "Cloud Infrastructure Fundamentals",
-    instructor: "Dr. Okafor",
-    schedule: "Tue / Thu — 2:00 PM",
-    duration: "10 weeks",
-    enrolled: 18,
-    capacity: 25,
-    progress: 30,
-    status: "active",
-    startDate: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    _id: "3",
-    title: "Network Administration Basics",
-    instructor: "Ms. Bello",
-    schedule: "Fri — 11:00 AM",
-    duration: "6 weeks",
-    enrolled: 20,
-    capacity: 20,
-    progress: 100,
-    status: "completed",
-    startDate: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toISOString(),
-  },
-];
+// Removed unused MOCK_CLASSES
 
 const STATUS_STYLE = {
   active: "bg-green-500/10 text-green-400 border border-green-500/20",
@@ -81,7 +44,7 @@ function PageLoader({ text }: { text: string }) {
 export function MyClasses() {
   const navigate = useNavigate();
   const { data: response, isLoading: loading } = useStudentClasses();
-  const classes = ((response as any)?.data as CourseClass[]) || [];
+  const classes = ((response as { data?: CourseClass[] })?.data as CourseClass[]) || [];
 
   if (loading) return <PageLoader text="Loading your classes..." />;
 

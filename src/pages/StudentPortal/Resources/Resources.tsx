@@ -18,53 +18,7 @@ interface Resource {
   downloadUrl: string;
 }
 
-const MOCK_RESOURCES: Resource[] = [
-  {
-    _id: "1",
-    name: "IT Support — Week 1 Notes.pdf",
-    type: "pdf",
-    size: "2.4 MB",
-    course: "IT Support & Hardware Maintenance",
-    uploadDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
-    downloadUrl: "#",
-  },
-  {
-    _id: "2",
-    name: "Hardware Diagnostics Lab Guide.pdf",
-    type: "pdf",
-    size: "1.8 MB",
-    course: "IT Support & Hardware Maintenance",
-    uploadDate: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
-    downloadUrl: "#",
-  },
-  {
-    _id: "3",
-    name: "Cloud Intro — Video Lecture.mp4",
-    type: "video",
-    size: "145 MB",
-    course: "Cloud Infrastructure Fundamentals",
-    uploadDate: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-    downloadUrl: "#",
-  },
-  {
-    _id: "4",
-    name: "AWS Core Services Overview.pdf",
-    type: "pdf",
-    size: "3.1 MB",
-    course: "Cloud Infrastructure Fundamentals",
-    uploadDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-    downloadUrl: "#",
-  },
-  {
-    _id: "5",
-    name: "Cybersecurity Glossary.doc",
-    type: "doc",
-    size: "0.9 MB",
-    course: "Cybersecurity Essentials",
-    uploadDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-    downloadUrl: "#",
-  },
-];
+// Removed unused MOCK_RESOURCES
 
 const FILE_ICON: Record<string, React.ReactNode> = {
   pdf: <FileText className="w-5 h-5 text-red-400" />,
@@ -91,7 +45,7 @@ function PageLoader({ text }: { text: string }) {
 
 export function Resources() {
   const { data: response, isLoading: loading } = useStudentResources();
-  const resources = ((response as any)?.data as Resource[]) || [];
+  const resources = ((response as { data?: Resource[] })?.data as Resource[]) || [];
   const [search, setSearch] = useState("");
 
   const filtered = resources.filter((r) => {

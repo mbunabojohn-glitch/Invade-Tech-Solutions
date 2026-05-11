@@ -96,20 +96,23 @@ export default function StudentLogin() {
       };
       const response = (await loginStudent(dataToSend)) as any;
 
-      // Check for success flag
-      if (response.success === false) {
-        throw new Error(response.error || "Invalid email or password.");
+      // Check for success flag in the response body
+      if (response?.success === false) {
+        throw new Error(response?.error || "Invalid email or password.");
       }
 
-      // The backend returns { success: true, data: { token, student }, message }
-      const authData = response.data || response;
+      // Backend typically returns { success: true, data: { token, student } }
+      // We look for token and student in response.data or response itself
+      const token = response?.data?.token || response?.token;
+      const student = response?.data?.student || response?.student;
 
-      if (authData.token && authData.student) {
-        setStudentToken(authData.token, authData.student);
+      if (token && student) {
+        setStudentToken(token, student);
         toast.success("Welcome back! Redirecting to your dashboard...");
         setTimeout(() => navigate("/student/dashboard"), 800);
       } else {
-        throw new Error("Invalid response from server");
+        console.error("Login response missing credentials:", response);
+        throw new Error("Invalid response from server: Missing token or student data");
       }
     } catch (err: any) {
       const errorMsg =
