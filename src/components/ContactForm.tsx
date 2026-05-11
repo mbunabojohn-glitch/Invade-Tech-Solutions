@@ -39,7 +39,11 @@ const ContactForm = () => {
     company: "",
     service: state?.service || "general", // Pre-fill service category if available
     // Pre-fill message body if available, otherwise check for a jobTitle to generate a custom application message
-    message: state?.message || (state?.jobTitle ? `I would like to apply for the ${state.jobTitle} position.` : ""),
+    message:
+      state?.message ||
+      (state?.jobTitle
+        ? `I would like to apply for the ${state.jobTitle} position.`
+        : ""),
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
@@ -126,10 +130,14 @@ const ContactForm = () => {
         message: "",
       });
       setErrors({});
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast.dismiss(loadingToast);
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again later.";
       toast.error("Failed to send message", {
-        description: error?.message || "Something went wrong. Please try again later.",
+        description: message,
       });
     }
   };

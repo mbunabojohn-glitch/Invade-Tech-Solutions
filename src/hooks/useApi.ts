@@ -265,3 +265,78 @@ export const useDeleteClient = (
     ...options,
   });
 };
+
+// --- STUDENT PORTAL ---
+
+export const useStudentRegister = (
+  options?: UseMutationOptions<unknown, AxiosError, Record<string, unknown>>,
+) => {
+  return useMutation({
+    mutationFn: (data) => apiService.studentRegister(data),
+    ...options,
+  });
+};
+
+export const useStudentLogin = (
+  options?: UseMutationOptions<unknown, AxiosError, Record<string, unknown>>,
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data) => apiService.studentLogin(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["student", "profile"] });
+    },
+    ...options,
+  });
+};
+
+export const useStudentProfile = (
+  options?: UseQueryOptions<unknown, AxiosError>,
+) => {
+  return useQuery({
+    queryKey: ["student", "profile"],
+    queryFn: () => apiService.getStudentProfile(),
+    ...options,
+  });
+};
+
+export const useStudentDashboardStats = (
+  options?: UseQueryOptions<unknown, AxiosError>,
+) => {
+  return useQuery({
+    queryKey: ["student", "dashboard"],
+    queryFn: () => apiService.getStudentDashboardStats(),
+    ...options,
+  });
+};
+
+export const useStudentClasses = (
+  options?: UseQueryOptions<unknown, AxiosError>,
+) => {
+  return useQuery({
+    queryKey: ["student", "classes"],
+    queryFn: () => apiService.getStudentClasses(),
+    ...options,
+  });
+};
+
+export const useStudentWebinars = (
+  options?: UseQueryOptions<unknown, AxiosError>,
+) => {
+  return useQuery({
+    queryKey: ["student", "webinars"],
+    queryFn: () => apiService.getStudentWebinars(),
+    ...options,
+  });
+};
+
+export const useStudentResources = (
+  options?: UseQueryOptions<unknown, AxiosError>,
+) => {
+  return useQuery({
+    queryKey: ["student", "resources"],
+    queryFn: () => apiService.getStudentResources(),
+    ...options,
+  });
+};

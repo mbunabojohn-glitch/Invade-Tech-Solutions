@@ -20,10 +20,16 @@ const apiClient: AxiosInstance = axios.create({
 // This runs before EVERY outgoing API call
 apiClient.interceptors.request.use(
   (config) => {
-    // Access token directly from Zustand store
-    const token = useAppStore.getState().token;
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    // Access tokens directly from Zustand store
+    const { token, studentToken } = useAppStore.getState();
+
+    // Prioritize studentToken for student portal routes, fallback to regular token
+    const activeToken = config.url?.startsWith("/students")
+      ? studentToken || token
+      : token;
+
+    if (activeToken) {
+      config.headers.Authorization = `Bearer ${activeToken}`;
     }
     return config;
   },
@@ -38,8 +44,15 @@ apiClient.interceptors.response.use(
   (error) => {
     // Auto-logout if a 401 Unauthorized error occurs (expired or invalid token)
     if (error.response?.status === 401) {
-      useAppStore.getState().logout();
-      window.location.href = "/login";
+      const isStudentRoute = window.location.pathname.startsWith("/student");
+
+      if (isStudentRoute) {
+        useAppStore.getState().studentLogout();
+        window.location.href = "/student/login";
+      } else {
+        useAppStore.getState().logout();
+        window.location.href = "/login";
+      }
     }
     return Promise.reject(error);
   },

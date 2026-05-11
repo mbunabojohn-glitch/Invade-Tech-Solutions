@@ -1,8 +1,22 @@
-import { Wrench, ShoppingCart, GraduationCap, Cloud, Users, Info, Settings, Shield, Server, Monitor, Database, Network } from "lucide-react";
+import {
+  Wrench,
+  ShoppingCart,
+  GraduationCap,
+  Cloud,
+  Users,
+  Info,
+  Settings,
+  Shield,
+  Server,
+  Monitor,
+  Database,
+  Network,
+  type LucideIcon,
+} from "lucide-react";
 import apiClient from "./apiClient";
 
 export const getIconComponent = (iconName: string) => {
-  const icons: Record<string, any> = {
+  const icons: Record<string, LucideIcon> = {
     wrench: Wrench,
     shopping: ShoppingCart,
     graduation: GraduationCap,
@@ -116,7 +130,9 @@ export const apiService = {
   // --- SERVICES ---
   getServices: async () => {
     const response = await apiClient.get("/services");
-    return Array.isArray(response.data) ? response.data : response.data?.data || [];
+    return Array.isArray(response.data)
+      ? response.data
+      : response.data?.data || [];
   },
 
   getServiceById: async (id: string) => {
@@ -142,7 +158,9 @@ export const apiService = {
   // --- CLIENT PORTFOLIO ---
   getClients: async () => {
     const response = await apiClient.get("/clients");
-    return Array.isArray(response.data) ? response.data : response.data?.data || [];
+    return Array.isArray(response.data)
+      ? response.data
+      : response.data?.data || [];
   },
 
   getClientById: async (id: string) => {
@@ -162,6 +180,42 @@ export const apiService = {
 
   deleteClient: async (id: string) => {
     const response = await apiClient.delete(`/clients/${id}`);
+    return response.data;
+  },
+
+  // --- STUDENT PORTAL ---
+  studentRegister: async (data: Record<string, unknown>) => {
+    const response = await apiClient.post("/students/register", data);
+    return response.data;
+  },
+
+  studentLogin: async (data: Record<string, unknown>) => {
+    const response = await apiClient.post("/students/login", data);
+    return response.data;
+  },
+
+  getStudentProfile: async () => {
+    const response = await apiClient.get("/students/me");
+    return response.data;
+  },
+
+  getStudentDashboardStats: async () => {
+    const response = await apiClient.get("/students/dashboard");
+    return response.data;
+  },
+
+  getStudentClasses: async () => {
+    const response = await apiClient.get("/students/classes");
+    return response.data;
+  },
+
+  getStudentWebinars: async () => {
+    const response = await apiClient.get("/students/webinars");
+    return response.data;
+  },
+
+  getStudentResources: async () => {
+    const response = await apiClient.get("/students/resources");
     return response.data;
   },
 };

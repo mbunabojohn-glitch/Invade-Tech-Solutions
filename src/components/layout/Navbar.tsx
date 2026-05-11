@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, GraduationCap } from "lucide-react";
 import { resolveServiceImage } from "../../lib/image-utils";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
-  // Close menu when location changes - using key prop instead of effect
   const handleLinkClick = () => {
     setIsOpen(false);
   };
@@ -19,14 +18,18 @@ const Navbar = () => {
     { name: "Career", path: "/career" },
   ];
 
+  const isActive = (path: string) =>
+    path === "/"
+      ? location.pathname === "/"
+      : location.pathname.startsWith(path);
+
   return (
     <nav className="bg-gray-950 border-b border-gray-800 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <img
-              src={resolveServiceImage('logo.png', 'logo', 'logo')}
+              src={resolveServiceImage("logo.png", "logo", "logo")}
               alt="Invade Tech Solutions"
               className="h-10 w-10"
             />
@@ -35,14 +38,13 @@ const Navbar = () => {
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
                 className={`transition-colors ${
-                  location.pathname === link.path
+                  isActive(link.path)
                     ? "text-cyan-500"
                     : "text-gray-300 hover:text-cyan-500"
                 }`}
@@ -50,15 +52,27 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
+
             <Link
-              to="/contact"
-              className="bg-cyan-500 text-white px-6 py-2 rounded-lg hover:bg-cyan-600 transition-colors"
+              to="/student/login"
+              className={`transition-colors flex items-center gap-2 ${
+                isActive("/student")
+                  ? "text-cyan-500"
+                  : "text-gray-300 hover:text-cyan-500"
+              }`}
             >
-              Get Started
+              <GraduationCap className="w-4 h-4" />
+              Student Portal
+            </Link>
+
+            <Link
+              to="/register"
+              className="bg-cyan-500 text-gray-950 px-6 py-2 rounded-lg hover:bg-cyan-600 transition-colors"
+            >
+              Register
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden text-gray-300 hover:text-cyan-500 transition-colors"
@@ -68,7 +82,6 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Mobile Navigation */}
         {isOpen && (
           <div className="md:hidden py-4 border-t border-gray-800">
             <div className="flex flex-col space-y-4">
@@ -78,7 +91,7 @@ const Navbar = () => {
                   to={link.path}
                   onClick={handleLinkClick}
                   className={`transition-colors ${
-                    location.pathname === link.path
+                    isActive(link.path)
                       ? "text-cyan-500"
                       : "text-gray-300 hover:text-cyan-500"
                   }`}
@@ -86,12 +99,26 @@ const Navbar = () => {
                   {link.name}
                 </Link>
               ))}
+
               <Link
-                to="/contact"
+                to="/student/login"
                 onClick={handleLinkClick}
-                className="bg-cyan-500 text-white px-6 py-2 rounded-lg hover:bg-cyan-600 transition-colors text-center"
+                className={`transition-colors flex items-center gap-2 ${
+                  isActive("/student")
+                    ? "text-cyan-500"
+                    : "text-gray-300 hover:text-cyan-500"
+                }`}
               >
-                Get Started
+                <GraduationCap className="w-4 h-4" />
+                Student Portal
+              </Link>
+
+              <Link
+                to="/register"
+                onClick={handleLinkClick}
+                className="bg-cyan-500 text-gray-950 px-6 py-2 rounded-lg hover:bg-cyan-600 transition-colors text-center"
+              >
+                Register
               </Link>
             </div>
           </div>
