@@ -145,14 +145,35 @@ const Services = () => {
                       </div>
                     )}
 
-                    <div className="pt-8">
-                      <button
-                        onClick={() => handleInquire(service.id, service.title)}
-                        className="border-2 border-cyan-500 text-cyan-500 hover:bg-cyan-500 hover:text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center space-x-2"
-                      >
-                        <span>Inquire about this Service</span>
-                        <ArrowRight className="w-5 h-5" />
-                      </button>
+                    <div className="pt-8 flex flex-wrap gap-4">
+                      {service.id !== 'it-training-career' && (
+                        <button
+                          onClick={() => handleInquire(service.id, service.title)}
+                          className="border-2 border-cyan-500 text-cyan-500 hover:bg-cyan-500 hover:text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center space-x-2"
+                        >
+                          <span>Inquire about this Service</span>
+                          <ArrowRight className="w-5 h-5" />
+                        </button>
+                      )}
+
+                      {service.id === 'it-training-career' && (
+                        <>
+                          <button
+                            onClick={() => navigate("/register")}
+                            className="bg-cyan-500 text-gray-950 hover:bg-cyan-600 px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center space-x-2"
+                          >
+                            <span>Enroll Now</span>
+                            <ArrowRight className="w-5 h-5" />
+                          </button>
+                          <button
+                            onClick={() => navigate("/student/login")}
+                            className="bg-gray-800 text-white hover:bg-gray-700 px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center space-x-2 border border-gray-700"
+                          >
+                            <span>Student Login</span>
+                            <ArrowRight className="w-5 h-5" />
+                          </button>
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>

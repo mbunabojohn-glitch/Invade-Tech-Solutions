@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, GraduationCap } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { resolveServiceImage } from "../../lib/image-utils";
 
 const Navbar = () => {
@@ -52,25 +52,6 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
-
-            <Link
-              to="/student/login"
-              className={`transition-colors flex items-center gap-2 ${
-                isActive("/student")
-                  ? "text-cyan-500"
-                  : "text-gray-300 hover:text-cyan-500"
-              }`}
-            >
-              <GraduationCap className="w-4 h-4" />
-              Student Portal
-            </Link>
-
-            <Link
-              to="/register"
-              className="bg-cyan-500 text-gray-950 px-6 py-2 rounded-lg hover:bg-cyan-600 transition-colors"
-            >
-              Register
-            </Link>
           </div>
 
           <button
@@ -99,27 +80,6 @@ const Navbar = () => {
                   {link.name}
                 </Link>
               ))}
-
-              <Link
-                to="/student/login"
-                onClick={handleLinkClick}
-                className={`transition-colors flex items-center gap-2 ${
-                  isActive("/student")
-                    ? "text-cyan-500"
-                    : "text-gray-300 hover:text-cyan-500"
-                }`}
-              >
-                <GraduationCap className="w-4 h-4" />
-                Student Portal
-              </Link>
-
-              <Link
-                to="/register"
-                onClick={handleLinkClick}
-                className="bg-cyan-500 text-gray-950 px-6 py-2 rounded-lg hover:bg-cyan-600 transition-colors text-center"
-              >
-                Register
-              </Link>
             </div>
           </div>
         )}
