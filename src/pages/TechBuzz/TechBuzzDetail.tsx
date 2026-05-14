@@ -121,8 +121,8 @@ const TechBuzzDetail = () => {
 
       {/* Hero Image Section */}
       <section className="pt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="relative h-[60vh] w-full overflow-hidden rounded-[2.5rem] shadow-2xl scroll-animate fade-in">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-8">
+          <div className="relative h-[40vh] md:h-[60vh] w-full overflow-hidden rounded-2xl md:rounded-[2.5rem] shadow-2xl scroll-animate scale-in">
             {(article.imageUrl || article.image) && !imageError ? (
               <img
                 src={article.imageUrl || article.image}
@@ -141,29 +141,29 @@ const TechBuzzDetail = () => {
       </section>
 
       {/* Article Content */}
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-20 relative z-10">
-        <article className="bg-gray-900/40 backdrop-blur-2xl border border-white/5 rounded-[2.5rem] p-8 md:p-16 shadow-2xl scroll-animate fade-in">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 md:-mt-20 relative z-10">
+        <article className="bg-gray-900/40 backdrop-blur-2xl border border-white/5 rounded-2xl md:rounded-[2.5rem] p-6 md:p-16 shadow-2xl scroll-animate slide-right">
           {/* Metadata */}
-          <div className="flex flex-wrap items-center gap-6 mb-10 pb-10 border-b border-white/5">
-            <span className="px-4 py-1.5 rounded-md bg-cyan-500 text-gray-950 text-xs font-black uppercase tracking-widest shadow-lg shadow-cyan-500/20">
+          <div className="flex flex-wrap items-center gap-4 md:gap-6 mb-6 md:mb-10 pb-6 md:pb-10 border-b border-white/5">
+            <span className="px-3 md:px-4 py-1 md:py-1.5 rounded-md bg-cyan-500 text-gray-950 text-[10px] md:text-xs font-black uppercase tracking-widest shadow-lg shadow-cyan-500/20">
               {article.source}
             </span>
-            <div className="flex items-center text-gray-400 text-sm font-bold uppercase tracking-wider">
-              <Calendar className="w-4 h-4 mr-2 text-cyan-500" />
+            <div className="flex items-center text-gray-400 text-xs md:text-sm font-bold uppercase tracking-wider">
+              <Calendar className="w-3.5 md:w-4 h-3.5 md:h-4 mr-2 text-cyan-500" />
               {new Date(article.publishedAt).toLocaleDateString("en-US", {
                 month: "long",
                 day: "numeric",
                 year: "numeric",
               })}
             </div>
-            <div className="flex items-center text-gray-400 text-sm font-bold uppercase tracking-wider">
-              <Clock className="w-4 h-4 mr-2 text-cyan-500" />
+            <div className="flex items-center text-gray-400 text-xs md:text-sm font-bold uppercase tracking-wider">
+              <Clock className="w-3.5 md:w-4 h-3.5 md:h-4 mr-2 text-cyan-500" />
               5 min read
             </div>
           </div>
 
           {/* Title */}
-          <h1 className="text-4xl md:text-6xl font-black text-white leading-[1.1] mb-12 tracking-tight">
+          <h1 className="text-3xl md:text-6xl font-black text-white leading-tight md:leading-[1.1] mb-8 md:mb-12 tracking-tight">
             {article.title}
           </h1>
 
@@ -172,15 +172,15 @@ const TechBuzzDetail = () => {
             {article.summary.split(/[.\n]/).filter(p => p.trim()).map((paragraph, index) => (
               <p 
                 key={index}
-                className={`text-xl md:text-2xl text-gray-300 leading-relaxed font-medium mb-8 ${
-                  index === 0 ? "first-letter:text-5xl first-letter:font-black first-letter:text-cyan-500 first-letter:mr-3 first-letter:float-left" : ""
+                className={`text-lg md:text-2xl text-gray-300 leading-relaxed font-medium mb-6 md:mb-8 ${
+                  index === 0 ? "first-letter:text-4xl md:first-letter:text-5xl first-letter:font-black first-letter:text-cyan-500 first-letter:mr-2 md:first-letter:mr-3 first-letter:float-left" : ""
                 }`}
               >
                 {paragraph.trim()}{paragraph.trim().length > 0 ? '.' : ''}
               </p>
             ))}
             
-            <div className="space-y-6 text-gray-400 text-lg leading-relaxed">
+            <div className="space-y-4 md:space-y-6 text-gray-400 text-base md:text-lg leading-relaxed">
               <p>
                 In today's rapidly evolving technological landscape, this development marks a significant milestone. 
                 Industry experts suggest that the implications of this news will be felt across multiple sectors 
