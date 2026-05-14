@@ -63,6 +63,17 @@ export interface Client {
   industry?: string;
 }
 
+export interface NewsArticle {
+  id: string;
+  title: string;
+  summary: string;
+  url: string;
+  originalUrl?: string;
+  image?: string;
+  source: string;
+  publishedAt: string;
+}
+
 interface ApiResponse<T> {
   success: boolean;
   data?: T;
@@ -217,5 +228,13 @@ export const apiService = {
   getStudentResources: async () => {
     const response = await apiClient.get("/students/resources");
     return response.data;
+  },
+
+  // --- TECH BUZZ ---
+  getNews: async (): Promise<NewsArticle[]> => {
+    const response = await apiClient.get("/news");
+    return Array.isArray(response.data)
+      ? response.data
+      : response.data?.data || [];
   },
 };

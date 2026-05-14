@@ -2,6 +2,7 @@ import Hero from "./Hero";
 import Stats from "./Stats";
 import ServicePreview from "./ServicePreview";
 import Clients from "./Clients";
+import TechBuzz from "../../components/TechBuzz";
 
 const Home = () => {
   return (
@@ -9,6 +10,7 @@ const Home = () => {
       <Hero />
       <Stats />
       <ServicePreview />
+      <TechBuzz />
       <Clients />
     </div>
   );

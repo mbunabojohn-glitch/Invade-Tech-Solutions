@@ -6,7 +6,7 @@ import {
   type UseMutationOptions,
 } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { apiService, type ContactFormData, type Service, type Client } from "../lib/api";
+import { apiService, type ContactFormData, type Service, type Client, type NewsArticle } from "../lib/api";
 
 // --- AUTHENTICATION & PROFILE ---
 
@@ -15,6 +15,17 @@ export const useRegister = (
 ) => {
   return useMutation({
     mutationFn: (data) => apiService.register(data),
+    ...options,
+  });
+};
+
+// --- TECH BUZZ ---
+
+export const useNews = (options?: UseQueryOptions<NewsArticle[], AxiosError>) => {
+  return useQuery({
+    queryKey: ["news"],
+    queryFn: () => apiService.getNews(),
+    staleTime: 10 * 60 * 1000, // 10 minutes
     ...options,
   });
 };
