@@ -93,26 +93,28 @@ const TechBuzz = () => {
             </div>
             
             {/* Category Tabs */}
-            <div className="flex flex-nowrap overflow-x-auto pb-4 -mx-4 px-4 md:mx-0 md:px-0 md:pb-0 md:flex-wrap gap-3 scroll-animate fade-in delay-200 no-scrollbar">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setSearchParams({ category: cat })}
-                  className={`whitespace-nowrap px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 flex-shrink-0 ${
-                    currentCategory === cat
-                      ? "bg-cyan-500 text-gray-950 scale-105 shadow-lg shadow-cyan-500/20"
-                      : "bg-gray-900 text-gray-400 hover:bg-gray-800 hover:text-white border border-gray-800"
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
+            <div className="w-full overflow-hidden">
+              <div className="flex flex-nowrap overflow-x-auto pb-4 -mx-4 px-4 md:mx-0 md:px-0 md:pb-0 md:flex-wrap gap-3 scroll-animate fade-in delay-200 no-scrollbar">
+                {categories.map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setSearchParams({ category: cat })}
+                    className={`whitespace-nowrap px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 flex-shrink-0 ${
+                      currentCategory === cat
+                        ? "bg-cyan-500 text-gray-950 scale-105 shadow-lg shadow-cyan-500/20"
+                        : "bg-gray-900 text-gray-400 hover:bg-gray-800 hover:text-white border border-gray-800"
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 overflow-x-hidden">
         {isLoading ? (
           <div className="space-y-12">
             <div className="w-full h-[60vh] bg-gray-900 animate-pulse rounded-3xl" />

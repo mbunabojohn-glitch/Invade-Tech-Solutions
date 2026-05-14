@@ -6,7 +6,7 @@ import "./App.css";
 
 function App() {
   return (
-    <div className="min-h-screen flex flex-col bg-gray-900">
+    <div className="min-h-screen flex flex-col bg-gray-900 overflow-x-hidden">
       <Toaster position="top-right" expand={false} richColors closeButton />
       <Navbar />
       <main className="flex-grow">

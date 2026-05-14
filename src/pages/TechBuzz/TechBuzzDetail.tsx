@@ -99,7 +99,7 @@ const TechBuzzDetail = () => {
   if (!article) return null;
 
   return (
-    <div className="min-h-screen bg-gray-950 text-gray-100 pb-20">
+    <div className="min-h-screen bg-gray-950 text-gray-100 pb-20 overflow-x-hidden">
       {/* Top Navigation */}
       <div className="fixed top-0 left-0 right-0 z-50 bg-gray-950/80 backdrop-blur-lg border-b border-white/5">
         <div className="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
