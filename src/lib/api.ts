@@ -64,12 +64,14 @@ export interface Client {
 }
 
 export interface NewsArticle {
-  id: string;
+  id?: string;
+  _id: string;
   title: string;
   summary: string;
   url: string;
   originalUrl?: string;
   image?: string;
+  imageUrl?: string;
   source: string;
   publishedAt: string;
 }
@@ -230,11 +232,42 @@ export const apiService = {
     return response.data;
   },
 
-  // --- TECH BUZZ ---
-  getNews: async (): Promise<NewsArticle[]> => {
-    const response = await apiClient.get("/news");
+  /**
+   * Fetches all tech news articles for the Tech Buzz magazine page.
+   * @param category Optional category to filter news
+   * @returns Array of NewsArticle objects
+   */
+  getNews: async (category?: string): Promise<NewsArticle[]> => {
+    // Manually encode the category to ensure spaces are %20 not +
+    const url = category 
+      ? `/news?category=${encodeURIComponent(category)}`
+      : "/news";
+    const response = await apiClient.get(url);
     return Array.isArray(response.data)
       ? response.data
       : response.data?.data || [];
+  },
+
+  /**
+   * Fetches news articles by category.
+   * @param category The category to filter by
+   * @returns Array of NewsArticle objects
+   */
+  getNewsByCategory: async (category: string): Promise<NewsArticle[]> => {
+    // Manually encode the category to ensure spaces are %20 not +
+    const response = await apiClient.get(`/news?category=${encodeURIComponent(category)}`);
+    return Array.isArray(response.data)
+      ? response.data
+      : response.data?.data || [];
+  },
+
+  /**
+   * Fetches a single news article by its unique ID.
+   * @param id The article ID
+   * @returns A single NewsArticle object
+   */
+  getNewsById: async (id: string): Promise<NewsArticle> => {
+    const response = await apiClient.get(`/news/${id}`);
+    return response.data?.data || response.data;
   },
 };

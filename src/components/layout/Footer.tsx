@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail } from "lucide-react";
 
+/**
+ * Footer Component
+ * Displays company information, social links, quick navigation, and legal links.
+ * Dynamically updates the copyright year.
+ */
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
@@ -93,6 +98,14 @@ const Footer = () => {
                   className="text-gray-400 hover:text-cyan-500 transition-colors"
                 >
                   Contact
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/tech-buzz"
+                  className="text-gray-400 hover:text-cyan-500 transition-colors"
+                >
+                  Tech Buzz
                 </Link>
               </li>
               <li>

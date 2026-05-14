@@ -21,11 +21,49 @@ export const useRegister = (
 
 // --- TECH BUZZ ---
 
-export const useNews = (options?: UseQueryOptions<NewsArticle[], AxiosError>) => {
+/**
+ * Hook to fetch all tech news articles.
+ * Includes a 10-minute stale time for caching efficiency.
+ */
+export const useNews = (
+  category?: string,
+  options?: UseQueryOptions<NewsArticle[], AxiosError>,
+) => {
   return useQuery({
-    queryKey: ["news"],
-    queryFn: () => apiService.getNews(),
+    queryKey: ["news", category],
+    queryFn: () => apiService.getNews(category),
     staleTime: 10 * 60 * 1000, // 10 minutes
+    ...options,
+  });
+};
+
+/**
+ * Hook to fetch news articles by category.
+ */
+export const useNewsByCategory = (
+  category: string,
+  options?: UseQueryOptions<NewsArticle[], AxiosError>,
+) => {
+  return useQuery({
+    queryKey: ["news", "category", category],
+    queryFn: () => apiService.getNewsByCategory(category),
+    staleTime: 10 * 60 * 1000,
+    ...options,
+  });
+};
+
+/**
+ * Hook to fetch a single news article by its ID.
+ * Automatically disabled if no ID is provided.
+ */
+export const useNewsById = (
+  id: string | undefined,
+  options?: UseQueryOptions<NewsArticle, AxiosError>,
+) => {
+  return useQuery({
+    queryKey: ["news", "detail", id],
+    queryFn: () => apiService.getNewsById(id!),
+    enabled: !!id,
     ...options,
   });
 };

@@ -3,21 +3,35 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { resolveServiceImage } from "../../lib/image-utils";
 
+/**
+ * Navbar Component
+ * Provides the main site navigation, including a responsive mobile menu.
+ * Highlighting is applied to the active route using current location.
+ */
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
+  /**
+   * Closes the mobile menu when a link is clicked.
+   */
   const handleLinkClick = () => {
     setIsOpen(false);
   };
 
+  // Main navigation configuration
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
     { name: "Services", path: "/services" },
+    { name: "Tech Buzz", path: "/tech-buzz" },
     { name: "Career", path: "/career" },
   ];
 
+  /**
+   * Determines if a given path is currently active.
+   * Special case for the home path to prevent partial matches.
+   */
   const isActive = (path: string) =>
     path === "/"
       ? location.pathname === "/"

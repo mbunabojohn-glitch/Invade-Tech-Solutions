@@ -7,6 +7,8 @@ import Career from "../pages/Career";
 import PrivacyPolicy from "../pages/PrivacyPolicy";
 import TermsOfService from "../pages/TermsOfService";
 import CookiePolicy from "../pages/CookiePolicy";
+import TechBuzz from "../pages/TechBuzz/TechBuzz";
+import TechBuzzDetail from "../pages/TechBuzz/TechBuzzDetail";
 import NotFound from "../pages/NotFound";
 import Register from "../pages/Register/Register";
 import StudentLogin from "../pages/StudentPortal/Login/StudentLogin";
@@ -37,6 +39,8 @@ const AppRoutes = () => {
       <Route path="/contact" element={<Contact />} />
       <Route path="/services" element={<Services />} />
       <Route path="/career" element={<Career />} />
+      <Route path="/tech-buzz" element={<TechBuzz />} />
+      <Route path="/tech-buzz/:id" element={<TechBuzzDetail />} />
       <Route path="/register" element={<Register />} />
       <Route path="/student/login" element={<StudentLogin />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
