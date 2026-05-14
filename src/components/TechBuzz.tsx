@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNews } from "../hooks/useApi";
 import { ExternalLink, Calendar, AlertCircle, Newspaper } from "lucide-react";
 
