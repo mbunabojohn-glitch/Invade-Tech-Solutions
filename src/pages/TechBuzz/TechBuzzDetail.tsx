@@ -146,9 +146,6 @@ const TechBuzzDetail = () => {
         <article className="bg-gray-900/40 backdrop-blur-2xl border border-white/5 rounded-2xl md:rounded-[2.5rem] p-6 md:p-16 shadow-2xl scroll-animate slide-right">
           {/* Metadata */}
           <div className="flex flex-wrap items-center gap-4 md:gap-6 mb-6 md:mb-10 pb-6 md:pb-10 border-b border-white/5">
-            <span className="px-3 md:px-4 py-1 md:py-1.5 rounded-md bg-cyan-500 text-gray-950 text-[10px] md:text-xs font-black uppercase tracking-widest shadow-lg shadow-cyan-500/20">
-              {article.source}
-            </span>
             <div className="flex items-center text-gray-400 text-xs md:text-sm font-bold uppercase tracking-wider">
               <Calendar className="w-3.5 md:w-4 h-3.5 md:h-4 mr-2 text-cyan-500" />
               {new Date(article.publishedAt).toLocaleDateString("en-US", {

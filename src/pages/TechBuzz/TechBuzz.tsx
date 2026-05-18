@@ -89,7 +89,7 @@ const TechBuzz = () => {
                 TECH <span className="text-cyan-500 italic">BUZZ</span>
               </h1>
               <p className="text-gray-400 text-base md:text-lg max-w-xl mx-auto md:mx-0">
-                The pulse of technology. AI-curated news, jobs, and webinars from the global tech ecosystem.
+                Your daily dose of tech news, job opportunities and webinars from around the world
               </p>
             </div>
             
@@ -152,9 +152,6 @@ const TechBuzz = () => {
                     
                     <div className="absolute bottom-0 left-0 right-0 p-5 md:p-12">
                       <div className="flex items-center gap-3 md:gap-4 mb-3 md:mb-6">
-                        <span className="px-3 md:px-4 py-1 md:py-1.5 rounded-md bg-cyan-500 text-gray-950 text-[10px] md:text-xs font-black uppercase tracking-widest">
-                          {featuredArticle.source}
-                        </span>
                         <div className="flex items-center text-gray-300 text-xs md:text-sm font-medium">
                           <Clock className="w-3 md:w-4 h-3 md:h-4 mr-1 md:mr-2" />
                           {new Date(featuredArticle.publishedAt).toLocaleDateString("en-US", {
@@ -202,11 +199,6 @@ const TechBuzz = () => {
                         <Newspaper className="w-12 md:w-16 h-12 md:h-16 text-white/10" />
                       </div>
                     )}
-                    <div className="absolute top-3 md:top-4 left-3 md:left-4">
-                      <span className="px-2 md:px-3 py-1 rounded-md bg-gray-950/80 backdrop-blur-md border border-white/10 text-cyan-500 text-[9px] md:text-[10px] font-black uppercase tracking-widest">
-                        {article.source}
-                      </span>
-                    </div>
                   </div>
 
                   <div className="flex-grow space-y-3 md:space-y-6">
