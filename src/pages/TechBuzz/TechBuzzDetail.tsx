@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useNewsById } from "../../hooks/useApi";
 import { Calendar, Newspaper, ArrowLeft, AlertCircle, Clock, Share2 } from "lucide-react";
-import { cleanArticleText } from "../../lib/text-utils";
 
 /**
  * TechBuzzDetail Component
@@ -12,6 +11,20 @@ import { cleanArticleText } from "../../lib/text-utils";
 const TechBuzzDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+
+  const cleanSummary = (text: string) => {
+    if (!text) return "";
+    // Decode HTML entities
+    const txt = document.createElement("textarea");
+    txt.innerHTML = text;
+    const decoded = txt.value;
+
+    return decoded
+      .replace(/^#+\s/gm, "") // remove # headings
+      .replace(/\*\*(.*?)\*\*/g, "$1") // remove bold **text**
+      .replace(/\*(.*?)\*/g, "$1") // remove italic *text*
+      .trim();
+  };
   
   // Fetch article data using custom hook
   const { data: article, isLoading, isError, error } = useNewsById(id);
@@ -162,22 +175,20 @@ const TechBuzzDetail = () => {
 
           {/* Title */}
           <h1 className="text-3xl md:text-6xl font-black text-white leading-tight md:leading-[1.1] mb-8 md:mb-12 tracking-tight">
-            {cleanArticleText(article.title)}
+            {cleanSummary(article.title)}
           </h1>
 
           {/* Content Summary */}
           <div className="max-w-none">
-            {cleanArticleText(article.summary)
-              .split(/\n+/)
-              .filter(p => p.trim())
+            {cleanSummary(article.summary)
+              .split("\n")
+              .filter((p) => p.trim())
               .map((paragraph, index) => (
-                <p 
+                <p
                   key={index}
-                  className={`text-lg md:text-2xl text-gray-300 leading-relaxed font-medium mb-6 md:mb-8 ${
-                    index === 0 ? "first-letter:text-4xl md:first-letter:text-5xl first-letter:font-black first-letter:text-cyan-500 first-letter:mr-2 md:first-letter:mr-3 first-letter:float-left" : ""
-                  }`}
+                  className="text-gray-300 text-lg leading-relaxed mb-4"
                 >
-                  {paragraph.trim()}
+                  {paragraph}
                 </p>
               ))}
           </div>
