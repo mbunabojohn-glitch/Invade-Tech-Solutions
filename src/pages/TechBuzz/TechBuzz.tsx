@@ -94,8 +94,8 @@ const TechBuzz = () => {
             </div>
             
             {/* Category Tabs */}
-            <div className="w-full overflow-hidden">
-              <div className="flex flex-nowrap overflow-x-auto pb-4 -mx-4 px-4 md:mx-0 md:px-0 md:pb-0 md:flex-wrap gap-3 scroll-animate fade-in delay-200 no-scrollbar">
+            <div className="w-full md:w-auto overflow-hidden">
+              <div className="flex flex-nowrap overflow-x-auto pb-4 -mx-4 px-4 md:mx-0 md:px-0 md:pb-0 md:flex-wrap md:justify-end gap-3 scroll-animate fade-in delay-200 no-scrollbar">
                 {categories.map((cat) => (
                   <button
                     key={cat}
