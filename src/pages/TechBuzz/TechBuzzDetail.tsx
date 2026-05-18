@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useNewsById } from "../../hooks/useApi";
 import { Calendar, Newspaper, ArrowLeft, AlertCircle, Clock, Share2 } from "lucide-react";
+import { cleanArticleText } from "../../lib/text-utils";
 
 /**
  * TechBuzzDetail Component
@@ -164,34 +165,24 @@ const TechBuzzDetail = () => {
 
           {/* Title */}
           <h1 className="text-3xl md:text-6xl font-black text-white leading-tight md:leading-[1.1] mb-8 md:mb-12 tracking-tight">
-            {article.title}
+            {cleanArticleText(article.title)}
           </h1>
 
           {/* Content Summary */}
           <div className="max-w-none">
-            {article.summary.split(/[.\n]/).filter(p => p.trim()).map((paragraph, index) => (
-              <p 
-                key={index}
-                className={`text-lg md:text-2xl text-gray-300 leading-relaxed font-medium mb-6 md:mb-8 ${
-                  index === 0 ? "first-letter:text-4xl md:first-letter:text-5xl first-letter:font-black first-letter:text-cyan-500 first-letter:mr-2 md:first-letter:mr-3 first-letter:float-left" : ""
-                }`}
-              >
-                {paragraph.trim()}{paragraph.trim().length > 0 ? '.' : ''}
-              </p>
-            ))}
-            
-            <div className="space-y-4 md:space-y-6 text-gray-400 text-base md:text-lg leading-relaxed">
-              <p>
-                In today's rapidly evolving technological landscape, this development marks a significant milestone. 
-                Industry experts suggest that the implications of this news will be felt across multiple sectors 
-                as companies adapt to these emerging trends.
-              </p>
-              <p>
-                The shift towards more integrated and intelligent systems continues to drive innovation, 
-                forcing traditional players to rethink their strategies. This article explores the core 
-                components of this change and what it means for the future of tech.
-              </p>
-            </div>
+            {cleanArticleText(article.summary)
+              .split(/\n+/)
+              .filter(p => p.trim())
+              .map((paragraph, index) => (
+                <p 
+                  key={index}
+                  className={`text-lg md:text-2xl text-gray-300 leading-relaxed font-medium mb-6 md:mb-8 ${
+                    index === 0 ? "first-letter:text-4xl md:first-letter:text-5xl first-letter:font-black first-letter:text-cyan-500 first-letter:mr-2 md:first-letter:mr-3 first-letter:float-left" : ""
+                  }`}
+                >
+                  {paragraph.trim()}
+                </p>
+              ))}
           </div>
 
         </article>

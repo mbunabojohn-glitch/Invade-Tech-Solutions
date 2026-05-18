@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { useNews } from "../../hooks/useApi";
 import { Calendar, Newspaper, ArrowRight, AlertCircle, Clock } from "lucide-react";
+import { cleanArticleText } from "../../lib/text-utils";
 
 /**
  * TechBuzz Component
@@ -164,10 +165,10 @@ const TechBuzz = () => {
                         </div>
                       </div>
                       <h2 className="text-2xl sm:text-3xl md:text-6xl font-black text-white mb-3 md:mb-6 max-w-4xl leading-tight md:leading-[1.1] group-hover:text-cyan-400 transition-colors line-clamp-2 md:line-clamp-none">
-                        {featuredArticle.title}
+                        {cleanArticleText(featuredArticle.title)}
                       </h2>
                       <p className="text-gray-300 text-sm md:text-xl max-w-3xl line-clamp-2 mb-4 md:mb-8 leading-relaxed">
-                        {featuredArticle.summary}
+                        {cleanArticleText(featuredArticle.summary)}
                       </p>
                       <button className="inline-flex items-center gap-2 bg-white text-gray-950 px-5 md:px-8 py-2.5 md:py-4 rounded-lg md:rounded-xl text-sm md:text-base font-bold hover:bg-cyan-500 transition-colors">
                         Read Full Article
@@ -219,11 +220,11 @@ const TechBuzz = () => {
                     </div>
                     <Link to={`/tech-buzz/${article._id}`}>
                       <h3 className="text-xl md:text-3xl font-black text-white group-hover:text-cyan-500 transition-colors leading-tight">
-                        {article.title}
+                        {cleanArticleText(article.title)}
                       </h3>
                     </Link>
                     <div className="text-gray-400 text-base md:text-lg leading-relaxed line-clamp-2 md:line-clamp-3">
-                      {article.summary}
+                      {cleanArticleText(article.summary)}
                     </div>
                     <Link
                       to={`/tech-buzz/${article._id}`}
