@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useNewsById } from "../../hooks/useApi";
 import { Calendar, Newspaper, ArrowLeft, AlertCircle, Clock, Share2 } from "lucide-react";
+import { cleanArticleText } from "../../lib/text-utils";
 
 /**
  * TechBuzzDetail Component
@@ -11,20 +12,6 @@ import { Calendar, Newspaper, ArrowLeft, AlertCircle, Clock, Share2 } from "luci
 const TechBuzzDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-
-  const cleanSummary = (text: string) => {
-    if (!text) return "";
-    // Decode HTML entities
-    const txt = document.createElement("textarea");
-    txt.innerHTML = text;
-    const decoded = txt.value;
-
-    return decoded
-      .replace(/^#+\s/gm, "") // remove # headings
-      .replace(/\*\*(.*?)\*\*/g, "$1") // remove bold **text**
-      .replace(/\*(.*?)\*/g, "$1") // remove italic *text*
-      .trim();
-  };
   
   // Fetch article data using custom hook
   const { data: article, isLoading, isError, error } = useNewsById(id);
@@ -136,7 +123,7 @@ const TechBuzzDetail = () => {
       {/* Hero Image Section */}
       <section className="pt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-8">
-          <div className="relative h-[40vh] md:h-[60vh] w-full overflow-hidden rounded-2xl md:rounded-[2.5rem] shadow-2xl scroll-animate scale-in">
+          <div className="relative h-[40vh] md:h-[60vh] w-full overflow-hidden rounded-2xl md:rounded-[2.5rem] shadow-2xl">
             {(article.imageUrl || article.image) && !imageError ? (
               <img
                 src={article.imageUrl || article.image}
@@ -155,8 +142,8 @@ const TechBuzzDetail = () => {
       </section>
 
       {/* Article Content */}
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 md:-mt-20 relative z-10">
-        <article className="bg-gray-900/40 backdrop-blur-2xl border border-white/5 rounded-2xl md:rounded-[2.5rem] p-6 md:p-16 shadow-2xl scroll-animate slide-right">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 md:-mt-20 relative z-10 min-h-[500px]">
+        <article className="bg-gray-900 border border-white/10 rounded-2xl md:rounded-[2.5rem] p-6 md:p-16 shadow-2xl block">
           {/* Metadata */}
           <div className="flex flex-wrap items-center gap-4 md:gap-6 mb-6 md:mb-10 pb-6 md:pb-10 border-b border-white/5">
             <div className="flex items-center text-gray-400 text-xs md:text-sm font-bold uppercase tracking-wider">
@@ -175,12 +162,12 @@ const TechBuzzDetail = () => {
 
           {/* Title */}
           <h1 className="text-3xl md:text-6xl font-black text-white leading-tight md:leading-[1.1] mb-8 md:mb-12 tracking-tight">
-            {cleanSummary(article.title)}
+            {cleanArticleText(article.title)}
           </h1>
 
           {/* Content Summary */}
           <div className="max-w-none">
-            {cleanSummary(article.summary)
+            {cleanArticleText(article.summary)
               .split("\n")
               .filter((p) => p.trim())
               .map((paragraph, index) => (

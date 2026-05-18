@@ -9,23 +9,26 @@
  */
 export const decodeHTML = (html: string): string => {
   if (!html) return '';
+  
+  // Fix common mis-encoded numeric entities (missing #)
+  let processed = html.replace(/&(\d+);/g, '&#$1;');
+  
   const txt = document.createElement('textarea');
-  txt.innerHTML = html;
+  txt.innerHTML = processed;
   return txt.value;
 };
 
 /**
- * Strips basic markdown symbols from a string
- * @param text The string containing markdown
- * @returns Clean text
+ * Strips basic markdown symbols from a string and cleans up the text
  */
 export const stripMarkdown = (text: string): string => {
   if (!text) return '';
   return text
-    .replace(/[#*`_~]/g, '') // Strip symbols like #, *, `, _, ~
+    .replace(/^#+\s/gm, '')      // Remove # headings
+    .replace(/\*\*(.*?)\*\*/g, '$1')  // Remove bold **text**
+    .replace(/\*(.*?)\*/g, '$1')      // Remove italic *text*
     .replace(/\[(.*?)\]\(.*?\)/g, '$1') // Convert [text](url) to text
     .replace(/^\s*-\s+/gm, '') // Strip list dashes
-    .replace(/\n{2,}/g, '\n\n') // Normalize multiple newlines
     .trim();
 };
 
