@@ -118,7 +118,7 @@ const Shop: React.FC = () => {
           <div className="relative z-10 group px-4">
             <div className="absolute -inset-6 bg-blue-500/10 blur-[60px] rounded-full group-hover:bg-blue-500/20 transition-colors"></div>
             <img 
-              src="/images/hero-solar.webp" 
+              src="/images/power-tank.webp" 
               alt="Itel Power Inverter" 
               className="relative w-full max-w-md drop-shadow-[0_20px_20px_rgba(0,0,0,0.5)] animate-rotate-y-slow brightness-110 contrast-105"
             />
