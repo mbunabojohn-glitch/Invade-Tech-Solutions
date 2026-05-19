@@ -13,7 +13,7 @@ export default defineConfig({
         '/about',
         '/services',
         '/contact',
-        '/career',
+        '/shop',
         '/tech-buzz',
       ],
     }),

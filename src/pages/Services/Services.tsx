@@ -73,11 +73,11 @@ const Services = () => {
         {/* Hero Content */}
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
           <h1
-            className="text-5xl md:text-7xl font-bold text-white mb-6 scroll-animate fade-in-up"
+            className="text-5xl md:text-7xl font-bold text-white mb-6 scroll-animate slide-right"
           >
             Our <span className="text-cyan-500">Services</span>
           </h1>
-          <p className="text-xl text-gray-300 mb-8 scroll-animate fade-in-up delay-100">
+          <p className="text-xl text-gray-300 mb-8 scroll-animate slide-left">
             We provide comprehensive IT solutions designed to empower your
             business, enhance productivity, and drive digital transformation.
           </p>
@@ -98,7 +98,7 @@ const Services = () => {
                   className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-12 items-center`}
                 >
                   {/* Image/Icon Side */}
-                  <div className="w-full lg:w-1/2 scroll-animate fade-in">
+                  <div className={`w-full lg:w-1/2 scroll-animate ${index % 2 === 0 ? 'slide-right' : 'slide-left'}`}>
                     <div className="relative group">
                       <div className="absolute -inset-4 bg-cyan-500/20 rounded-xl blur-xl group-hover:bg-cyan-500/30 transition-all duration-500"></div>
                       <div className="relative overflow-hidden rounded-2xl border border-gray-800 bg-gray-900 shadow-2xl">
@@ -122,7 +122,7 @@ const Services = () => {
                   </div>
 
                   {/* Content Side */}
-                  <div className="w-full lg:w-1/2 space-y-6 scroll-animate fade-in">
+                  <div className={`w-full lg:w-1/2 space-y-6 scroll-animate ${index % 2 === 0 ? 'slide-left' : 'slide-right'}`}>
                     <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-500 text-sm font-medium">
                       <Icon className="w-4 h-4" />
                       <span>{('shortTitle' in service) ? service.shortTitle : `Service ${index + 1}`}</span>

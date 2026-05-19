@@ -26,6 +26,25 @@
   animation: fadeInUp 0.8s ease-out 0.4s forwards;
 }
 
+@keyframes swingY {
+  0% {
+    transform: perspective(1000px) rotateY(-30deg);
+  }
+  50% {
+    transform: perspective(1000px) rotateY(30deg);
+  }
+  100% {
+    transform: perspective(1000px) rotateY(-30deg);
+  }
+}
+
+.animate-rotate-y-slow {
+  animation: swingY 10s ease-in-out infinite;
+  transform-style: preserve-3d;
+  will-change: transform;
+  backface-visibility: visible;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
