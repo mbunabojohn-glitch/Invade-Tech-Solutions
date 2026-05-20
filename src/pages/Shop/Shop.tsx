@@ -225,7 +225,7 @@ const Shop: React.FC = () => {
             className="w-full h-full object-cover"
           />
         </div>
-        <div className="max-w-4xl mx-auto text-center relative z-10 scroll-animate scale-in bg-slate-950/40 backdrop-blur-sm p-6 md:p-8 lg:p-12 rounded-3xl border border-white/10 mx-2 md:mx-0">
+        <div className="max-w-4xl mx-auto text-center relative z-10 scroll-animate scale-in bg-slate-950/40 backdrop-blur-sm p-6 md:p-8 lg:p-12 rounded-3xl border border-white/10">
           <h2 className="text-2xl md:text-4xl lg:text-6xl font-black mb-4 md:mb-8 leading-tight text-white drop-shadow-[0_4px_12px_rgba(0,0,0,1)]">
             When National Grid Fall, <br />
             <span className="text-cyan-400">Your Power Go Get Back Up!</span>
