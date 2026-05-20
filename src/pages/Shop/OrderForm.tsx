@@ -95,9 +95,9 @@ const OrderForm: React.FC = () => {
         {/* Product Summary Card */}
         <div className="bg-slate-900/40 border border-slate-800 rounded-3xl p-6 md:p-8 mb-8">
           <div className="flex flex-col md:flex-row gap-8 items-center md:items-start text-center md:text-left">
-            <div className="w-32 h-32 md:w-40 md:h-40 bg-slate-800 rounded-2xl flex-shrink-0 overflow-hidden shadow-xl">
+            <div className="w-28 h-28 md:w-40 md:h-40 lg:w-48 lg:h-48 bg-slate-800 rounded-2xl flex-shrink-0 overflow-hidden shadow-xl">
               <img 
-                src="/images/hero-solar.webp" 
+                src="/images/power-tank.webp" 
                 alt="Itel Power Inverter" 
                 className="w-full h-full object-contain p-2"
               />

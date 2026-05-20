@@ -70,114 +70,114 @@ const Shop: React.FC = () => {
   return (
     <div className="bg-[#020d1f] text-white min-h-screen font-sans selection:bg-cyan-500/30 overflow-x-hidden">
       {/* Section 1 — Hero */}
-      <section className="relative pt-8 pb-12 px-4 overflow-hidden flex flex-col items-center text-center">
+      <section className="relative pt-6 pb-10 px-4 overflow-hidden flex flex-col items-center text-center">
         {/* Top Banner */}
-        <p className="text-cyan-400 font-semibold mb-4 scroll-animate fade-in">
+        <p className="text-cyan-400 font-semibold mb-3 scroll-animate fade-in text-sm md:text-base">
           Never be caught off-guard again!
         </p>
 
         {/* Headline */}
-        <div className="relative mb-4 scroll-animate slide-right">
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight relative z-10 text-white">
+        <div className="relative mb-3 scroll-animate slide-right">
+          <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold tracking-tight relative z-10 text-white leading-tight">
             <span className="text-cyan-500">Take Control</span> of Your Power
           </h1>
         </div>
 
-        <p className="text-slate-300 text-lg md:text-xl max-w-2xl mb-8 leading-relaxed scroll-animate slide-left">
+        <p className="text-slate-300 text-base md:text-lg lg:text-xl max-w-2xl mb-6 leading-relaxed scroll-animate slide-left px-2">
           Keep your devices running anytime, with reliable power supply you can trust!
         </p>
 
         {/* Order Now Button */}
         <button 
           onClick={navigateToOrder}
-          className="bg-cyan-500 text-white px-10 py-4 rounded-full font-bold text-lg flex items-center gap-3 shadow-[0_0_20px_rgba(6,182,212,0.5)] hover:shadow-[0_0_30px_rgba(6,182,212,0.8)] hover:scale-105 transition-all mb-12 group relative overflow-hidden scroll-animate scale-in"
+          className="w-full max-w-sm bg-cyan-500 text-white px-8 py-4 rounded-full font-bold text-base md:text-lg flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(6,182,212,0.5)] hover:shadow-[0_0_30px_rgba(6,182,212,0.8)] hover:scale-105 transition-all mb-8 group relative overflow-hidden scroll-animate scale-in"
         >
           <span className="relative z-10">Order Now</span>
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
         </button>
 
         {/* Product Image and Floating Badges */}
-        <div className="relative w-full max-w-5xl mx-auto flex justify-center items-center py-8 scroll-animate fade-in">
+        <div className="relative w-full max-w-5xl mx-auto flex justify-center items-center py-6 scroll-animate fade-in">
           {/* Floating Badges - Left */}
-          <div className="absolute left-[-20px] xl:left-0 top-1/4 hidden lg:flex flex-col gap-16 z-20">
-            <div className="bg-slate-900/80 backdrop-blur border border-slate-700 p-4 rounded-xl flex items-center gap-3 animate-float shadow-2xl" style={{animationDelay: '0s'}}>
-              <div className="bg-cyan-500/20 p-2.5 rounded-lg"><Zap className="w-6 h-6 text-cyan-400" /></div>
+          <div className="absolute left-[-10px] md:left-[-20px] xl:left-0 top-1/4 hidden md:flex flex-col gap-8 md:gap-16 z-20">
+            <div className="bg-slate-900/80 backdrop-blur border border-slate-700 p-2 md:p-4 rounded-xl flex items-center gap-2 md:gap-3 animate-float shadow-2xl" style={{animationDelay: '0s'}}>
+              <div className="bg-cyan-500/20 p-1.5 md:p-2.5 rounded-lg"><Zap className="w-4 h-4 md:w-6 md:h-6 text-cyan-400" /></div>
               <div className="text-left">
-                <p className="text-base font-bold">Plug & Play</p>
+                <p className="text-xs md:text-base font-bold">Plug & Play</p>
               </div>
             </div>
-            <div className="bg-slate-900/80 backdrop-blur border border-slate-700 p-4 rounded-xl flex items-center gap-3 animate-float shadow-2xl" style={{animationDelay: '1s'}}>
-              <div className="bg-orange-500/20 p-2.5 rounded-lg"><Zap className="w-6 h-6 text-orange-400" /></div>
+            <div className="bg-slate-900/80 backdrop-blur border border-slate-700 p-2 md:p-4 rounded-xl flex items-center gap-2 md:gap-3 animate-float shadow-2xl" style={{animationDelay: '1s'}}>
+              <div className="bg-orange-500/20 p-1.5 md:p-2.5 rounded-lg"><Zap className="w-4 h-4 md:w-6 md:h-6 text-orange-400" /></div>
               <div className="text-left">
-                <p className="text-base font-bold">2hrs Fast Charge</p>
+                <p className="text-xs md:text-base font-bold">2hrs Fast Charge</p>
               </div>
             </div>
           </div>
 
           {/* Product Image */}
           <div className="relative z-10 group px-4">
-            <div className="absolute -inset-6 bg-blue-500/10 blur-[60px] rounded-full group-hover:bg-blue-500/20 transition-colors"></div>
+            <div className="absolute -inset-4 md:-inset-6 bg-blue-500/10 blur-[40px] md:blur-[60px] rounded-full group-hover:bg-blue-500/20 transition-colors"></div>
             <img 
               src="/images/power-tank.webp" 
               alt="Itel Power Inverter" 
-              className="relative w-full max-w-md drop-shadow-[0_20px_20px_rgba(0,0,0,0.5)] animate-rotate-y-slow brightness-110 contrast-105"
+              className="relative w-full max-w-[250px] md:max-w-md lg:max-w-lg drop-shadow-[0_15px_15px_rgba(0,0,0,0.5)] md:drop-shadow-[0_20px_20px_rgba(0,0,0,0.5)] animate-rotate-y-slow brightness-110 contrast-105"
             />
           </div>
 
           {/* Floating Badges - Right */}
-          <div className="absolute right-[-20px] xl:right-0 top-1/4 hidden lg:flex flex-col gap-16 z-20">
-            <div className="bg-slate-900/80 backdrop-blur border border-slate-700 p-4 rounded-xl flex items-center gap-3 animate-float shadow-2xl" style={{animationDelay: '0.5s'}}>
-              <div className="bg-yellow-500/20 p-2.5 rounded-lg"><Sun className="w-6 h-6 text-yellow-400" /></div>
+          <div className="absolute right-[-10px] md:right-[-20px] xl:right-0 top-1/4 hidden md:flex flex-col gap-8 md:gap-16 z-20">
+            <div className="bg-slate-900/80 backdrop-blur border border-slate-700 p-2 md:p-4 rounded-xl flex items-center gap-2 md:gap-3 animate-float shadow-2xl" style={{animationDelay: '0.5s'}}>
+              <div className="bg-yellow-500/20 p-1.5 md:p-2.5 rounded-lg"><Sun className="w-4 h-4 md:w-6 md:h-6 text-yellow-400" /></div>
               <div className="text-left">
-                <p className="text-base font-bold max-w-[180px]">Battery + Inverter + Solar in one</p>
+                <p className="text-xs md:text-base font-bold max-w-[120px] md:max-w-[180px]">Battery + Inverter + Solar in one</p>
               </div>
             </div>
-            <div className="bg-slate-900/80 backdrop-blur border border-slate-700 p-4 rounded-xl flex items-center gap-3 animate-float shadow-2xl" style={{animationDelay: '1.5s'}}>
-              <div className="bg-purple-500/20 p-2.5 rounded-lg"><Settings className="w-6 h-6 text-purple-400" /></div>
+            <div className="bg-slate-900/80 backdrop-blur border border-slate-700 p-2 md:p-4 rounded-xl flex items-center gap-2 md:gap-3 animate-float shadow-2xl" style={{animationDelay: '1.5s'}}>
+              <div className="bg-purple-500/20 p-1.5 md:p-2.5 rounded-lg"><Settings className="w-4 h-4 md:w-6 md:h-6 text-purple-400" /></div>
               <div className="text-left">
-                <p className="text-base font-bold">Simple Setup</p>
+                <p className="text-xs md:text-base font-bold">Simple Setup</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Social Proof */}
-        <div className="mt-8 flex items-center gap-4 bg-slate-900/40 px-6 py-3 rounded-full border border-slate-800 animate-fade-in">
+        <div className="mt-6 flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4 bg-slate-900/40 px-4 md:px-6 py-3 rounded-full border border-slate-800 animate-fade-in w-full max-w-xs md:max-w-none">
           <div className="flex -space-x-2">
             {[1, 2, 3].map(i => (
-              <img key={i} src={`https://i.pravatar.cc/100?img=${i+10}`} alt="User" className="w-8 h-8 rounded-full border-2 border-slate-900" />
+              <img key={i} src={`https://i.pravatar.cc/100?img=${i+10}`} alt="User" className="w-7 h-7 md:w-8 md:h-8 rounded-full border-2 border-slate-900" />
             ))}
           </div>
-          <p className="text-sm font-bold text-slate-300">
-            <Users className="w-4 h-4 inline mr-2 text-cyan-400" />
+          <p className="text-xs md:text-sm font-bold text-slate-300 flex items-center gap-2">
+            <Users className="w-3.5 h-3.5 md:w-4 md:h-4 text-cyan-400" />
             1,000+ Units sold
           </p>
         </div>
       </section>
 
       {/* Section 2 — What It Can Power */}
-      <section className="py-20 bg-slate-900/30 px-4">
+      <section className="py-12 md:py-20 bg-slate-900/30 px-4">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16 scroll-animate fade-in">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">See How Long It Powers Your Devices</h2>
-            <div className="w-20 h-1 bg-cyan-500 mx-auto"></div>
+          <div className="text-center mb-10 md:mb-16 scroll-animate fade-in">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4">See How Long It Powers Your Devices</h2>
+            <div className="w-16 md:w-20 h-1 bg-cyan-500 mx-auto"></div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {appliances.map((app, i) => (
-              <div key={i} className="bg-slate-900 border border-slate-800 p-6 rounded-2xl hover:border-cyan-500/50 transition-colors group scroll-animate scale-in">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="p-3 bg-slate-800 rounded-xl text-cyan-400 group-hover:bg-cyan-500 group-hover:text-slate-950 transition-colors">
+              <div key={i} className="bg-slate-900 border border-slate-800 p-4 md:p-6 rounded-2xl hover:border-cyan-500/50 transition-colors group scroll-animate scale-in">
+                <div className="flex items-center gap-3 md:gap-4 mb-4">
+                  <div className="p-2.5 md:p-3 bg-slate-800 rounded-xl text-cyan-400 group-hover:bg-cyan-500 group-hover:text-slate-950 transition-colors">
                     {app.icon}
                   </div>
                   <div>
-                    <h3 className="font-bold text-lg">{app.name}</h3>
-                    <p className="text-slate-500 text-sm">Power Usage: {app.power}</p>
+                    <h3 className="font-bold text-base md:text-lg">{app.name}</h3>
+                    <p className="text-slate-500 text-xs md:text-sm">Power Usage: {app.power}</p>
                   </div>
                 </div>
-                <div className="flex justify-between items-center pt-4 border-t border-slate-800">
-                  <span className="text-slate-400 text-sm">Runtime</span>
-                  <span className="text-cyan-400 font-bold">{app.runtime}</span>
+                <div className="flex justify-between items-center pt-3 md:pt-4 border-t border-slate-800">
+                  <span className="text-slate-400 text-xs md:text-sm">Runtime</span>
+                  <span className="text-cyan-400 font-bold text-sm md:text-base">{app.runtime}</span>
                 </div>
               </div>
             ))}
@@ -186,29 +186,29 @@ const Shop: React.FC = () => {
       </section>
 
       {/* Section 3 — Warning */}
-      <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-          <div className="order-2 md:order-1 scroll-animate slide-right">
+      <section className="py-12 md:py-20 px-4">
+        <div className="max-w-7xl mx-auto flex flex-col md:grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div className="order-2 md:order-1 scroll-animate slide-right w-full">
             <img 
               src="/images/power-tank.webp" 
               alt="Safety Warning"
-              className="w-full h-[500px] object-cover rounded-2xl brightness-110 contrast-105"
+              className="w-full h-[300px] md:h-[400px] lg:h-[500px] object-cover rounded-2xl brightness-110 contrast-105"
             />
           </div>
-          <div className="order-1 md:order-2 scroll-animate slide-left">
-            <h2 className="text-3xl md:text-4xl font-bold mb-8">With Great Power Comes Responsibility!</h2>
-            <div className="space-y-4 mb-8">
+          <div className="order-1 md:order-2 scroll-animate slide-left w-full">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 md:mb-8">With Great Power Comes Responsibility!</h2>
+            <div className="space-y-3 md:space-y-4 mb-6 md:mb-8">
               {warnings.map((item, i) => (
-                <div key={i} className="flex items-center gap-4 text-slate-300">
-                  <div className="bg-red-500/10 p-1 rounded">
-                    <AlertTriangle className="w-5 h-5 text-red-500" />
+                <div key={i} className="flex items-center gap-3 md:gap-4 text-slate-300">
+                  <div className="bg-red-500/10 p-1 rounded flex-shrink-0">
+                    <AlertTriangle className="w-4 h-4 md:w-5 md:h-5 text-red-500" />
                   </div>
-                  <span className="text-lg">{item}</span>
+                  <span className="text-base md:text-lg">{item}</span>
                 </div>
               ))}
             </div>
-            <div className="p-4 bg-yellow-500/10 border-l-4 border-yellow-500 rounded-r-lg">
-              <p className="text-yellow-500 font-medium">
+            <div className="p-3 md:p-4 bg-yellow-500/10 border-l-4 border-yellow-500 rounded-r-lg">
+              <p className="text-yellow-500 font-medium text-sm md:text-base">
                 Note: Heavy appliances may trigger overload protection
               </p>
             </div>
@@ -217,7 +217,7 @@ const Shop: React.FC = () => {
       </section>
 
       {/* Section 4 — Human Touch */}
-      <section className="relative py-32 px-4 overflow-hidden">
+      <section className="relative py-16 md:py-32 px-4 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
             src="/images/living room.jpg" 
@@ -225,63 +225,62 @@ const Shop: React.FC = () => {
             className="w-full h-full object-cover"
           />
         </div>
-        <div className="max-w-4xl mx-auto text-center relative z-10 scroll-animate scale-in bg-slate-950/40 backdrop-blur-sm p-8 md:p-12 rounded-3xl border border-white/10">
-          <h2 className="text-4xl md:text-6xl font-black mb-8 leading-tight text-white drop-shadow-[0_4px_12px_rgba(0,0,0,1)]">
+        <div className="max-w-4xl mx-auto text-center relative z-10 scroll-animate scale-in bg-slate-950/40 backdrop-blur-sm p-6 md:p-8 lg:p-12 rounded-3xl border border-white/10 mx-2 md:mx-0">
+          <h2 className="text-2xl md:text-4xl lg:text-6xl font-black mb-4 md:mb-8 leading-tight text-white drop-shadow-[0_4px_12px_rgba(0,0,0,1)]">
             When National Grid Fall, <br />
             <span className="text-cyan-400">Your Power Go Get Back Up!</span>
           </h2>
-          <p className="text-xl md:text-2xl text-white italic font-bold drop-shadow-[0_4px_8px_rgba(0,0,0,1)]">
+          <p className="text-base md:text-xl lg:text-2xl text-white italic font-bold drop-shadow-[0_4px_8px_rgba(0,0,0,1)] leading-relaxed">
             "No more 'Up NEPA' heartbreaks. Stay connected, stay productive, and keep the vibes going 24/7."
           </p>
         </div>
       </section>
 
       {/* Section 5 — Offer */}
-      <section className="py-24 px-4 bg-gradient-to-b from-slate-950 to-slate-900">
+      <section className="py-16 md:py-24 px-4 bg-gradient-to-b from-slate-950 to-slate-900">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16 scroll-animate fade-in">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4">We've Power-Packed the Best Deal for You</h2>
+          <div className="text-center mb-10 md:mb-16 scroll-animate fade-in">
+            <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold mb-4">We've Power-Packed the Best Deal for You</h2>
           </div>
 
           <div className="bg-slate-900 border-2 border-cyan-500/30 rounded-3xl overflow-hidden shadow-2xl scroll-animate scale-in">
-            <div className="grid md:grid-cols-2">
-              <div className="p-8 md:p-12">
-                <div className="inline-block px-4 py-1 bg-green-500/20 text-green-400 rounded-full text-sm font-bold mb-6">
+            <div className="flex flex-col md:grid md:grid-cols-2">
+              <div className="p-6 md:p-8 lg:p-12 order-2 md:order-1">
+                <div className="inline-block px-3 md:px-4 py-1 bg-green-500/20 text-green-400 rounded-full text-xs md:text-sm font-bold mb-4 md:mb-6">
                   + 200W Sonik Energy Saving Iron — FREE
                 </div>
-                <h3 className="text-3xl font-bold mb-4">Itel 500W Solar Tank Inverter</h3>
-                <div className="flex items-baseline gap-3 mb-8">
-                  <span className="text-5xl font-black text-white">₦350,000</span>
-                  <span className="text-slate-500 line-through text-xl">₦450,000</span>
+                <h3 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4">Itel 500W Solar Tank Inverter</h3>
+                <div className="mb-6 md:mb-8">
+                  <span className="text-4xl md:text-5xl font-black text-white">₦350,000</span>
                 </div>
 
-                <div className="space-y-4 mb-10">
-                  <div className="flex items-center gap-3">
-                    <ShieldCheck className="w-6 h-6 text-cyan-400" />
-                    <span className="font-medium text-lg">2 Years Warranty</span>
+                <div className="space-y-3 md:space-y-4 mb-8 md:mb-10">
+                  <div className="flex items-center gap-2 md:gap-3">
+                    <ShieldCheck className="w-5 h-5 md:w-6 md:h-6 text-cyan-400" />
+                    <span className="font-medium text-base md:text-lg">2 Years Warranty</span>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <Settings className="w-6 h-6 text-cyan-400" />
-                    <span className="font-medium text-lg">Free Installation</span>
+                  <div className="flex items-center gap-2 md:gap-3">
+                    <Settings className="w-5 h-5 md:w-6 md:h-6 text-cyan-400" />
+                    <span className="font-medium text-base md:text-lg">Free Installation</span>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <Truck className="w-6 h-6 text-cyan-400" />
-                    <span className="font-medium text-lg">Payment on Delivery</span>
+                  <div className="flex items-center gap-2 md:gap-3">
+                    <Truck className="w-5 h-5 md:w-6 md:h-6 text-cyan-400" />
+                    <span className="font-medium text-base md:text-lg">Payment on Delivery</span>
                   </div>
                 </div>
 
                 <button 
                   onClick={navigateToOrder}
-                  className="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black py-5 rounded-2xl text-xl transition-all shadow-lg hover:shadow-cyan-500/20"
+                  className="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black py-4 md:py-5 rounded-2xl text-lg md:text-xl transition-all shadow-lg hover:shadow-cyan-500/20"
                 >
                   Claim This Offer Now
                 </button>
               </div>
-              <div className="bg-slate-800/50 flex items-center justify-center p-8">
+              <div className="bg-slate-800/50 flex items-center justify-center p-6 md:p-8 order-1 md:order-2">
                 <img 
                   src="/images/sec5.jpg" 
                   alt="Bundle Offer"
-                  className="w-full max-w-sm drop-shadow-2xl rounded-2xl"
+                  className="w-full max-w-xs md:max-w-sm drop-shadow-2xl rounded-2xl"
                 />
               </div>
             </div>
