@@ -253,8 +253,9 @@ const Shop: React.FC = () => {
                   + 200W Sonik Energy Saving Iron — FREE
                 </div>
                 <h3 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4">Itel 500W Solar Tank Inverter</h3>
-                <div className="mb-6 md:mb-8">
+                <div className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-3 mb-6 md:mb-8">
                   <span className="text-4xl md:text-5xl font-black text-white">₦350,000</span>
+                  <span className="text-base md:text-xl text-slate-500 line-through">₦450,000</span>
                 </div>
 
                 <div className="space-y-3 md:space-y-4 mb-8 md:mb-10">
