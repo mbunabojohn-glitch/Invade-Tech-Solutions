@@ -99,17 +99,17 @@ const Shop: React.FC = () => {
         {/* Product Image and Floating Badges */}
         <div className="relative w-full max-w-5xl mx-auto flex justify-center items-center py-6 scroll-animate fade-in">
           {/* Floating Badges - Left */}
-          <div className="absolute left-[-10px] md:left-[-20px] xl:left-0 top-1/4 hidden md:flex flex-col gap-8 md:gap-16 z-20">
-            <div className="bg-slate-900/80 backdrop-blur border border-slate-700 p-2 md:p-4 rounded-xl flex items-center gap-2 md:gap-3 animate-float shadow-2xl" style={{animationDelay: '0s'}}>
-              <div className="bg-cyan-500/20 p-1.5 md:p-2.5 rounded-lg"><Zap className="w-4 h-4 md:w-6 md:h-6 text-cyan-400" /></div>
+          <div className="absolute left-[-5px] md:left-[-10px] lg:left-[-20px] xl:left-0 top-1/4 flex flex-col gap-4 md:gap-8 lg:gap-16 z-20">
+            <div className="bg-slate-900/80 backdrop-blur border border-slate-700 p-1.5 md:p-2 lg:p-4 rounded-xl flex items-center gap-1.5 md:gap-2 lg:gap-3 animate-float shadow-2xl" style={{animationDelay: '0s'}}>
+              <div className="bg-cyan-500/20 p-1 md:p-1.5 lg:p-2.5 rounded-lg"><Zap className="w-3.5 h-3.5 md:w-4 lg:w-6 h-3.5 md:h-4 lg:h-6 text-cyan-400" /></div>
               <div className="text-left">
-                <p className="text-xs md:text-base font-bold">Plug & Play</p>
+                <p className="text-[10px] md:text-xs lg:text-base font-bold">Plug & Play</p>
               </div>
             </div>
-            <div className="bg-slate-900/80 backdrop-blur border border-slate-700 p-2 md:p-4 rounded-xl flex items-center gap-2 md:gap-3 animate-float shadow-2xl" style={{animationDelay: '1s'}}>
-              <div className="bg-orange-500/20 p-1.5 md:p-2.5 rounded-lg"><Zap className="w-4 h-4 md:w-6 md:h-6 text-orange-400" /></div>
+            <div className="bg-slate-900/80 backdrop-blur border border-slate-700 p-1.5 md:p-2 lg:p-4 rounded-xl flex items-center gap-1.5 md:gap-2 lg:gap-3 animate-float shadow-2xl" style={{animationDelay: '1s'}}>
+              <div className="bg-orange-500/20 p-1 md:p-1.5 lg:p-2.5 rounded-lg"><Zap className="w-3.5 h-3.5 md:w-4 lg:w-6 h-3.5 md:h-4 lg:h-6 text-orange-400" /></div>
               <div className="text-left">
-                <p className="text-xs md:text-base font-bold">2hrs Fast Charge</p>
+                <p className="text-[10px] md:text-xs lg:text-base font-bold">2hrs Fast Charge</p>
               </div>
             </div>
           </div>
@@ -125,17 +125,17 @@ const Shop: React.FC = () => {
           </div>
 
           {/* Floating Badges - Right */}
-          <div className="absolute right-[-10px] md:right-[-20px] xl:right-0 top-1/4 hidden md:flex flex-col gap-8 md:gap-16 z-20">
-            <div className="bg-slate-900/80 backdrop-blur border border-slate-700 p-2 md:p-4 rounded-xl flex items-center gap-2 md:gap-3 animate-float shadow-2xl" style={{animationDelay: '0.5s'}}>
-              <div className="bg-yellow-500/20 p-1.5 md:p-2.5 rounded-lg"><Sun className="w-4 h-4 md:w-6 md:h-6 text-yellow-400" /></div>
+          <div className="absolute right-[-5px] md:right-[-10px] lg:right-[-20px] xl:right-0 top-1/4 flex flex-col gap-4 md:gap-8 lg:gap-16 z-20">
+            <div className="bg-slate-900/80 backdrop-blur border border-slate-700 p-1.5 md:p-2 lg:p-4 rounded-xl flex items-center gap-1.5 md:gap-2 lg:gap-3 animate-float shadow-2xl" style={{animationDelay: '0.5s'}}>
+              <div className="bg-yellow-500/20 p-1 md:p-1.5 lg:p-2.5 rounded-lg"><Sun className="w-3.5 h-3.5 md:w-4 lg:w-6 h-3.5 md:h-4 lg:h-6 text-yellow-400" /></div>
               <div className="text-left">
-                <p className="text-xs md:text-base font-bold max-w-[120px] md:max-w-[180px]">Battery + Inverter + Solar in one</p>
+                <p className="text-[10px] md:text-xs lg:text-base font-bold max-w-[100px] md:max-w-[120px] lg:max-w-[180px]">Battery + Inverter + Solar in one</p>
               </div>
             </div>
-            <div className="bg-slate-900/80 backdrop-blur border border-slate-700 p-2 md:p-4 rounded-xl flex items-center gap-2 md:gap-3 animate-float shadow-2xl" style={{animationDelay: '1.5s'}}>
-              <div className="bg-purple-500/20 p-1.5 md:p-2.5 rounded-lg"><Settings className="w-4 h-4 md:w-6 md:h-6 text-purple-400" /></div>
+            <div className="bg-slate-900/80 backdrop-blur border border-slate-700 p-1.5 md:p-2 lg:p-4 rounded-xl flex items-center gap-1.5 md:gap-2 lg:gap-3 animate-float shadow-2xl" style={{animationDelay: '1.5s'}}>
+              <div className="bg-purple-500/20 p-1 md:p-1.5 lg:p-2.5 rounded-lg"><Settings className="w-3.5 h-3.5 md:w-4 lg:w-6 h-3.5 md:h-4 lg:h-6 text-purple-400" /></div>
               <div className="text-left">
-                <p className="text-xs md:text-base font-bold">Simple Setup</p>
+                <p className="text-[10px] md:text-xs lg:text-base font-bold">Simple Setup</p>
               </div>
             </div>
           </div>
