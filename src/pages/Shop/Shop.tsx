@@ -196,7 +196,10 @@ const Shop: React.FC = () => {
             />
           </div>
           <div className="order-1 md:order-2 scroll-animate slide-left w-full">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 md:mb-8">With Great Power Comes Responsibility!</h2>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 md:mb-8">With Great Power comes Responsibility!</h2>
+            <p className="text-base md:text-lg text-slate-300 mb-6 md:mb-8">
+              The itel Power Tank is built for essential appliances and comfort, not heavy heating devices. Be careful not to use it on:
+            </p>
             <div className="space-y-3 md:space-y-4 mb-6 md:mb-8">
               {warnings.map((item, i) => (
                 <div key={i} className="flex items-center gap-3 md:gap-4 text-slate-300">
@@ -209,7 +212,7 @@ const Shop: React.FC = () => {
             </div>
             <div className="p-3 md:p-4 bg-yellow-500/10 border-l-4 border-yellow-500 rounded-r-lg">
               <p className="text-yellow-500 font-medium text-sm md:text-base">
-                Note: Heavy appliances may trigger overload protection
+                Heavy appliances may trigger overload protection.
               </p>
             </div>
           </div>
@@ -228,7 +231,7 @@ const Shop: React.FC = () => {
         <div className="max-w-4xl mx-auto text-center relative z-10 scroll-animate scale-in bg-slate-950/40 backdrop-blur-sm p-6 md:p-8 lg:p-12 rounded-3xl border border-white/10">
           <h2 className="text-2xl md:text-4xl lg:text-6xl font-black mb-4 md:mb-8 leading-tight text-white drop-shadow-[0_4px_12px_rgba(0,0,0,1)]">
             When National Grid Fall, <br />
-            <span className="text-cyan-400">Your Power Go Get Back Up!</span>
+            <span className="text-cyan-400">Your Power go get Back Up!</span>
           </h2>
           <p className="text-base md:text-xl lg:text-2xl text-white italic font-bold drop-shadow-[0_4px_8px_rgba(0,0,0,1)] leading-relaxed">
             "No more 'Up NEPA' heartbreaks. Stay connected, stay productive, and keep the vibes going 24/7."
