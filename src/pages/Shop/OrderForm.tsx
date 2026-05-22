@@ -11,7 +11,8 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import PaystackPop from '@paystack/inline-js';
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const PaystackPop = (window as any).PaystackPop;
 import { apiService } from '../../lib/api';
 
 const OrderForm: React.FC = () => {
