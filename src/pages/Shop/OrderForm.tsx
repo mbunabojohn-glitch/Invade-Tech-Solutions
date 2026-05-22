@@ -62,7 +62,11 @@ const OrderForm: React.FC = () => {
     try {
       // Step 1: Create the order first using the real API
       const orderResponse = await apiService.createOrder(formData);
-      const orderId = orderResponse.id || orderResponse.orderId;
+      console.log('Order response:', orderResponse);
+      
+      // Try to get orderId from various possible response structures
+      const orderId = orderResponse.id || orderResponse.orderId || orderResponse.data?._id || orderResponse.data?.id || orderResponse.data?.orderId || orderResponse._id;
+      console.log('Order created with ID:', orderId);
 
       // Step 2: Initialize Paystack
       const handler = (window as any).PaystackPop.setup({
@@ -77,12 +81,14 @@ const OrderForm: React.FC = () => {
           phoneNumber: formData.phoneNumber
         },
         callback: function(response: any) {
+          console.log('Paystack callback received with reference:', response.reference, 'and orderId:', orderId);
           verifyPayment(response.reference, orderId);
         },
         onClose: function() {
           toast.error('Payment cancelled');
         }
       });
+      console.log('Opening Paystack iframe with orderId:', orderId);
       handler.openIframe();
     } catch (error) {
       console.error('Error creating order:', error);
