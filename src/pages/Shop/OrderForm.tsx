@@ -11,8 +11,6 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const PaystackPop = (window as any).PaystackPop;
 import { apiService } from '../../lib/api';
 
 const OrderForm: React.FC = () => {
@@ -67,25 +65,25 @@ const OrderForm: React.FC = () => {
       const orderId = orderResponse.id || orderResponse.orderId;
 
       // Step 2: Initialize Paystack
-      const paystack = new PaystackPop();
-      paystack.newTransaction({
+      const handler = (window as any).PaystackPop.setup({
         key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY as string,
         email: formData.email,
-        amount: totalAmount * 100, // Paystack uses kobo
-        currency: "NGN",
+        amount: totalAmount * 100,
+        currency: 'NGN',
         ref: `ITS_${Date.now()}`,
         metadata: {
           orderId: orderId,
           customerName: formData.fullName,
           phoneNumber: formData.phoneNumber
         },
-        onSuccess: (transaction: any) => {
-          verifyPayment(transaction.reference, orderId);
+        callback: function(response: any) {
+          verifyPayment(response.reference, orderId);
         },
-        onCancel: () => {
-          toast.error("Payment cancelled");
+        onClose: function() {
+          toast.error('Payment cancelled');
         }
       });
+      handler.openIframe();
     } catch (error) {
       console.error('Error creating order:', error);
       toast.error('Failed to create order. Please try again.');
