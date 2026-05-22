@@ -6,22 +6,28 @@ import {
   Minus, 
   Plus, 
   CheckCircle2,
-  ArrowLeft
+  ArrowLeft,
+  Loader2
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { toast } from 'sonner';
+import PaystackPop from '@paystack/inline-js';
+import { apiService } from '../../lib/api';
 
 const OrderForm: React.FC = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: '',
     phoneNumber: '',
+    email: '',
     deliveryAddress: '',
     quantity: 1
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isVerifyingPayment, setIsVerifyingPayment] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+
+  const totalAmount = formData.quantity * 350000;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -36,17 +42,52 @@ const OrderForm: React.FC = () => {
     setFormData(prev => ({ ...prev, quantity: Math.max(1, prev.quantity + val) }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+  const verifyPayment = async (reference: string, orderId: string) => {
+    setIsVerifyingPayment(true);
     try {
-      // Mock API call - replace with your actual endpoint
-      await axios.post('/api/orders', formData);
+      await apiService.verifyPayment({ reference, orderId });
       setIsSuccess(true);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (error) {
-      console.error('Error submitting order:', error);
-      toast.error('Failed to place order. Please try again or contact support.');
+      console.error('Error verifying payment:', error);
+      toast.error('Payment verification failed. Please contact support.');
+    } finally {
+      setIsVerifyingPayment(false);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      // Step 1: Create the order first using the real API
+      const orderResponse = await apiService.createOrder(formData);
+      const orderId = orderResponse.id || orderResponse.orderId;
+
+      // Step 2: Initialize Paystack
+      const paystack = new PaystackPop();
+      paystack.newTransaction({
+        key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY as string,
+        email: formData.email,
+        amount: totalAmount * 100, // Paystack uses kobo
+        currency: "NGN",
+        ref: `ITS_${Date.now()}`,
+        metadata: {
+          orderId: orderId,
+          customerName: formData.fullName,
+          phoneNumber: formData.phoneNumber
+        },
+        onSuccess: (transaction: any) => {
+          verifyPayment(transaction.reference, orderId);
+        },
+        onCancel: () => {
+          toast.error("Payment cancelled");
+        }
+      });
+    } catch (error) {
+      console.error('Error creating order:', error);
+      toast.error('Failed to create order. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -59,10 +100,15 @@ const OrderForm: React.FC = () => {
           <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-8">
             <CheckCircle2 className="w-12 h-12 text-green-500" />
           </div>
-          <h2 className="text-3xl font-bold mb-4">Order Received!</h2>
-          <p className="text-slate-400 mb-8 text-lg">
-            Thank you, <span className="text-white font-semibold">{formData.fullName}</span>. 
-            We've received your order for {formData.quantity} unit(s) and will call you shortly to confirm delivery.
+          <h2 className="text-3xl font-bold mb-4">Order Confirmed! 🎉</h2>
+          <p className="text-slate-400 mb-4 text-lg">
+            Thank you <span className="text-white font-semibold">{formData.fullName}</span>, your order has been received
+          </p>
+          <p className="text-slate-400 mb-4">
+            Our team will contact you shortly on <span className="text-white font-semibold">{formData.phoneNumber}</span>
+          </p>
+          <p className="text-slate-400 mb-8">
+            Check your email for order confirmation
           </p>
           <button 
             onClick={() => navigate('/shop')}
@@ -156,6 +202,19 @@ const OrderForm: React.FC = () => {
             </div>
 
             <div>
+              <label className="block text-slate-400 mb-3 font-semibold uppercase text-xs tracking-widest">Email Address</label>
+              <input 
+                type="email" 
+                name="email"
+                required
+                value={formData.email}
+                onChange={handleInputChange}
+                className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none transition-all placeholder:text-slate-700"
+                placeholder="e.g. john@example.com"
+              />
+            </div>
+
+            <div>
               <label className="block text-slate-400 mb-3 font-semibold uppercase text-xs tracking-widest">Phone Number</label>
               <input 
                 type="tel" 
@@ -204,7 +263,7 @@ const OrderForm: React.FC = () => {
               </div>
               <div className="text-right">
                 <p className="text-slate-500 text-sm mb-1">Total Payable</p>
-                <p className="text-3xl font-black text-cyan-400">₦{(formData.quantity * 350000).toLocaleString()}</p>
+                <p className="text-3xl font-black text-cyan-400">₦{totalAmount.toLocaleString()}</p>
               </div>
             </div>
 
@@ -214,11 +273,14 @@ const OrderForm: React.FC = () => {
               </p>
               <button 
                 type="submit" 
-                disabled={isSubmitting}
+                disabled={isSubmitting || isVerifyingPayment}
                 className="w-full bg-cyan-500 hover:bg-cyan-400 text-[#020d1f] font-black py-5 rounded-2xl text-xl transition-all shadow-[0_0_40px_rgba(6,182,212,0.3)] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
-                {isSubmitting ? (
-                  <div className="w-6 h-6 border-3 border-[#020d1f] border-t-transparent rounded-full animate-spin"></div>
+                {isSubmitting || isVerifyingPayment ? (
+                  <>
+                    <Loader2 className="w-6 h-6 animate-spin" />
+                    {isVerifyingPayment ? 'Verifying Payment...' : 'Processing...'}
+                  </>
                 ) : (
                   'Complete My Order'
                 )}

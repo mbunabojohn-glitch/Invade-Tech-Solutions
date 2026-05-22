@@ -270,4 +270,15 @@ export const apiService = {
     const response = await apiClient.get(`/news/${id}`);
     return response.data?.data || response.data;
   },
+
+  // --- SHOP ORDERS ---
+  createOrder: async (orderData: Record<string, unknown>) => {
+    const response = await apiClient.post('/orders', orderData);
+    return response.data;
+  },
+
+  verifyPayment: async (data: { reference: string; orderId: string }) => {
+    const response = await apiClient.post('/orders/verify-payment', data);
+    return response.data;
+  },
 };
