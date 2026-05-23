@@ -25,11 +25,20 @@ apiClient.interceptors.request.use((config) => {
   // Check if this is a student portal request
   const isStudentRequest = config.url?.startsWith("/students") || config.url?.startsWith("/classes/student");
 
+  console.log("API Request:", {
+    url: config.url,
+    isStudentRequest,
+    studentTokenExists: !!token,
+    regularTokenExists: !!state.token,
+  });
+
   if (isStudentRequest && token) {
     config.headers.Authorization = `Bearer ${token}`;
+    console.log("Attached student token to request");
   } else if (state.token) {
     // For non-student requests, use the regular token
     config.headers.Authorization = `Bearer ${state.token}`;
+    console.log("Attached regular token to request");
   }
 
   return config;
