@@ -18,25 +18,24 @@ const apiClient: AxiosInstance = axios.create({
 
 // Request interceptor to add auth token automatically
 // This runs before EVERY outgoing API call
-apiClient.interceptors.request.use(
-  (config) => {
-    // Access tokens directly from Zustand store
-    const { token, studentToken } = useAppStore.getState();
+apiClient.interceptors.request.use((config) => {
+  const state = useAppStore.getState();
+  const token = state.studentToken;
 
-    // Prioritize studentToken for student portal routes, fallback to regular token
-    const activeToken = config.url?.startsWith("/students")
-      ? studentToken || token
-      : token;
+  // Check if this is a student portal request
+  const isStudentRequest = config.url?.startsWith("/students") || config.url?.startsWith("/classes/student");
 
-    if (activeToken) {
-      config.headers.Authorization = `Bearer ${activeToken}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  },
-);
+  if (isStudentRequest && token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  } else if (state.token) {
+    // For non-student requests, use the regular token
+    config.headers.Authorization = `Bearer ${state.token}`;
+  }
+
+  return config;
+}, (error) => {
+  return Promise.reject(error);
+});
 
 // Response interceptor to handle errors globally
 apiClient.interceptors.response.use(

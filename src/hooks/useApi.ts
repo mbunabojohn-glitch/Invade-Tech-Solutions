@@ -389,3 +389,10 @@ export const useStudentResources = (
     ...options,
   });
 };
+
+export const useMyClasses = () => {
+  return useQuery({
+    queryKey: ['my-classes'],
+    queryFn: () => apiService.getMyClasses(),
+  });
+};

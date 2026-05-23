@@ -232,6 +232,11 @@ export const apiService = {
     return response.data;
   },
 
+  getMyClasses: async () => {
+    const response = await apiClient.get('/classes/student/my-classes');
+    return response.data;
+  },
+
   /**
    * Fetches all tech news articles for the Tech Buzz magazine page.
    * @param category Optional category to filter news
