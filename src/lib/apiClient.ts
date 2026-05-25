@@ -23,7 +23,7 @@ apiClient.interceptors.request.use((config) => {
   const token = state.studentToken;
 
   // Check if this is a student portal request
-  const isStudentRequest = config.url?.startsWith("/students") || config.url?.startsWith("/classes/student");
+  const isStudentRequest = config.url?.startsWith("/students") || config.url?.startsWith("/classes/student") || config.url?.startsWith("/webinars/student") || config.url?.startsWith("/webinars/");
 
   console.log("API Request:", {
     url: config.url,

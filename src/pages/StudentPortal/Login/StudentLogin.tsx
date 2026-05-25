@@ -103,8 +103,12 @@ export default function StudentLogin() {
 
       // Backend typically returns { success: true, data: { token, student } }
       // We look for token and student in response.data or response itself
+      console.log("Login response from backend:", response);
       const token = response?.data?.token || response?.token;
       const student = response?.data?.student || response?.student;
+
+      console.log("Extracted token:", token);
+      console.log("Extracted student:", student);
 
       if (token && student) {
         setStudentToken(token, student);

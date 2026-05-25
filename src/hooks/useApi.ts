@@ -370,16 +370,6 @@ export const useStudentClasses = (
   });
 };
 
-export const useStudentWebinars = (
-  options?: UseQueryOptions<unknown, AxiosError>,
-) => {
-  return useQuery({
-    queryKey: ["student", "webinars"],
-    queryFn: () => apiService.getStudentWebinars(),
-    ...options,
-  });
-};
-
 export const useStudentResources = (
   options?: UseQueryOptions<unknown, AxiosError>,
 ) => {
@@ -394,5 +384,41 @@ export const useMyClasses = () => {
   return useQuery({
     queryKey: ['my-classes'],
     queryFn: () => apiService.getMyClasses(),
+  });
+};
+
+export const useStudentWebinars = (
+  options?: UseQueryOptions<unknown, AxiosError>,
+) => {
+  return useQuery({
+    queryKey: ["student", "webinars"],
+    queryFn: () => apiService.getStudentWebinars(),
+    refetchInterval: 30000, // Poll every 30 seconds for real-time status updates
+    ...options,
+  });
+};
+
+export const useRegisterForWebinar = (
+  options?: UseMutationOptions<unknown, AxiosError, string>,
+) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (webinarId: string) => apiService.registerForWebinar(webinarId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["student", "webinars"] });
+    },
+    ...options,
+  });
+};
+
+export const useWebinarRoom = (
+  webinarId: string | undefined,
+  options?: UseQueryOptions<unknown, AxiosError>,
+) => {
+  return useQuery({
+    queryKey: ["webinar", "room", webinarId],
+    queryFn: () => apiService.getWebinarRoom(webinarId!),
+    enabled: !!webinarId,
+    ...options,
   });
 };

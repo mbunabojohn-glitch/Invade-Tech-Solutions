@@ -237,6 +237,22 @@ export const apiService = {
     return response.data;
   },
 
+  // --- STUDENT WEBINARS ---
+  getStudentWebinars: async () => {
+    const response = await apiClient.get('/webinars/student/my-webinars');
+    return response.data;
+  },
+
+  registerForWebinar: async (webinarId: string) => {
+    const response = await apiClient.post(`/webinars/${webinarId}/register`);
+    return response.data;
+  },
+
+  getWebinarRoom: async (webinarId: string) => {
+    const response = await apiClient.get(`/webinars/${webinarId}/room`);
+    return response.data;
+  },
+
   /**
    * Fetches all tech news articles for the Tech Buzz magazine page.
    * @param category Optional category to filter news
