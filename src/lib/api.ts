@@ -222,11 +222,6 @@ export const apiService = {
     return response.data;
   },
 
-  getStudentWebinars: async () => {
-    const response = await apiClient.get("/students/webinars");
-    return response.data;
-  },
-
   getStudentResources: async () => {
     const response = await apiClient.get("/students/resources");
     return response.data;
