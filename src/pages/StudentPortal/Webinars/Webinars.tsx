@@ -1,4 +1,4 @@
-import { Video, Calendar, Clock, CheckCircle } from "lucide-react";
+import { Video, Calendar, Clock} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useStudentWebinars } from "../../../hooks/useApi";
 
