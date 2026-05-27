@@ -18,6 +18,7 @@ import StudentOverview from "../pages/StudentPortal/Dashboard/StudentOverview";
 import { MyClasses } from "../pages/StudentPortal/Classes/MyClasses";
 import { Webinars } from "../pages/StudentPortal/Webinars/Webinars";
 import { Classroom } from "../pages/StudentPortal/Classroom/Classroom";
+import { WebinarRoom } from "../pages/StudentPortal/Classroom/WebinarRoom";
 import { Resources } from "../pages/StudentPortal/Resources/Resources";
 import { useAppStore } from "../store/useAppStore";
 
@@ -48,6 +49,16 @@ const AppRoutes = () => {
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/terms-of-service" element={<TermsOfService />} />
       <Route path="/cookie-policy" element={<CookiePolicy />} />
+
+      {/* ── Webinar Room (no layout) ── */}
+      <Route
+        path="/student/classroom/:webinarId"
+        element={
+          <StudentProtectedRoute>
+            <WebinarRoom />
+          </StudentProtectedRoute>
+        }
+      />
 
       {/* ── Student Portal Routes (nested under dashboard layout) ── */}
       <Route

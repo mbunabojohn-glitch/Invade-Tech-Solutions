@@ -1,7 +1,7 @@
-import { Video, Calendar, Clock, CheckCircle, X, Loader2 } from "lucide-react";
-import { useState } from "react";
+import { Video, Calendar, Clock, CheckCircle, Loader2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { useStudentWebinars, useRegisterForWebinar, useWebinarRoom } from "../../../hooks/useApi";
+import { useStudentWebinars, useRegisterForWebinar } from "../../../hooks/useApi";
 
 interface Webinar {
   _id: string;
@@ -13,12 +13,12 @@ interface Webinar {
   date: string;
   time: string;
   duration: string;
-  status: "scheduled" | "live" | "completed";
+  status: "upcoming" | "live" | "completed";
   isRegistered?: boolean;
 }
 
 const STATUS_STYLE: Record<string, string> = {
-  scheduled: "bg-blue-500/10 text-blue-400 border border-blue-500/20",
+  upcoming: "bg-blue-500/10 text-blue-400 border border-blue-500/20",
   live: "bg-green-500/10 text-green-400 border border-green-500/20",
   completed: "bg-gray-500/10 text-gray-400 border border-gray-500/20",
 };
@@ -41,62 +41,8 @@ function SkeletonCard() {
   );
 }
 
-function WebinarRoomModal({
-  webinarId,
-  onClose,
-}: {
-  webinarId: string;
-  onClose: () => void;
-}) {
-  const { data: roomData, isLoading, error } = useWebinarRoom(webinarId);
-  const roomUrl = (roomData as any)?.data?.roomUrl || (roomData as any)?.roomUrl;
-
-  if (error) {
-    toast.error("Webinar is not live yet");
-    onClose();
-    return null;
-  }
-
-  if (isLoading) {
-    return (
-      <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center">
-        <div className="text-center">
-          <Loader2 className="w-12 h-12 text-cyan-500 animate-spin mx-auto mb-4" />
-          <p className="text-white text-lg">Joining webinar...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!roomUrl) {
-    toast.error("Failed to get webinar room URL");
-    onClose();
-    return null;
-  }
-
-  return (
-    <div className="fixed inset-0 bg-black z-50 flex flex-col">
-      <div className="flex items-center justify-between p-4 bg-slate-900 border-b border-slate-800">
-        <h2 className="text-white font-semibold">Webinar Room</h2>
-        <button
-          onClick={onClose}
-          className="p-2 hover:bg-slate-800 rounded-lg text-gray-400 hover:text-white transition-colors"
-        >
-          <X className="w-6 h-6" />
-        </button>
-      </div>
-      <iframe
-        src={roomUrl}
-        allow="camera; microphone; fullscreen; display-capture; autoplay"
-        style={{ width: "100%", height: "100%", border: "none" }}
-        title="Webinar Room"
-      />
-    </div>
-  );
-}
-
 export function Webinars() {
-  const [activeWebinarId, setActiveWebinarId] = useState<string | null>(null);
+  const navigate = useNavigate();
   const { data: response, isLoading: loading, error } = useStudentWebinars();
   const { mutateAsync: registerForWebinar, isPending: isRegistering } =
     useRegisterForWebinar({
@@ -123,7 +69,7 @@ export function Webinars() {
   };
 
   const handleJoin = (webinarId: string) => {
-    setActiveWebinarId(webinarId);
+    navigate(`/student/classroom/${webinarId}`);
   };
 
   if (error) {
@@ -140,6 +86,22 @@ export function Webinars() {
           <p className="text-gray-400">
             {(error as Error)?.message || "An unexpected error occurred"}
           </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!loading && webinars.length === 0) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h2 className="text-2xl font-bold text-white">Webinars</h2>
+          <p className="text-gray-400 mt-1">
+            Upcoming, live, and past webinar sessions.
+          </p>
+        </div>
+        <div className="text-center py-16">
+          <p className="text-gray-400">No webinars available yet</p>
         </div>
       </div>
     );
@@ -201,10 +163,6 @@ export function Webinars() {
                 </span>
               </div>
 
-              <p className="text-sm text-gray-400 line-clamp-2">
-                {webinar.description}
-              </p>
-
               <div className="flex flex-wrap gap-3 text-xs text-gray-400">
                 <span className="flex items-center gap-1">
                   <Calendar className="w-3.5 h-3.5" />{" "}
@@ -219,7 +177,7 @@ export function Webinars() {
               </div>
 
               <div className="pt-2">
-                {webinar.status === "scheduled" && !webinar.isRegistered ? (
+                {webinar.status === "upcoming" && !webinar.isRegistered ? (
                   <button
                     onClick={() => handleRegister(webinar._id || webinar.id!)}
                     disabled={isRegistering}
@@ -234,7 +192,7 @@ export function Webinars() {
                       "Register"
                     )}
                   </button>
-                ) : webinar.status === "scheduled" && webinar.isRegistered ? (
+                ) : webinar.status === "upcoming" && webinar.isRegistered ? (
                   <button
                     disabled
                     className="w-full py-2.5 bg-slate-800 text-gray-400 font-semibold rounded-lg cursor-not-allowed flex items-center justify-center gap-2"
@@ -245,7 +203,7 @@ export function Webinars() {
                 ) : webinar.status === "live" && webinar.isRegistered ? (
                   <button
                     onClick={() => handleJoin(webinar._id || webinar.id!)}
-                    className="w-full py-2.5 bg-green-500 hover:bg-green-400 text-gray-950 font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
+                    className="w-full py-2.5 bg-green-500 hover:bg-green-400 text-gray-950 font-semibold rounded-lg transition-colors flex items-center justify-center gap-2 shadow-lg shadow-green-500/25"
                   >
                     Join Now
                   </button>
@@ -254,7 +212,7 @@ export function Webinars() {
                     disabled
                     className="w-full py-2.5 bg-slate-800 text-gray-400 font-semibold rounded-lg cursor-not-allowed"
                   >
-                    Ended
+                    Completed
                   </button>
                 ) : (
                   <button
@@ -268,13 +226,6 @@ export function Webinars() {
             </div>
           ))}
         </div>
-      )}
-
-      {activeWebinarId && (
-        <WebinarRoomModal
-          webinarId={activeWebinarId}
-          onClose={() => setActiveWebinarId(null)}
-        />
       )}
     </div>
   );
