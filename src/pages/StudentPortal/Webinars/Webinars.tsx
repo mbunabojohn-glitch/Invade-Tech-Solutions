@@ -68,10 +68,6 @@ export function Webinars() {
     await registerForWebinar(webinarId);
   };
 
-  const handleJoin = (webinarId: string) => {
-    navigate(`/student/classroom/${webinarId}`);
-  };
-
   if (error) {
     return (
       <div className="space-y-6">
@@ -191,9 +187,16 @@ export function Webinars() {
                     <button
                       onClick={() => handleRegister(webinar._id || webinar.id!)}
                       disabled={isRegistering}
-                      className="w-full py-3 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold rounded-lg transition-all"
+                      className="w-full py-3 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold rounded-lg transition-all flex items-center justify-center gap-2"
                     >
-                      Register
+                      {isRegistering ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          Registering...
+                        </>
+                      ) : (
+                        "Register"
+                      )}
                     </button>
                   ) : (
                     <button
