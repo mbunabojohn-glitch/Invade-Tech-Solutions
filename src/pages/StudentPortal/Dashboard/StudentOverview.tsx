@@ -63,6 +63,16 @@ export default function StudentOverview() {
     });
   };
 
+  const formatTime = (time: string) => { 
+    if (!time) return ''; 
+    if (time.includes('AM') || time.includes('PM')) return time; 
+    const [hours, minutes] = time.split(':'); 
+    const hour = parseInt(hours); 
+    const ampm = hour >= 12 ? 'PM' : 'AM'; 
+    const displayHour = hour % 12 || 12; 
+    return `${displayHour}:${minutes} ${ampm}`; 
+  };
+
   const formatAnnouncementDate = (dateStr: string) =>
     new Date(dateStr).toLocaleDateString("en-US", {
       day: "2-digit",
@@ -202,7 +212,7 @@ export default function StudentOverview() {
                         {formatScheduleDate(item.date)}
                       </p>
                       <p className="text-xs text-gray-400 flex items-center gap-1 justify-end">
-                        <Clock className="w-3 h-3" /> {item.time}
+                        <Clock className="w-3 h-3" /> {formatTime(item.time)}
                       </p>
                     </div>
                     <button
