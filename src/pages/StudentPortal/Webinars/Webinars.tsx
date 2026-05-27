@@ -123,7 +123,9 @@ export function Webinars() {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {webinars.map((webinar: Webinar) => (
+          {webinars.map((webinar: Webinar) => {
+            console.log('Webinar status:', webinar.status);
+            return (
             <div
               key={webinar._id || webinar.id}
               className="bg-slate-900 border border-slate-800 rounded-xl p-6 flex flex-col gap-4"
@@ -177,54 +179,43 @@ export function Webinars() {
               </div>
 
               <div className="pt-2">
-                {webinar.status === "upcoming" && !webinar.isRegistered ? (
-                  <button
-                    onClick={() => handleRegister(webinar._id || webinar.id!)}
-                    disabled={isRegistering}
-                    className="w-full py-2.5 bg-cyan-500 hover:bg-cyan-400 disabled:bg-cyan-500/50 disabled:cursor-not-allowed text-gray-950 font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
+                {webinar.status === 'live' ? (
+                  <button 
+                    onClick={() => navigate(`/student/classroom/${webinar._id}`)}
+                    className="w-full py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg shadow-lg shadow-green-500/30 transition-all"
                   >
-                    {isRegistering ? (
-                      <>
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                        Registering...
-                      </>
-                    ) : (
-                      "Register"
-                    )}
+                    🔴 Join Now
                   </button>
-                ) : webinar.status === "upcoming" && webinar.isRegistered ? (
-                  <button
-                    disabled
-                    className="w-full py-2.5 bg-slate-800 text-gray-400 font-semibold rounded-lg cursor-not-allowed flex items-center justify-center gap-2"
-                  >
-                    <CheckCircle className="w-4 h-4" />
-                    Registered ✓
-                  </button>
-                ) : webinar.status === "live" && webinar.isRegistered ? (
-                  <button
-                    onClick={() => handleJoin(webinar._id || webinar.id!)}
-                    className="w-full py-2.5 bg-green-500 hover:bg-green-400 text-gray-950 font-semibold rounded-lg transition-colors flex items-center justify-center gap-2 shadow-lg shadow-green-500/25"
-                  >
-                    Join Now
-                  </button>
-                ) : webinar.status === "completed" ? (
-                  <button
-                    disabled
-                    className="w-full py-2.5 bg-slate-800 text-gray-400 font-semibold rounded-lg cursor-not-allowed"
-                  >
-                    Completed
-                  </button>
+                ) : webinar.status === 'upcoming' ? (
+                  !webinar.isRegistered ? (
+                    <button
+                      onClick={() => handleRegister(webinar._id || webinar.id!)}
+                      disabled={isRegistering}
+                      className="w-full py-3 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold rounded-lg transition-all"
+                    >
+                      Register
+                    </button>
+                  ) : (
+                    <button
+                      disabled
+                      className="w-full py-3 bg-gray-600 text-gray-400 font-semibold rounded-lg cursor-not-allowed flex items-center justify-center gap-2"
+                    >
+                      <CheckCircle className="w-4 h-4" />
+                      Registered ✓
+                    </button>
+                  )
                 ) : (
                   <button
                     disabled
-                    className="w-full py-2.5 bg-slate-800 text-gray-400 font-semibold rounded-lg cursor-not-allowed"
+                    className="w-full py-3 bg-gray-600 text-gray-400 font-semibold rounded-lg cursor-not-allowed"
                   >
-                    Not available
+                    Completed
                   </button>
                 )}
               </div>
             </div>
-          ))}
+          );
+          })}
         </div>
       )}
     </div>
