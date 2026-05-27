@@ -1,7 +1,6 @@
-import { Video, Calendar, Clock, CheckCircle, Loader2 } from "lucide-react";
+import { Video, Calendar, Clock, CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
-import { useStudentWebinars, useRegisterForWebinar } from "../../../hooks/useApi";
+import { useStudentWebinars } from "../../../hooks/useApi";
 
 interface Webinar {
   _id: string;
@@ -44,29 +43,12 @@ function SkeletonCard() {
 export function Webinars() {
   const navigate = useNavigate();
   const { data: response, isLoading: loading, error } = useStudentWebinars();
-  const { mutateAsync: registerForWebinar, isPending: isRegistering } =
-    useRegisterForWebinar({
-      onSuccess: () => {
-        toast.success("Successfully registered for webinar");
-      },
-      onError: (err: any) => {
-        const errorMsg =
-          err.response?.data?.error ||
-          err.message ||
-          "Failed to register for webinar";
-        toast.error(errorMsg);
-      },
-    });
 
   const webinars = Array.isArray((response as any)?.data)
     ? (response as any).data
     : Array.isArray(response)
     ? response
     : [];
-
-  const handleRegister = async (webinarId: string) => {
-    await registerForWebinar(webinarId);
-  };
 
   if (error) {
     return (
@@ -178,42 +160,18 @@ export function Webinars() {
                 {webinar.status === 'live' ? (
                   <button 
                     onClick={() => navigate(`/student/classroom/${webinar._id}`)}
-                    className="w-full py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg shadow-lg shadow-green-500/30 transition-all"
+                    className="w-full py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg shadow-lg shadow-green-500/30 transition-all animate-pulse"
                   >
-                    🔴 Join Now
+                    🔴 Join Now — Live
                   </button>
                 ) : webinar.status === 'upcoming' ? (
-                  !webinar.isRegistered ? (
-                    <button
-                      onClick={() => handleRegister(webinar._id || webinar.id!)}
-                      disabled={isRegistering}
-                      className="w-full py-3 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold rounded-lg transition-all flex items-center justify-center gap-2"
-                    >
-                      {isRegistering ? (
-                        <>
-                          <Loader2 className="w-4 h-4 animate-spin" />
-                          Registering...
-                        </>
-                      ) : (
-                        "Register"
-                      )}
-                    </button>
-                  ) : (
-                    <button
-                      disabled
-                      className="w-full py-3 bg-gray-600 text-gray-400 font-semibold rounded-lg cursor-not-allowed flex items-center justify-center gap-2"
-                    >
-                      <CheckCircle className="w-4 h-4" />
-                      Registered ✓
-                    </button>
-                  )
+                  <div className="w-full py-3 bg-blue-500/20 text-blue-400 font-semibold rounded-lg text-center border border-blue-500/30">
+                    📅 Upcoming
+                  </div>
                 ) : (
-                  <button
-                    disabled
-                    className="w-full py-3 bg-gray-600 text-gray-400 font-semibold rounded-lg cursor-not-allowed"
-                  >
-                    Completed
-                  </button>
+                  <div className="w-full py-3 bg-gray-600/20 text-gray-400 font-semibold rounded-lg text-center border border-gray-600/30">
+                    ✅ Completed
+                  </div>
                 )}
               </div>
             </div>
