@@ -26,7 +26,6 @@ const OrderForm: React.FC = () => {
     quantity: 1
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isVerifyingPayment, setIsVerifyingPayment] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
 
@@ -43,20 +42,6 @@ const OrderForm: React.FC = () => {
 
   const updateQuantity = (val: number) => {
     setFormData(prev => ({ ...prev, quantity: Math.max(1, prev.quantity + val) }));
-  };
-
-  const verifyPayment = async (reference: string, orderId: string) => {
-    setIsVerifyingPayment(true);
-    try {
-      await apiService.verifyPayment({ reference, orderId });
-      setIsSuccess(true);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } catch (error) {
-      console.error('Error verifying payment:', error);
-      toast.error('Payment verification failed. Please contact support.');
-    } finally {
-      setIsVerifyingPayment(false);
-    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => { 
@@ -301,13 +286,13 @@ const OrderForm: React.FC = () => {
               </p>
               <button 
                 type="submit" 
-                disabled={isSubmitting || isVerifyingPayment}
+                disabled={isSubmitting}
                 className="w-full bg-cyan-500 hover:bg-cyan-400 text-[#020d1f] font-black py-5 rounded-2xl text-xl transition-all shadow-[0_0_40px_rgba(6,182,212,0.3)] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
-                {isSubmitting || isVerifyingPayment ? (
+                {isSubmitting ? (
                   <>
                     <Loader2 className="w-6 h-6 animate-spin" />
-                    {isVerifyingPayment ? 'Verifying Payment...' : 'Processing...'}
+                    Processing...
                   </>
                 ) : (
                   'Complete My Order'
