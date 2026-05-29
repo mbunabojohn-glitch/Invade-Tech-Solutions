@@ -249,12 +249,9 @@ const Shop: React.FC = () => {
           <div className="bg-slate-900 border-2 border-cyan-500/30 rounded-3xl overflow-hidden shadow-2xl scroll-animate scale-in">
             <div className="flex flex-col md:grid md:grid-cols-2">
               <div className="p-6 md:p-8 lg:p-12 order-2 md:order-1">
-                <div className="inline-block px-3 md:px-4 py-1 bg-green-500/20 text-green-400 rounded-full text-xs md:text-sm font-bold mb-4 md:mb-6">
-                  + 200W Sonik Energy Saving Iron — FREE
-                </div>
                 <h3 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4">Itel 500W Solar Tank Inverter</h3>
                 <div className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-3 mb-6 md:mb-8">
-                  <span className="text-4xl md:text-5xl font-black text-white">₦350,000</span>
+                  <span className="text-4xl md:text-5xl font-black text-white">₦400,000</span>
                   <span className="text-base md:text-xl text-slate-500 line-through">₦450,000</span>
                 </div>
 
@@ -265,7 +262,7 @@ const Shop: React.FC = () => {
                   </div>
                   <div className="flex items-center gap-2 md:gap-3">
                     <Settings className="w-5 h-5 md:w-6 md:h-6 text-cyan-400" />
-                    <span className="font-medium text-base md:text-lg">Free Installation</span>
+                    <span className="font-medium text-base md:text-lg">Free Installation — includes professional setup, mounting, wiring and testing at your location anywhere in Lagos</span>
                   </div>
                   <div className="flex items-center gap-2 md:gap-3">
                     <Truck className="w-5 h-5 md:w-6 md:h-6 text-cyan-400" />
