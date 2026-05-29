@@ -2,6 +2,8 @@ import { useState } from "react";
 import {
   FileText,
   Film,
+  Image,
+  Music,
   Download,
   Search as SearchIcon,
   Loader2,
@@ -10,26 +12,26 @@ import { useStudentResources } from "../../../hooks/useApi";
 
 interface Resource {
   _id: string;
-  name: string;
-  type: "pdf" | "video" | "doc";
-  size: string;
-  course: string;
-  uploadDate: string;
-  downloadUrl: string;
+  title: string;
+  description: string;
+  fileType: "pdf" | "video" | "image" | "audio" | string;
+  fileSize?: number;
+  createdAt: string;
+  fileUrl: string;
 }
-
-// Removed unused MOCK_RESOURCES
 
 const FILE_ICON: Record<string, React.ReactNode> = {
   pdf: <FileText className="w-5 h-5 text-red-400" />,
   video: <Film className="w-5 h-5 text-blue-400" />,
-  doc: <FileText className="w-5 h-5 text-blue-300" />,
+  image: <Image className="w-5 h-5 text-green-400" />,
+  audio: <Music className="w-5 h-5 text-purple-400" />,
 };
 
 const FILE_BADGE: Record<string, string> = {
   pdf: "bg-red-500/10 text-red-400",
   video: "bg-blue-500/10 text-blue-400",
-  doc: "bg-indigo-500/10 text-indigo-400",
+  image: "bg-green-500/10 text-green-400",
+  audio: "bg-purple-500/10 text-purple-400",
 };
 
 function PageLoader({ text }: { text: string }) {
@@ -52,8 +54,8 @@ export function Resources() {
     const q = search.toLowerCase();
     return (
       !q ||
-      r.name.toLowerCase().includes(q) ||
-      r.course.toLowerCase().includes(q)
+      r.title.toLowerCase().includes(q) ||
+      (r.description && r.description.toLowerCase().includes(q))
     );
   });
 
@@ -63,6 +65,11 @@ export function Resources() {
       month: "short",
       year: "numeric",
     });
+
+  const formatFileSize = (size?: number) => {
+    if (!size) return "";
+    return `${(size / 1024 / 1024).toFixed(2)} MB`;
+  };
 
   if (loading) return <PageLoader text="Loading resources..." />;
 
@@ -107,31 +114,36 @@ export function Resources() {
             >
               <div className="flex items-center gap-3 min-w-0">
                 <div className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center flex-shrink-0">
-                  {FILE_ICON[res.type]}
+                  {FILE_ICON[res.fileType] || <FileText className="w-5 h-5 text-gray-400" />}
                 </div>
                 <div className="min-w-0">
                   <p className="text-sm font-medium text-white truncate">
-                    {res.name}
+                    {res.title}
                   </p>
-                  <p className="text-xs text-gray-500 truncate">{res.course}</p>
+                  {res.description && (
+                    <p className="text-xs text-gray-500 truncate">{res.description}</p>
+                  )}
                 </div>
               </div>
 
               <div className="flex flex-wrap items-center gap-2 sm:gap-4 flex-shrink-0 w-full sm:w-auto">
                 <span
-                  className={`hidden sm:block px-2 py-0.5 rounded text-xs font-semibold uppercase ${FILE_BADGE[res.type]}`}
+                  className={`hidden sm:block px-2 py-0.5 rounded text-xs font-semibold uppercase ${FILE_BADGE[res.fileType] || "bg-gray-500/10 text-gray-400"}`}
                 >
-                  {res.type}
+                  {res.fileType}
                 </span>
+                {res.fileSize && (
+                  <span className="hidden md:block text-xs text-gray-500">
+                    {formatFileSize(res.fileSize)}
+                  </span>
+                )}
                 <span className="hidden md:block text-xs text-gray-500">
-                  {res.size}
-                </span>
-                <span className="hidden md:block text-xs text-gray-500">
-                  {formatDate(res.uploadDate)}
+                  {formatDate(res.createdAt)}
                 </span>
                 <a
-                  href={res.downloadUrl}
-                  download
+                  href={res.fileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/20 text-cyan-400 text-xs font-semibold rounded-lg transition-colors flex-grow sm:flex-grow-0"
                 >
                   <Download className="w-3.5 h-3.5" />
