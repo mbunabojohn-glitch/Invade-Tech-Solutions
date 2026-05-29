@@ -29,7 +29,6 @@ const OrderForm: React.FC = () => {
   const [isVerifyingPayment, setIsVerifyingPayment] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState<'paystack' | 'pay_on_delivery' | null>(null);
 
   const totalAmount = formData.quantity * 400000;
 
@@ -81,41 +80,6 @@ const OrderForm: React.FC = () => {
       window.scrollTo({ top: 0, behavior: 'smooth' }); 
     } catch (error) { 
       toast.error('Failed to place order. Please try again.'); 
-    } finally { 
-      setIsSubmitting(false); 
-    } 
-  }; 
-
-  const handlePaystack = async () => { 
-    setShowPaymentModal(false); 
-    setIsSubmitting(true); 
-    try { 
-      const orderResponse = await apiService.createOrder({ 
-        ...formData, 
-        paymentMethod: 'paystack', 
-        deliveryFee: 0, 
-        amount: totalAmount, 
-        product: 'Itel 500W Solar Tank Inverter', 
-        status: 'pending', 
-      }); 
-      const orderId = orderResponse.data?._id || orderResponse._id; 
-      const handler = (window as any).PaystackPop.setup({ 
-        key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY as string, 
-        email: formData.email, 
-        amount: totalAmount * 100, 
-        currency: 'NGN', 
-        ref: `ITS_${Date.now()}`, 
-        metadata: { orderId, customerName: formData.fullName, phoneNumber: formData.phoneNumber }, 
-        callback: function(response: any) { 
-          verifyPayment(response.reference, orderId); 
-        }, 
-        onClose: function() { 
-          toast.error('Payment cancelled'); 
-        } 
-      }); 
-      handler.openIframe(); 
-    } catch (error) { 
-      toast.error('Failed to create order. Please try again.'); 
     } finally { 
       setIsSubmitting(false); 
     } 
