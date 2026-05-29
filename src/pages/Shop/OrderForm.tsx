@@ -28,6 +28,7 @@ const OrderForm: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<'paystack' | 'pay_on_delivery' | null>(null);
 
   const totalAmount = formData.quantity * 400000;
 
@@ -295,7 +296,7 @@ const OrderForm: React.FC = () => {
                     Processing...
                   </>
                 ) : (
-                  'Complete My Order'
+                  'Order Now'
                 )}
               </button>
               <p className="mt-6 text-slate-500 text-sm flex items-center justify-center gap-2">
