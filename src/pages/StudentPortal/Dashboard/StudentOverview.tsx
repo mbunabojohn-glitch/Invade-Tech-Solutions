@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppStore } from "../../../store/useAppStore";
 import { useStudentDashboardStats } from "../../../hooks/useApi";
@@ -24,15 +25,18 @@ interface ScheduleItem {
 interface Announcement {
   _id: string;
   title: string;
-  preview: string;
-  date: string;
-  isNew: boolean;
+  message?: string;
+  preview?: string;
+  createdAt?: string;
+  date?: string;
+  isNew?: boolean;
 }
 
 // Removed unused MOCK_SCHEDULE and MOCK_ANNOUNCEMENTS
 
 export default function StudentOverview() {
   const navigate = useNavigate();
+  const [expandedAnnouncement, setExpandedAnnouncement] = useState<string | null>(null);
   const studentUser = useAppStore((state) => state.studentUser);
 
   const { data: response, isLoading: loading } = useStudentDashboardStats();
@@ -235,11 +239,19 @@ export default function StudentOverview() {
               <Bell className="w-5 h-5 text-cyan-400" />
               Announcements
             </h3>
-            {announcements.filter((a) => a.isNew).length > 0 && (
-              <span className="px-2 py-0.5 bg-cyan-500/20 text-cyan-400 text-xs font-bold rounded-full">
-                {announcements.filter((a) => a.isNew).length} new
-              </span>
-            )}
+            <div className="flex items-center gap-2">
+              {announcements.filter((a) => a.isNew).length > 0 && (
+                <span className="px-2 py-0.5 bg-cyan-500/20 text-cyan-400 text-xs font-bold rounded-full">
+                  {announcements.filter((a) => a.isNew).length} new
+                </span>
+              )}
+              <button
+                onClick={() => navigate("/student/announcements")}
+                className="text-sm text-cyan-400 hover:text-cyan-300 font-medium transition-colors"
+              >
+                View All
+              </button>
+            </div>
           </div>
 
           {announcements.length === 0 ? (
@@ -249,29 +261,34 @@ export default function StudentOverview() {
             </div>
           ) : (
             <div className="space-y-3">
-              {announcements.map((ann) => (
-                <div
-                  key={ann._id}
-                  className={`p-4 rounded-xl border transition-colors ${
-                    ann.isNew
-                      ? "bg-cyan-500/5 border-cyan-500/20"
-                      : "bg-slate-800 border-slate-700/50"
+              {announcements.map((announcement) => (
+                <div 
+                  key={announcement._id} 
+                  onClick={() => setExpandedAnnouncement(
+                    expandedAnnouncement === announcement._id ? null : announcement._id
+                  )} 
+                  className={`cursor-pointer bg-gray-800/50 rounded-lg p-3 hover:bg-gray-700/50 transition-colors ${
+                    announcement.isNew ? "border border-cyan-500/20" : ""
                   }`}
                 >
-                  <div className="flex items-start justify-between gap-2 mb-1">
-                    <p className="text-sm font-semibold text-white leading-tight">
-                      {ann.title}
-                    </p>
-                    {ann.isNew && (
+                  <div className="flex items-start justify-between gap-2">
+                    <p className="text-white font-medium text-sm">{announcement.title}</p> 
+                    {announcement.isNew && (
                       <span className="w-2 h-2 bg-cyan-400 rounded-full flex-shrink-0 mt-1" />
                     )}
                   </div>
-                  <p className="text-xs text-gray-400 line-clamp-2 mb-2">
-                    {ann.preview}
-                  </p>
-                  <p className="text-xs text-gray-600">
-                    {formatAnnouncementDate(ann.date)}
-                  </p>
+                  
+                  {expandedAnnouncement === announcement._id && ( 
+                    <p className="text-gray-400 text-sm mt-2">{announcement.message || announcement.preview}</p> 
+                  )} 
+                  
+                  <p className="text-gray-500 text-xs mt-1"> 
+                    {announcement.createdAt ? new Date(announcement.createdAt).toLocaleDateString('en-NG', { 
+                      day: 'numeric', month: 'short', year: 'numeric' 
+                    }) : announcement.date ? new Date(announcement.date).toLocaleDateString('en-NG', { 
+                      day: 'numeric', month: 'short', year: 'numeric' 
+                    }) : ''}
+                  </p> 
                 </div>
               ))}
             </div>
