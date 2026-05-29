@@ -20,6 +20,7 @@ import { Webinars } from "../pages/StudentPortal/Webinars/Webinars";
 import { Classroom } from "../pages/StudentPortal/Classroom/Classroom";
 import { WebinarRoom } from "../pages/StudentPortal/Classroom/WebinarRoom";
 import { Resources } from "../pages/StudentPortal/Resources/Resources";
+import Announcements from "../pages/StudentPortal/Announcements/Announcements";
 import { useAppStore } from "../store/useAppStore";
 
 // Student Protected Route — redirects to login if not authenticated
@@ -73,6 +74,7 @@ const AppRoutes = () => {
         <Route path="/student/webinars" element={<Webinars />} />
         <Route path="/student/classroom" element={<Classroom />} />
         <Route path="/student/resources" element={<Resources />} />
+        <Route path="/student/announcements" element={<Announcements />} />
       </Route>
 
       <Route path="*" element={<NotFound />} />

@@ -422,3 +422,13 @@ export const useWebinarRoom = (
     ...options,
   });
 };
+
+export const useStudentAnnouncements = (
+  options?: UseQueryOptions<unknown, AxiosError>,
+) => {
+  return useQuery({
+    queryKey: ["student", "announcements"],
+    queryFn: () => apiService.getStudentAnnouncements(),
+    ...options,
+  });
+};

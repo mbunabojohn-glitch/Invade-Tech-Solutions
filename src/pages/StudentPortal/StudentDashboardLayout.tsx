@@ -6,6 +6,7 @@ import {
   Video,
   Monitor,
   FolderOpen,
+  Bell,
   LogOut,
   GraduationCap,
   Menu,
@@ -23,6 +24,7 @@ const NAV_ITEMS = [
   { label: "Webinars", path: "/student/webinars", icon: Video },
   { label: "Classroom", path: "/student/classroom", icon: Monitor },
   { label: "Resources", path: "/student/resources", icon: FolderOpen },
+  { label: "Announcements", path: "/student/announcements", icon: Bell },
 ];
 
 // ─── Sidebar Content Component ────────────────────────────────────────────────
