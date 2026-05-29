@@ -77,12 +77,7 @@ export default function StudentOverview() {
     return `${displayHour}:${minutes} ${ampm}`; 
   };
 
-  const formatAnnouncementDate = (dateStr: string) =>
-    new Date(dateStr).toLocaleDateString("en-US", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    });
+
 
   if (loading) {
     return (
