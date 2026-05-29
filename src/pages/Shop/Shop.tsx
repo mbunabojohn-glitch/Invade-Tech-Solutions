@@ -262,7 +262,7 @@ const Shop: React.FC = () => {
                   </div>
                   <div className="flex items-center gap-2 md:gap-3">
                     <Settings className="w-5 h-5 md:w-6 md:h-6 text-cyan-400" />
-                    <span className="font-medium text-base md:text-lg">Free Installation — includes professional setup, mounting, wiring and testing at your location anywhere in Lagos</span>
+                    <span className="font-medium text-base md:text-lg">Free Installation includes professional setup, mounting, wiring and testing at your location anywhere in Lagos</span>
                   </div>
                   <div className="flex items-center gap-2 md:gap-3">
                     <Truck className="w-5 h-5 md:w-6 md:h-6 text-cyan-400" />
