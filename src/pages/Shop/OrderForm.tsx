@@ -34,7 +34,6 @@ const OrderForm: React.FC = () => {
   });
   const [isSuccess, setIsSuccess] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState<'paystack' | 'pay_on_delivery' | null>(null);
 
   const totalAmount = formData.quantity * 400000;
 
