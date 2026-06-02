@@ -12,6 +12,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { apiService } from '../../lib/api';
+import { nigerianStates, phoneValidation, emailValidation } from '../../data/nigerian-lgas';
 
 const OrderForm: React.FC = () => {
   const navigate = useNavigate();
@@ -22,10 +23,15 @@ const OrderForm: React.FC = () => {
     deliveryAddress: '',
     city: '',
     state: '',
+    lga: '',
     notes: '',
     quantity: 1
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState({
+    phoneNumber: '',
+    email: '',
+  });
   const [isSuccess, setIsSuccess] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<'paystack' | 'pay_on_delivery' | null>(null);
@@ -47,6 +53,17 @@ const OrderForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => { 
     e.preventDefault(); 
+    
+    if (errors.phoneNumber || errors.email) { 
+      toast.error('Please fix validation errors'); 
+      return; 
+    } 
+    
+    if (!formData.phoneNumber || !formData.email || !formData.state || !formData.lga) { 
+      toast.error('Please fill all required fields'); 
+      return; 
+    } 
+    
     setShowPaymentModal(true); 
   }; 
 
@@ -86,7 +103,7 @@ const OrderForm: React.FC = () => {
             Our team will contact you on <span className="text-white font-semibold">{formData.phoneNumber}</span> to confirm your delivery. 
           </p> 
           <p className="text-slate-400 mb-4"> 
-            Delivery address: <span className="text-white font-semibold">{formData.deliveryAddress}, {formData.city}, {formData.state}</span> 
+            Delivery address: <span className="text-white font-semibold">{formData.deliveryAddress}, {formData.city}, {formData.lga}, {formData.state}</span> 
           </p> 
           <p className="text-slate-400 mb-8"> 
             Amount to pay on delivery: <span className="text-cyan-400 font-bold">₦{totalAmount.toLocaleString()}</span> 
@@ -182,12 +199,20 @@ const OrderForm: React.FC = () => {
               <input 
                 type="email" 
                 name="email"
-                required
+                placeholder="you@example.com"
                 value={formData.email}
-                onChange={handleInputChange}
+                onChange={(e) => { 
+                  const value = e.target.value; 
+                  setFormData({ ...formData, email: value }); 
+                  if (value && !emailValidation(value)) { 
+                    setErrors({ ...errors, email: 'Please enter a valid email address' }); 
+                  } else { 
+                    setErrors({ ...errors, email: '' }); 
+                  } 
+                }} 
                 className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none transition-all placeholder:text-slate-700"
-                placeholder="e.g. john@example.com"
               />
+              {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>} 
             </div>
 
             <div>
@@ -195,12 +220,20 @@ const OrderForm: React.FC = () => {
               <input 
                 type="tel" 
                 name="phoneNumber"
-                required
+                placeholder="09012345678"
                 value={formData.phoneNumber}
-                onChange={handleInputChange}
+                onChange={(e) => { 
+                  const value = e.target.value; 
+                  setFormData({ ...formData, phoneNumber: value }); 
+                  if (value && !phoneValidation(value)) { 
+                    setErrors({ ...errors, phoneNumber: 'Phone must be 11 digits starting with 0' }); 
+                  } else { 
+                    setErrors({ ...errors, phoneNumber: '' }); 
+                  } 
+                }} 
                 className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none transition-all placeholder:text-slate-700"
-                placeholder="e.g. 08012345678"
               />
+              {errors.phoneNumber && <p className="text-red-400 text-sm mt-1">{errors.phoneNumber}</p>} 
             </div>
 
             <div>
@@ -231,16 +264,36 @@ const OrderForm: React.FC = () => {
 
             <div> 
               <label className="block text-slate-400 mb-3 font-semibold uppercase text-xs tracking-widest">State</label> 
-              <input 
-                type="text" 
+              <select 
                 name="state" 
-                required 
                 value={formData.state} 
-                onChange={handleInputChange} 
-                className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none transition-all placeholder:text-slate-700" 
-                placeholder="e.g. Lagos State" 
-              /> 
+                onChange={(e) => { 
+                  setFormData({ ...formData, state: e.target.value, lga: '' }); 
+                }} 
+                className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none transition-all text-white" 
+              > 
+                <option value="">Select State</option> 
+                {Object.keys(nigerianStates).sort().map((state) => ( 
+                  <option key={state} value={state}>{state}</option> 
+                ))} 
+              </select> 
             </div> 
+            
+            <div> 
+              <label className="block text-slate-400 mb-3 font-semibold uppercase text-xs tracking-widest">LGA</label> 
+              <select 
+                name="lga" 
+                value={formData.lga} 
+                onChange={(e) => setFormData({ ...formData, lga: e.target.value })} 
+                disabled={!formData.state} 
+                className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none transition-all text-white disabled:opacity-50" 
+              > 
+                <option value="">Select LGA</option> 
+                {formData.state && nigerianStates[formData.state as keyof typeof nigerianStates]?.map((lga) => ( 
+                  <option key={lga} value={lga}>{lga}</option> 
+                ))} 
+              </select> 
+            </div>
 
             <div> 
               <label className="block text-slate-400 mb-3 font-semibold uppercase text-xs tracking-widest">Additional Notes (Optional)</label> 
