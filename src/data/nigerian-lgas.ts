@@ -44,6 +44,6 @@ export const nigerianStates: { [key: string]: string[] } = {
  }; 
 
  export const emailValidation = (email: string): boolean => { 
-   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+   const emailRegex = /^[^\s@]+@[^\s@]+\.(com|org|net|io|edu|gov|co\.uk|com\.ng|ng|co\.za|ac\.uk|de|fr|it|es|au|ca|us|uk|in|ie)$/i; 
    return emailRegex.test(email); 
  };
