@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import ChatWidget from '../../components/ChatWidget';
 import { 
   Zap, 
   Sun, 
@@ -335,6 +336,7 @@ const Shop: React.FC = () => {
           animation: fade-in 1s ease-out forwards;
         }
       `}</style>
+      <ChatWidget />
     </div>
   );
 };
