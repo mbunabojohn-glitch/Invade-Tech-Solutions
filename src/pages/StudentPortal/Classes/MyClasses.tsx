@@ -182,7 +182,7 @@ export function MyClasses() {
             </div>
 
             <button
-              onClick={() => navigate("/student/classroom")}
+              onClick={() => navigate(`/student/classroom/${cls._id || cls.id}`)}
               className={`w-full py-3 sm:py-2.5 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 transition-colors ${
                 cls.status === "completed"
                   ? "bg-slate-800 hover:bg-slate-700 text-gray-300"

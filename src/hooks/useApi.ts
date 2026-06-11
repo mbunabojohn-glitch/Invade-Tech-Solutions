@@ -387,6 +387,18 @@ export const useMyClasses = () => {
   });
 };
 
+export const useClassById = (
+  classId: string | undefined,
+  options?: UseQueryOptions<unknown, AxiosError>,
+) => {
+  return useQuery({
+    queryKey: ['class', classId],
+    queryFn: () => apiService.getClassById(classId!),
+    enabled: !!classId,
+    ...options,
+  });
+};
+
 export const useStudentWebinars = (
   options?: UseQueryOptions<unknown, AxiosError>,
 ) => {

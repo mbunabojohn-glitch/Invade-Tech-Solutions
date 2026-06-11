@@ -232,6 +232,11 @@ export const apiService = {
     return response.data;
   },
 
+  getClassById: async (classId: string) => {
+    const response = await apiClient.get(`/classes/student/${classId}`);
+    return response.data;
+  },
+
   // --- STUDENT WEBINARS ---
   getStudentWebinars: async () => {
     const response = await apiClient.get('/webinars/student/my-webinars');

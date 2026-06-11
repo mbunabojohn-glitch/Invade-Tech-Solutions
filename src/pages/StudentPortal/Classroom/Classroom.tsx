@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Video, Monitor, Send } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Monitor, Send, Loader2 } from "lucide-react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useClassById } from "../../../hooks/useApi";
 
 const WHITEBOARD_TOOLS = [
   { id: "pen", label: "Pen", icon: "✏️" },
@@ -51,6 +52,10 @@ interface ChatMessage {
 
 export function Classroom() {
   const navigate = useNavigate();
+  const { classId } = useParams<{ classId: string }>();
+  const { data: classResponse, isLoading, error } = useClassById(classId);
+  const classData = (classResponse as any)?.data || classResponse;
+  
   const [activeTool, setActiveTool] = useState("pen");
   const [activeColor, setActiveColor] = useState("#06b6d4");
   const [chatInput, setChatInput] = useState("");
@@ -83,25 +88,49 @@ export function Classroom() {
     setChatInput("");
   };
 
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-[calc(100vh-100px)]">
+        <Loader2 className="w-10 h-10 text-cyan-500 animate-spin" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center h-[calc(100vh-100px)] text-center">
+        <p className="text-red-400 text-lg mb-4">Failed to load classroom</p>
+        <button
+          onClick={() => navigate("/student/classes")}
+          className="px-4 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors"
+        >
+          Back to Classes
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <h2 className="text-xl font-bold text-white">
-              IT Support & Hardware Maintenance
+              {classData?.title || "IT Support & Hardware Maintenance"}
             </h2>
-            <span className="flex items-center gap-1.5 px-2.5 py-1 bg-red-500/10 border border-red-500/30 rounded-full text-xs font-semibold text-red-400">
-              <span className="w-2 h-2 bg-red-500 rounded-full animate-ping" />
-              LIVE
-            </span>
+            {classData?.webinar?.status === "live" && (
+              <span className="flex items-center gap-1.5 px-2.5 py-1 bg-red-500/10 border border-red-500/30 rounded-full text-xs font-semibold text-red-400">
+                <span className="w-2 h-2 bg-red-500 rounded-full animate-ping" />
+                LIVE
+              </span>
+            )}
           </div>
           <p className="text-gray-400 text-sm">
-            Mr. Adeyemi · Session started 10:00 AM
+            {classData?.instructorName || classData?.instructor || "Mr. Adeyemi"} • Session started 10:00 AM
           </p>
         </div>
         <button
-          onClick={() => navigate("/student/dashboard")}
+          onClick={() => navigate("/student/classes")}
           className="px-4 py-2 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-400 font-semibold text-sm rounded-lg transition-colors"
         >
           Leave Class
@@ -145,7 +174,7 @@ export function Classroom() {
           <div className="flex-1 bg-slate-950 flex items-center justify-center">
             <div className="text-center">
               <div className="w-20 h-20 bg-slate-800 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <Monitor className="w-10 h-10 text-slate-600" />
+                <Monitor className="w-10 h-10 text-slate-700" />
               </div>
               <p className="text-gray-400 font-medium mb-1">
                 Collaborative Whiteboard
@@ -161,14 +190,25 @@ export function Classroom() {
         </div>
 
         <div className="flex flex-col gap-3 sm:gap-4 overflow-hidden order-1 lg:order-2">
-          <div className="bg-slate-900 rounded-xl border border-slate-800 p-4 flex flex-col items-center justify-center h-44">
-            <div className="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center mb-2">
-              <Video className="w-6 h-6 text-slate-600" />
-            </div>
-            <p className="text-gray-400 text-sm font-medium">Live Video</p>
-            <p className="text-gray-600 text-xs mt-1 text-center">
-              Embed Jitsi or Daily.co here
-            </p>
+          {/* Live Video Section */}
+          <div className="bg-slate-800 border border-slate-700 rounded-lg p-6">
+            <h3 className="text-lg font-semibold text-white mb-4">📺 Live Video</h3>
+
+            {classData?.webinar?.dailyRoomUrl && classData?.webinar?.status === 'live' ? (
+              <div className="w-full h-96 rounded-lg overflow-hidden">
+                <iframe
+                  src={classData.webinar.dailyRoomUrl}
+                  allow="camera; microphone; display-capture; fullscreen"
+                  title="Daily.co Webinar"
+                  className="w-full h-full"
+                />
+              </div>
+            ) : (
+              <div className="bg-slate-700 h-96 rounded-lg flex flex-col items-center justify-center text-center">
+                <p className="text-slate-300 text-lg mb-2">📹 Waiting for webinar to go live...</p>
+                <p className="text-slate-400 text-sm">The instructor will start the session soon</p>
+              </div>
+            )}
           </div>
 
           <div className="flex-1 bg-slate-900 rounded-xl border border-slate-800 flex flex-col overflow-hidden min-h-0">
