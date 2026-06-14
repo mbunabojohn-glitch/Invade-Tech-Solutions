@@ -12,6 +12,11 @@ interface Webinar {
   time: string;
   duration: string;
   status: "upcoming" | "live" | "completed";
+  recordingUrl?: string;
+  videoUrl?: string;
+  url?: string;
+  dailyRoomUrl?: string;
+  [key: string]: any;
 }
 
 function SkeletonCard() {
@@ -41,10 +46,14 @@ export function Recordings() {
     ? response
     : [];
 
+  console.log('Fetched webinars:', webinars);
+
   // Filter only completed webinars
   const completedWebinars = webinars.filter(
     (webinar: Webinar) => webinar.status === "completed"
   );
+
+  console.log('Completed webinars:', completedWebinars);
 
   if (error) {
     return (
@@ -136,7 +145,13 @@ export function Recordings() {
               </div>
 
               <div className="pt-2">
-                <button className="w-full py-3 bg-cyan-500 hover:bg-cyan-600 text-gray-950 font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors">
+                <button 
+                  onClick={(e) => {
+                    console.log('Webinar clicked:', webinar);
+                    e.preventDefault();
+                  }}
+                  className="w-full py-3 bg-cyan-500 hover:bg-cyan-600 text-gray-950 font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                >
                   <Play className="w-4 h-4" /> Watch Recording
                 </button>
               </div>
