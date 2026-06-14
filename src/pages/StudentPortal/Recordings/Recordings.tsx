@@ -42,7 +42,7 @@ export function Recordings() {
   const navigate = useNavigate();
   const { data: response, isLoading: loading, error } = useStudentWebinars();
 
-  const webinars = Array.isArray((response as any)?.data
+  const webinars = Array.isArray((response as any)?.data)
     ? (response as any).data
     : Array.isArray(response)
     ? response
