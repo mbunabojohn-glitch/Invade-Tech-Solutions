@@ -22,6 +22,7 @@ const NAV_ITEMS = [
   { label: "Overview", path: "/student/dashboard", icon: LayoutDashboard },
   { label: "My Classes", path: "/student/classes", icon: BookOpen },
   { label: "Webinars", path: "/student/webinars", icon: Video },
+  { label: "Recordings", path: "/student/recordings", icon: Video },
   { label: "Classroom", path: "/student/classroom", icon: Monitor },
   { label: "Resources", path: "/student/resources", icon: FolderOpen },
   { label: "Announcements", path: "/student/announcements", icon: Bell },
