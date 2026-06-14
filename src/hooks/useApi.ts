@@ -444,3 +444,15 @@ export const useStudentAnnouncements = (
     ...options,
   });
 };
+
+export const useWebinarRecording = (
+  recordingId: string | undefined,
+  options?: UseQueryOptions<unknown, AxiosError>,
+) => {
+  return useQuery({
+    queryKey: ["webinar", "recording", recordingId],
+    queryFn: () => apiService.getWebinarRecording(recordingId!),
+    enabled: !!recordingId,
+    ...options,
+  });
+};

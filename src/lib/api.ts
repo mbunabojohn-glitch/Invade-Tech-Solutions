@@ -253,6 +253,11 @@ export const apiService = {
     return response.data;
   },
 
+  getWebinarRecording: async (recordingId: string) => {
+    const response = await apiClient.get(`/webinars/${recordingId}/recording`);
+    return response.data;
+  },
+
   // --- STUDENT ANNOUNCEMENTS ---
   getStudentAnnouncements: async () => {
     const response = await apiClient.get('/announcements/student/my-announcements');

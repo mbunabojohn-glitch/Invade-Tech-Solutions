@@ -1,5 +1,6 @@
-import { Video, Calendar, Clock, Play } from "lucide-react";
+import { Video, Calendar, Clock } from "lucide-react";
 import { useStudentWebinars } from "../../../hooks/useApi";
+import { useNavigate } from "react-router-dom";
 
 interface Webinar {
   _id: string;
@@ -38,9 +39,10 @@ function SkeletonCard() {
 }
 
 export function Recordings() {
+  const navigate = useNavigate();
   const { data: response, isLoading: loading, error } = useStudentWebinars();
 
-  const webinars = Array.isArray((response as any)?.data)
+  const webinars = Array.isArray((response as any)?.data
     ? (response as any).data
     : Array.isArray(response)
     ? response
@@ -54,6 +56,10 @@ export function Recordings() {
   );
 
   console.log('Completed webinars:', completedWebinars);
+
+  const handleWatchRecording = (webinar: Webinar) => {
+    navigate(`/student/recordings/${webinar._id}`);
+  };
 
   if (error) {
     return (
@@ -146,13 +152,17 @@ export function Recordings() {
 
               <div className="pt-2">
                 <button 
-                  onClick={(e) => {
-                    console.log('Webinar clicked:', webinar);
-                    e.preventDefault();
-                  }}
-                  className="w-full py-3 bg-cyan-500 hover:bg-cyan-600 text-gray-950 font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer"
-                >
-                  <Play className="w-4 h-4" /> Watch Recording
+                  onClick={() => handleWatchRecording(webinar)} 
+                  className="w-full bg-cyan-500 hover:bg-cyan-600 active:bg-cyan-700 text-black font-bold py-3 rounded-xl transition duration-200 flex items-center justify-center gap-2 cursor-pointer" 
+                > 
+                  <svg 
+                    className="w-5 h-5" 
+                    fill="currentColor" 
+                    viewBox="0 0 24 24" 
+                  > 
+                    <path d="M8 5v14l11-7z" /> 
+                  </svg> 
+                  Watch Recording 
                 </button>
               </div>
             </div>
