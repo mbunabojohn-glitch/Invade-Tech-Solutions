@@ -24,10 +24,8 @@ export default function RecordingPlayer() {
   // Fetch recording data using TanStack Query hook
   const { data: response, isLoading: loading, error } = useWebinarRecording(recordingId);
 
-  // Extract recording from response (handle both direct object and wrapped response)
-  const recording: Recording | null = Array.isArray((response as any)?.data)
-    ? (response as any).data[0]
-    : (response as any)?.data || response;
+  // Extract recording from response
+  const recording = response as unknown as Recording;
 
   // Handle errors
   if (error) {
