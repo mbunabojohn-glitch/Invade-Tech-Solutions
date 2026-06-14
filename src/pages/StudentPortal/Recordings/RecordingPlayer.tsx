@@ -25,8 +25,9 @@ export default function RecordingPlayer() {
   const { data: response, isLoading: loading, error } = useWebinarRecording(recordingId);
 
   // Extract recording from response
-  const recording = response as unknown as Recording;
-  console.log("Recording URL:", recording.recordingUrl);
+  const recording = (response as any)?.data || response;
+  console.log("Full response:", response);
+  console.log("Recording data:", recording);
 
   // Handle errors
   if (error) {
