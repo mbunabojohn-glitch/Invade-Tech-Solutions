@@ -124,7 +124,7 @@ export default function RecordingPlayer() {
         <div className="bg-gradient-to-b from-slate-900 to-slate-800 rounded-2xl overflow-hidden shadow-2xl mb-8 border border-slate-700">
           {/* Video Container */}
           <div className="aspect-video bg-black flex items-center justify-center">
-            {recording.recordingUrl ? (
+            {recording?.recordingUrl ? (
               <iframe
                 src={recording.recordingUrl}
                 className="w-full h-full border-0"
@@ -132,32 +132,11 @@ export default function RecordingPlayer() {
                 allowFullScreen
               />
             ) : (
-              <div className="text-center">
-                <svg
-                  className="w-16 h-16 text-gray-600 mx-auto mb-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1}
-                    d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1}
-                    d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-                <p className="text-gray-400">
-                  Recording URL is being processed
-                </p>
-                <p className="text-gray-500 text-sm mt-2">
-                  Please check back in a moment or contact your instructor
-                </p>
+              <div className="text-center flex items-center justify-center h-full">
+                <div>
+                  <p className="text-gray-400">Loading recording...</p>
+                  <p className="text-gray-500 text-sm mt-2">Please wait a moment</p>
+                </div>
               </div>
             )}
           </div>
