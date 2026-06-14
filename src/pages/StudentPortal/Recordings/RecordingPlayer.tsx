@@ -123,14 +123,12 @@ export default function RecordingPlayer() {
           {/* Video Container */}
           <div className="aspect-video bg-black flex items-center justify-center">
             {recording.recordingUrl ? (
-              <video
-                controls
-                className="w-full h-full"
-                controlsList="nodownload"
-              >
-                <source src={recording.recordingUrl} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+              <iframe
+                src={recording.recordingUrl}
+                className="w-full h-full border-0"
+                allow="camera; microphone; display-capture"
+                allowFullScreen
+              />
             ) : (
               <div className="text-center">
                 <svg
