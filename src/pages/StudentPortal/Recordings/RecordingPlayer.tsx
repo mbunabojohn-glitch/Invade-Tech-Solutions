@@ -25,7 +25,7 @@ export default function RecordingPlayer() {
   const { data: response, isLoading: loading, error } = useWebinarRecording(recordingId);
 
   // Extract recording from response (handle both direct object and wrapped response)
-  const recording = Array.isArray((response as any)?.data)
+  const recording: Recording | null = Array.isArray((response as any)?.data)
     ? (response as any).data[0]
     : (response as any)?.data || response;
 
