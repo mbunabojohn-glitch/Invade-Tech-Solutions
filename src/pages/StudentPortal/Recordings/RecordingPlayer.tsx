@@ -26,6 +26,7 @@ export default function RecordingPlayer() {
 
   // Extract recording from response
   const recording = response as unknown as Recording;
+  console.log("Recording URL:", recording.recordingUrl);
 
   // Handle errors
   if (error) {
