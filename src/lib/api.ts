@@ -253,8 +253,8 @@ export const apiService = {
     return response.data;
   },
 
-  getWebinarRecording: async (recordingId: string) => {
-    const response = await apiClient.get(`/webinars/${recordingId}/recording`);
+  getWebinarRecording: async (webinarId: string) => {
+    const response = await apiClient.get(`/webinars/${webinarId}`);
     return response.data;
   },
 
