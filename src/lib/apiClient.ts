@@ -20,25 +20,16 @@ const apiClient: AxiosInstance = axios.create({
 // This runs before EVERY outgoing API call
 apiClient.interceptors.request.use((config) => {
   const state = useAppStore.getState();
-  const token = state.studentToken;
-
-  // Check if this is a student portal request
-  const isStudentRequest = config.url?.startsWith("/students") || config.url?.startsWith("/classes/student") || config.url?.startsWith("/webinars/student") || config.url?.startsWith("/webinars/");
+  const token = state.token;
 
   console.log("API Request:", {
     url: config.url,
-    isStudentRequest,
-    studentTokenExists: !!token,
-    regularTokenExists: !!state.token,
+    regularTokenExists: !!token,
   });
 
-  if (isStudentRequest && token) {
+  if (token) {
     config.headers.Authorization = `Bearer ${token}`;
-    console.log("Attached student token to request");
-  } else if (state.token) {
-    // For non-student requests, use the regular token
-    config.headers.Authorization = `Bearer ${state.token}`;
-    console.log("Attached regular token to request");
+    console.log("Attached regular auth token to request");
   }
 
   return config;
@@ -52,15 +43,8 @@ apiClient.interceptors.response.use(
   (error) => {
     // Auto-logout if a 401 Unauthorized error occurs (expired or invalid token)
     if (error.response?.status === 401) {
-      const isStudentRoute = window.location.pathname.startsWith("/student");
-
-      if (isStudentRoute) {
-        useAppStore.getState().studentLogout();
-        window.location.href = "/student/login";
-      } else {
-        useAppStore.getState().logout();
-        window.location.href = "/login";
-      }
+      useAppStore.getState().logout();
+      window.location.href = "/login";
     }
     return Promise.reject(error);
   },
