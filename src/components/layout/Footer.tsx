@@ -127,14 +127,6 @@ const Footer = () => {
                   Tech Buzz
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="/shop"
-                  className="text-gray-400 hover:text-cyan-500 transition-colors"
-                >
-                  Shop
-                </Link>
-              </li>
             </ul>
           </div>
 
