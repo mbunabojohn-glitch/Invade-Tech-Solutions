@@ -435,6 +435,15 @@ export const useWebinarRoom = (
   });
 };
 
+export const useJoinWebinar = (
+  options?: UseMutationOptions<unknown, AxiosError, string>,
+) => {
+  return useMutation({
+    mutationFn: (webinarId: string) => apiService.joinWebinar(webinarId),
+    ...options,
+  });
+};
+
 export const useStudentAnnouncements = (
   options?: UseQueryOptions<unknown, AxiosError>,
 ) => {

@@ -253,6 +253,11 @@ export const apiService = {
     return response.data;
   },
 
+  joinWebinar: async (webinarId: string) => {
+    const response = await apiClient.post(`/webinars/${webinarId}/join`);
+    return response.data;
+  },
+
   getWebinarRecording: async (webinarId: string) => {
     const response = await apiClient.get(`/webinars/student/${webinarId}`);
     return response.data;

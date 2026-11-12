@@ -1,6 +1,6 @@
 import { Video, Calendar, Clock} from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { useStudentWebinars } from "../../../hooks/useApi";
+import { toast } from "sonner";
+import { useStudentWebinars, useJoinWebinar } from "../../../hooks/useApi";
 
 interface Webinar {
   _id: string;
@@ -22,6 +22,29 @@ const STATUS_STYLE: Record<string, string> = {
   completed: "bg-gray-500/10 text-gray-400 border border-gray-500/20",
 };
 
+// Parses a webinar time string ("10:00", "10:00 AM", "2:30 PM") into 24h parts.
+function parseTimeParts(time: string): { hours: number; minutes: number } {
+  const match = time?.trim().match(/^(\d{1,2})(?::(\d{2}))?\s*(AM|PM)?$/i);
+  if (!match) return { hours: 0, minutes: 0 };
+  let hours = parseInt(match[1], 10);
+  const minutes = match[2] ? parseInt(match[2], 10) : 0;
+  const meridiem = match[3]?.toUpperCase();
+  if (meridiem === "PM" && hours < 12) hours += 12;
+  if (meridiem === "AM" && hours === 12) hours = 0;
+  return { hours, minutes };
+}
+
+// Computes when the join window opens: the webinar's date and time as WAT (UTC+1),
+// read in UTC and shifted back 1 hour (like the backend), minus 10 minutes.
+function getWebinarOpenTime(date: string, time: string): Date {
+  const d = new Date(date);
+  const { hours, minutes } = parseTimeParts(time);
+  const watStartMs =
+    Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), hours, minutes) -
+    60 * 60 * 1000;
+  return new Date(watStartMs - 10 * 60 * 1000);
+}
+
 function SkeletonCard() {
   return (
     <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-4">
@@ -41,8 +64,26 @@ function SkeletonCard() {
 }
 
 export function Webinars() {
-  const navigate = useNavigate();
   const { data: response, isLoading: loading, error } = useStudentWebinars();
+
+  const joinWebinar = useJoinWebinar({
+    onSuccess: (data) => {
+      const { roomUrl, token } = data as { roomUrl: string; token: string };
+      if (roomUrl && token) {
+        window.open(`${roomUrl}?t=${token}`, "_blank", "noopener,noreferrer");
+      } else {
+        toast.error("Unable to join webinar: missing room details.");
+      }
+    },
+    onError: (err) => {
+      const message =
+        (err.response?.data as { message?: string; error?: string })?.message ||
+        (err.response?.data as { message?: string; error?: string })?.error ||
+        err.message ||
+        "Failed to join webinar.";
+      toast.error(message);
+    },
+  });
 
   const webinars = Array.isArray((response as any)?.data)
     ? (response as any).data
@@ -102,7 +143,12 @@ export function Webinars() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {webinars.map((webinar: Webinar) => {
-            console.log('Webinar status:', webinar.status);
+            const openTime = getWebinarOpenTime(webinar.date, webinar.time);
+            const canJoin = Date.now() >= openTime.getTime();
+            const openTimeLabel = openTime.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            });
             return (
             <div
               key={webinar._id || webinar.id}
@@ -157,21 +203,28 @@ export function Webinars() {
               </div>
 
               <div className="pt-2">
-                {webinar.status === 'live' ? (
-                  <button 
-                    onClick={() => navigate(`/student/classroom/${webinar._id}`)}
-                    className="w-full py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg shadow-lg shadow-green-500/30 transition-all animate-pulse"
-                  >
-                    🔴 Join Now — Live
-                  </button>
-                ) : webinar.status === 'upcoming' ? (
-                  <div className="w-full py-3 bg-blue-500/20 text-blue-400 font-semibold rounded-lg text-center border border-blue-500/30">
-                    📅 Upcoming
-                  </div>
-                ) : (
+                {webinar.status === "completed" ? (
                   <div className="w-full py-3 bg-gray-600/20 text-gray-400 font-semibold rounded-lg text-center border border-gray-600/30">
                     ✅ Completed
                   </div>
+                ) : (
+                  <button
+                    onClick={() =>
+                      joinWebinar.mutate((webinar._id || webinar.id)!)
+                    }
+                    disabled={!canJoin || joinWebinar.isPending}
+                    className={`w-full py-3 font-semibold rounded-lg transition-all ${
+                      canJoin
+                        ? "bg-green-500 hover:bg-green-600 text-white shadow-lg shadow-green-500/30 disabled:opacity-60 disabled:cursor-not-allowed"
+                        : "bg-blue-500/20 text-blue-400 border border-blue-500/30 cursor-not-allowed"
+                    }`}
+                  >
+                    {canJoin
+                      ? joinWebinar.isPending
+                        ? "Joining…"
+                        : "Join Webinar"
+                      : `Opens at ${openTimeLabel}`}
+                  </button>
                 )}
               </div>
             </div>
