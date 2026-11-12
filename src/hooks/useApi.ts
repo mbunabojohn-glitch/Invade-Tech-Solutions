@@ -315,3 +315,12 @@ export const useDeleteClient = (
   });
 };
 
+export const useJoinWebinar = (
+  options?: UseMutationOptions<unknown, AxiosError, string>,
+) => {
+  return useMutation({
+    mutationFn: (webinarId: string) => apiService.joinWebinar(webinarId),
+    ...options,
+  });
+};
+
