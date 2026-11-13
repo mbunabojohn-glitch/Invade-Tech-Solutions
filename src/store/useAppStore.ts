@@ -8,11 +8,25 @@ interface User {
   role: string;
 }
 
+interface StudentUser {
+  id: string;
+  fullName: string;
+  email: string;
+  phone?: string;
+  course?: string;
+  status: "pending" | "confirmed" | "rejected";
+}
+
 interface AppState {
   // Auth state
   token: string | null;
   user: User | null;
   isAuthenticated: boolean;
+
+  // Student auth state
+  studentToken: string | null;
+  studentUser: StudentUser | null;
+  isStudentAuthenticated: boolean;
 
   // UI state
   isLoading: boolean;
@@ -27,6 +41,9 @@ interface AppState {
   setTheme: (theme: "light" | "dark") => void;
   logout: () => void;
   clearError: () => void;
+
+  setStudentToken: (token: string, user: StudentUser) => void;
+  studentLogout: () => void;
 }
 
 // Global State Management with Zustand
@@ -38,6 +55,9 @@ export const useAppStore = create<AppState>()(
       token: null,
       user: null,
       isAuthenticated: false,
+      studentToken: null,
+      studentUser: null,
+      isStudentAuthenticated: false,
       isLoading: false,
       error: null,
       theme: "light",
@@ -52,6 +72,20 @@ export const useAppStore = create<AppState>()(
           token: null,
           user: null,
           isAuthenticated: false,
+        }),
+
+      setStudentToken: (studentToken, studentUser) =>
+        set({
+          studentToken,
+          studentUser,
+          isStudentAuthenticated: true,
+        }),
+
+      studentLogout: () =>
+        set({
+          studentToken: null,
+          studentUser: null,
+          isStudentAuthenticated: false,
         }),
 
       // --- UI ACTIONS ---
@@ -71,6 +105,9 @@ export const useAppStore = create<AppState>()(
         user: state.user,
         theme: state.theme,
         isAuthenticated: state.isAuthenticated,
+        studentToken: state.studentToken,
+        studentUser: state.studentUser,
+        isStudentAuthenticated: state.isStudentAuthenticated,
       }),
     },
   ),

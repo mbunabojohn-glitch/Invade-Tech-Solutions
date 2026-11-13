@@ -159,10 +159,10 @@ const Services = () => {
                       {service.id === 'it-training-career' && (
                         <>
                           <button
-                            onClick={() => navigate("/register")}
-                            className="bg-cyan-500 text-gray-950 hover:bg-cyan-600 px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center space-x-2"
+                            disabled
+                            className="bg-cyan-500 text-gray-950 px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center space-x-2 opacity-50 cursor-not-allowed"
                           >
-                            <span>Enroll Now</span>
+                            <span>Get Trained</span>
                             <ArrowRight className="w-5 h-5" />
                           </button>
                           <button
