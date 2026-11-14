@@ -27,14 +27,15 @@ const Hero = () => {
           <div className="max-w-3xl">
             {/* Main Headline - Animates first */}
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight animate-fade-in-up">
-              Build Stronger, Faster,{" "}
-              <span className="text-cyan-400">More Efficient Systems</span>
+              Your Complete IT Department,{" "}
+              <span className="text-cyan-400">On Demand.</span>
             </h1>
 
             {/* Description - Animates second */}
             <p className="text-base sm:text-lg text-gray-300 mb-10 max-w-2xl animate-fade-in-up-delay-1">
-              We help businesses grow and operate efficiently through reliable
-              IT solutions, expert consulting, and tailored technical support.
+              We deliver end-to-end technology solutions; spanning cloud
+              infrastructure, hardware procurement, and 24/7 IT support so you can
+              focus on growing your business.
             </p>
 
             {/* CTA Buttons - Animates third */}
