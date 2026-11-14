@@ -33,11 +33,11 @@ const Clients = () => {
         {/* Section Header */}
         <div className="text-center mb-16 scroll-animate fade-in">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Trusted by <span className="text-cyan-500">Leading Organizations</span>
+            Trusted by <span className="text-cyan-500">Brands You Know</span>
           </h2>
           <p className="text-gray-300 text-lg max-w-3xl mx-auto">
-            We're proud to partner with innovative companies across various
-            industries, delivering exceptional IT solutions and support.
+            Delivering enterprise-grade reliability, secure cloud setups, and
+            rapid IT support to growing sector leaders.
           </p>
         </div>
 
