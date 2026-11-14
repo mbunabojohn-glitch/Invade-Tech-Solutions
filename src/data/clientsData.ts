@@ -13,8 +13,9 @@ export const clients: Client[] = [
     name: "Livespot360",
     logo: "/images/livespot-Img.jpg",
     website: "https://livespot360.com",
-    description: "Leading experiential marketing and event management company",
-    industry: "Marketing & Events",
+    description:
+      "Partnered with Livespot360 to provide IT support and hardware procurement services.",
+    industry: "IT Support & Hardware Procurement",
   },
   {
     id: "standpoint-ng",
