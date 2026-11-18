@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { toast } from "sonner";
 import { useAppStore } from "../../../store/useAppStore";
 import { useStudentLogin } from "../../../hooks/useApi";
@@ -48,7 +48,13 @@ const PORTAL_FEATURES = [
 
 export default function StudentLogin() {
   const navigate = useNavigate();
+  const location = useLocation();
   const setStudentToken = useAppStore((state) => state.setStudentToken);
+
+  // When a student was redirected here (e.g. from a course page), return them
+  // to that page after a successful login instead of the dashboard.
+  const redirectTo =
+    (location.state as { from?: string } | null)?.from || "/student/dashboard";
 
   const [formData, setFormData] = useState<LoginFormData>({
     email: "",
@@ -112,8 +118,8 @@ export default function StudentLogin() {
 
       if (token && student) {
         setStudentToken(token, student);
-        toast.success("Welcome back! Redirecting to your dashboard...");
-        setTimeout(() => navigate("/student/dashboard"), 800);
+        toast.success("Welcome back! Redirecting...");
+        setTimeout(() => navigate(redirectTo), 800);
       } else {
         console.error("Login response missing credentials:", response);
         throw new Error("Invalid response from server: Missing token or student data");
