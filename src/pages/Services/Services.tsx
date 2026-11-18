@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { services as staticServices } from "../../data/servicesData";
 import { CheckCircle, ArrowRight } from "lucide-react";
 import { useServices } from "../../hooks/useApi";
@@ -158,13 +158,13 @@ const Services = () => {
 
                       {service.id === 'it-training-career' && (
                         <>
-                          <button
-                            disabled
-                            className="bg-cyan-500 text-gray-950 px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center space-x-2 opacity-50 cursor-not-allowed"
+                          <Link
+                            to="/courses"
+                            className="bg-cyan-500 text-gray-950 px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center space-x-2 hover:bg-cyan-400"
                           >
                             <span>Get Trained</span>
                             <ArrowRight className="w-5 h-5" />
-                          </button>
+                          </Link>
                           <button
                             onClick={() => navigate("/student/login")}
                             className="bg-gray-800 text-white hover:bg-gray-700 px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center space-x-2 border border-gray-700"

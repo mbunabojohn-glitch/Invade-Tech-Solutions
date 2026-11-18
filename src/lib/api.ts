@@ -76,6 +76,28 @@ export interface NewsArticle {
   publishedAt: string;
 }
 
+export interface CourseModule {
+  title: string;
+  topics: string[];
+}
+
+export interface Course {
+  id: string;
+  slug: string;
+  title: string;
+  summary: string;
+  school?: string;
+  highlights?: string[];
+  curriculum?: CourseModule[];
+  tuition?: string;
+}
+
+export interface CourseApplicationData {
+  preferredFormat: string;
+  paymentPlan?: string;
+  message?: string;
+}
+
 interface ApiResponse<T> {
   success: boolean;
   data?: T;
@@ -306,5 +328,23 @@ export const apiService = {
   getNewsById: async (id: string): Promise<NewsArticle> => {
     const response = await apiClient.get(`/news/${id}`);
     return response.data?.data || response.data;
+  },
+
+  // --- COURSES ---
+  getCourses: async (): Promise<Course[]> => {
+    const response = await apiClient.get("/courses");
+    return Array.isArray(response.data)
+      ? response.data
+      : response.data?.data || [];
+  },
+
+  getCourseBySlug: async (slug: string): Promise<Course> => {
+    const response = await apiClient.get(`/courses/${slug}`);
+    return response.data?.data || response.data;
+  },
+
+  applyForCourse: async (slug: string, data: CourseApplicationData) => {
+    const response = await apiClient.post(`/courses/${slug}/apply`, data);
+    return response.data;
   },
 };

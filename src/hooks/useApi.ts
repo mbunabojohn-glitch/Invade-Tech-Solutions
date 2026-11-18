@@ -6,7 +6,7 @@ import {
   type UseMutationOptions,
 } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { apiService, type ContactFormData, type Service, type Client, type NewsArticle } from "../lib/api";
+import { apiService, type ContactFormData, type Service, type Client, type NewsArticle, type Course, type CourseApplicationData } from "../lib/api";
 
 // --- AUTHENTICATION & PROFILE ---
 
@@ -462,6 +462,42 @@ export const useWebinarRecording = (
     queryKey: ["webinar", "recording", recordingId],
     queryFn: () => apiService.getWebinarRecording(recordingId!),
     enabled: !!recordingId,
+    ...options,
+  });
+};
+
+// --- COURSES ---
+
+export const useCourses = (options?: UseQueryOptions<Course[], AxiosError>) => {
+  return useQuery({
+    queryKey: ["courses"],
+    queryFn: () => apiService.getCourses(),
+    staleTime: 5 * 60 * 1000,
+    ...options,
+  });
+};
+
+export const useCourse = (
+  slug: string | undefined,
+  options?: UseQueryOptions<Course, AxiosError>,
+) => {
+  return useQuery({
+    queryKey: ["courses", slug],
+    queryFn: () => apiService.getCourseBySlug(slug!),
+    enabled: !!slug,
+    ...options,
+  });
+};
+
+export const useApplyForCourse = (
+  options?: UseMutationOptions<
+    unknown,
+    AxiosError,
+    { slug: string; data: CourseApplicationData }
+  >,
+) => {
+  return useMutation({
+    mutationFn: ({ slug, data }) => apiService.applyForCourse(slug, data),
     ...options,
   });
 };
