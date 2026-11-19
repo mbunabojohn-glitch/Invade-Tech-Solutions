@@ -5,6 +5,11 @@ import { useCourses } from "../../hooks/useApi";
 import { type Course } from "../../lib/api";
 import { trainedPeople, type TrainedPerson } from "../../data/trainedData";
 
+// Capitalises only the first letter of a string and leaves the rest untouched,
+// so acronyms like "SQL", "CI/CD", "AI", and "UX" stay unchanged.
+const capitalise = (text: string) =>
+  text ? text.charAt(0).toUpperCase() + text.slice(1) : text;
+
 /**
  * FlipTile
  * A single square tile in the Career Flip Wall.
@@ -36,9 +41,11 @@ const FlipTile = ({ person, index }: { person: TrainedPerson; index: number }) =
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-gray-950/90 via-gray-950/40 to-transparent p-5">
-              <p className="text-white font-bold text-lg">{person.name}</p>
+              <p className="text-white font-bold text-lg">
+                {capitalise(person.name)}
+              </p>
               <p className="text-xs font-semibold uppercase tracking-wide text-cyan-400">
-                {person.category}
+                {capitalise(person.category)}
               </p>
             </div>
           </div>
@@ -47,18 +54,20 @@ const FlipTile = ({ person, index }: { person: TrainedPerson; index: number }) =
           <div className="flip-face flip-face-back rounded-2xl border border-cyan-500/30 bg-gray-950 p-6 flex flex-col justify-center gap-3">
             <div className="flex flex-wrap items-center gap-2">
               <span className="text-gray-400 line-through">
-                {person.previousRole}
+                {capitalise(person.previousRole)}
               </span>
               <ArrowRight className="w-4 h-4 text-cyan-400" />
-              <span className="font-semibold text-white">{person.newRole}</span>
+              <span className="font-semibold text-white">
+                {capitalise(person.newRole)}
+              </span>
             </div>
             <p className="text-sm text-gray-400">
               <span className="font-semibold text-cyan-400">Training:</span>{" "}
-              {person.training}
+              {capitalise(person.training)}
             </p>
             <p className="text-sm text-gray-400">
               <span className="font-semibold text-cyan-400">Current Role:</span>{" "}
-              {person.currentRole}
+              {capitalise(person.currentRole)}
             </p>
           </div>
         </div>
@@ -177,7 +186,7 @@ const Courses = () => {
                             {course.title}
                           </h3>
                           <p className="text-gray-400 text-sm leading-relaxed flex-grow">
-                            {course.summary}
+                            {capitalise(course.summary)}
                           </p>
                           <span className="mt-6 inline-flex items-center gap-2 text-cyan-400 font-semibold text-sm">
                             View Course
