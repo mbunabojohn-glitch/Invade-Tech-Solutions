@@ -19,6 +19,11 @@ const FORMAT_OPTIONS = [
   { value: "self-paced", label: "Self-paced" },
 ];
 
+// Capitalises only the first letter of a string and leaves the rest untouched,
+// so acronyms like "SQL", "CI/CD", "AI", and "UX" stay unchanged.
+const capitalise = (text: string) =>
+  text ? text.charAt(0).toUpperCase() + text.slice(1) : text;
+
 /**
  * CourseDetail Page
  * Shows a single course's details and handles the apply flow:
@@ -162,7 +167,7 @@ const CourseDetail = () => {
           </h1>
 
           <p className="text-lg text-gray-300 leading-relaxed scroll-animate fade-in">
-            {course.summary}
+            {capitalise(course.summary)}
           </p>
         </div>
       </section>
@@ -188,7 +193,7 @@ const CourseDetail = () => {
               {course.highlights.map((highlight, index) => (
                 <div key={index} className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-cyan-500 mt-1 flex-shrink-0" />
-                  <span className="text-gray-300">{highlight}</span>
+                  <span className="text-gray-300">{capitalise(highlight)}</span>
                 </div>
               ))}
             </div>
@@ -208,7 +213,7 @@ const CourseDetail = () => {
                   className="rounded-2xl border border-gray-800 bg-gray-900 p-6"
                 >
                   <h3 className="text-lg font-semibold text-white mb-3">
-                    {module.title}
+                    {capitalise(module.title)}
                   </h3>
                   <ul className="space-y-2">
                     {(module.topics || []).map((topic, tIndex) => (
@@ -217,7 +222,7 @@ const CourseDetail = () => {
                         className="flex items-start gap-3 text-gray-400"
                       >
                         <span className="mt-2 w-1.5 h-1.5 rounded-full bg-cyan-500 flex-shrink-0" />
-                        <span>{topic}</span>
+                        <span>{capitalise(topic)}</span>
                       </li>
                     ))}
                   </ul>
