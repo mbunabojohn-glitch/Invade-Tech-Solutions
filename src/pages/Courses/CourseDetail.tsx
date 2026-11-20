@@ -12,11 +12,24 @@ import { toast } from "sonner";
 import { AxiosError } from "axios";
 import { useCourse, useApplyForCourse } from "../../hooks/useApi";
 import { useAppStore } from "../../store/useAppStore";
+import { type CourseModule } from "../../lib/api";
 
 const FORMAT_OPTIONS = [
   { value: "live", label: "Live (in-person)" },
   { value: "virtual", label: "Virtual (online)" },
   { value: "self-paced", label: "Self-paced" },
+];
+
+// Fixed final modules appended to every course curriculum (frontend only).
+const FINAL_MODULES: CourseModule[] = [
+  {
+    title: "Exams",
+    topics: ["Written and practical assessment", "Project evaluation"],
+  },
+  {
+    title: "Certification",
+    topics: ["Certificate of completion", "Verification of your certificate"],
+  },
 ];
 
 // Capitalises only the first letter of a string and leaves the rest untouched,
@@ -142,6 +155,10 @@ const CourseDetail = () => {
   const tuition =
     typeof course.tuition === "string" ? course.tuition.trim() : course.tuition;
 
+  // Curriculum from the API with the fixed Exams and Certification modules
+  // appended. These are always shown, even when the API returns no curriculum.
+  const curriculum = [...(course.curriculum || []), ...FINAL_MODULES];
+
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100 pb-20 overflow-x-hidden">
       {/* Hero */}
@@ -201,36 +218,34 @@ const CourseDetail = () => {
         )}
 
         {/* Curriculum */}
-        {course.curriculum && course.curriculum.length > 0 && (
-          <section className="mb-12 scroll-animate fade-in">
-            <h2 className="text-2xl font-bold text-white mb-6">
-              Course <span className="text-cyan-500">Curriculum</span>
-            </h2>
-            <div className="space-y-4">
-              {course.curriculum.map((module, index) => (
-                <div
-                  key={index}
-                  className="rounded-2xl border border-gray-800 bg-gray-900 p-6"
-                >
-                  <h3 className="text-lg font-semibold text-white mb-3">
-                    {capitalise(module.title)}
-                  </h3>
-                  <ul className="space-y-2">
-                    {(module.topics || []).map((topic, tIndex) => (
-                      <li
-                        key={tIndex}
-                        className="flex items-start gap-3 text-gray-400"
-                      >
-                        <span className="mt-2 w-1.5 h-1.5 rounded-full bg-cyan-500 flex-shrink-0" />
-                        <span>{capitalise(topic)}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
+        <section className="mb-12 scroll-animate fade-in">
+          <h2 className="text-2xl font-bold text-white mb-6">
+            Course <span className="text-cyan-500">Curriculum</span>
+          </h2>
+          <div className="space-y-4">
+            {curriculum.map((module, index) => (
+              <div
+                key={index}
+                className="rounded-2xl border border-gray-800 bg-gray-900 p-6"
+              >
+                <h3 className="text-lg font-semibold text-white mb-3">
+                  {capitalise(module.title)}
+                </h3>
+                <ul className="space-y-2">
+                  {(module.topics || []).map((topic, tIndex) => (
+                    <li
+                      key={tIndex}
+                      className="flex items-start gap-3 text-gray-400"
+                    >
+                      <span className="mt-2 w-1.5 h-1.5 rounded-full bg-cyan-500 flex-shrink-0" />
+                      <span>{capitalise(topic)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
 
         {/* Apply Section */}
         <section className="rounded-2xl border border-cyan-500/20 bg-gray-900 p-8 scroll-animate fade-in">
